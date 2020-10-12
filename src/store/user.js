@@ -1,6 +1,6 @@
 import axios from 'axios';
-//const URL = 'http://localhost:5000/';
-const URL = 'https://cryptic-caverns-97446.herokuapp.com/';
+const URL = 'http://localhost:3000/';
+//const URL = 'https://cryptic-caverns-97446.herokuapp.com/';
 import apiClient from './api_client';
 import saveToken from './local_storage';
 import router from '../router';
@@ -55,6 +55,7 @@ const  state = {
                                   first_name: user.first_name, 
                                   last_name: user.last_name, 
                                   password: user.password,
+                                  picture: user.picture,
                                   user_about: user.user_about }); 
       state.user = user;
     },

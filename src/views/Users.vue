@@ -1,14 +1,16 @@
 <template>
   <div class="users">
     <Nav />
-    <div v-if="!isLoadedFriends" class=""><img class="loading__img" src="../assets/loading.gif" alt=""></div>
-    <transition v-else name="slide-fade">
-    <div class="friends__lists">
-      <Friends title='Friends Request' btnName='Abort' :friendsType='getRequestFriend.user[0].friends' />
-      <Friends title='Friends Invitation' btnName='Accept' :friendsType='getFriendInvitation.user[0].friends' />
-      <Friends title='Friends' btnName='Un-friend' :friendsType='getFriends.user[0].friends' />
-      <Friends title='Not Friends' btnName='Add friend' :friendsType='getNotFriends.users' />
-    </div>
+    <transition name="slide-fade" mode="out-in">
+      <div v-if="!isLoadedFriends" class="">
+        <img class="loading__img" src="../assets/loading.gif" alt="">
+      </div>
+      <div v-else class="friends__lists">
+        <Friends title='Friends Request' btnName='Abort' :friendsType='getRequestFriend.user[0].friends' />
+        <Friends title='Friends Invitation' btnName='Accept' :friendsType='getFriendInvitation.user[0].friends' />
+        <Friends title='Friends' btnName='Un-friend' :friendsType='getFriends.user[0].friends' />
+        <Friends title='Not Friends' btnName='Add friend' :friendsType='getNotFriends.users' />
+      </div>
     </transition>
     <Footer />
   </div>
@@ -52,11 +54,11 @@
         await this.fetchNotFriends(this.loggedUser._id);
         await this.fetchRequestedFriends(this.loggedUser._id);
         await this.fetchFriendsInvitations(this.loggedUser._id);
+        this.isLoadedFriends = true;
       }
     },
     created() {
       this.loadFriends();
-      this.isLoadedFriends = true;
     }
   }
 </script>

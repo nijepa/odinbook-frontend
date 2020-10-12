@@ -1,6 +1,6 @@
 import axios from 'axios';
-//const URL = 'http://localhost:5000/';
-const URL = 'https://cryptic-caverns-97446.herokuapp.com/';
+const URL = 'http://localhost:3000/';
+//const URL = 'https://cryptic-caverns-97446.herokuapp.com/';
 
 const  state = {
   friends: [],

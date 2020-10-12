@@ -1,24 +1,36 @@
 <template>
-<transition name="slide-fade">
-  <div class="friends">
-    <h1>{{ title }}</h1>
-    <div v-if="!friendsType" class=""><img class="loading__img" src="../assets/loading.gif" alt=""></div>
-    <div v-else class="">
-      <div v-if="!friendsType.length" class="">
-        <h3>No friends</h3>
+  <transition name="fall" >
+    <div class="friends" v-on:load="onAppeared" v-show="appeared">
+      <h1>{{ title }}</h1>
+
+      <div v-if="!friendsType" class="">
+        <img class="loading__img" src="../assets/loading.gif" alt="">
       </div>
-      <transition-group name="slide-fade" mode="out-in">
-        <div v-for="user in friendsType" :key="user._id" class="friend">
-          <div class="friend__data">
-            <h3>{{ user.username }}</h3>
-            <a @click="selectUser(user)" class="user__link">{{ user.last_name }}, {{ user.first_name }}</a>
-          </div>
-          <a @click="toggleBtns(btnName, user._id)" href="#" :class="btnName == 'Un-friend' || btnName == 'Abort' ? 'btn__type1' : 'btn__type2'" class="toggle__friend">{{ btnName }}</a>
+
+      <div v-else class="">
+        <div v-if="!friendsType.length" class="">
+          <h3>No friends</h3>
         </div>
-      </transition-group>
+
+        <transition-group name="slide-fade" mode="out-in">
+          <div v-for="user in friendsType" :key="user._id" class="friend">
+            <div class="friend__data">
+              <img :src="user.picture || require('../assets/nopic' + Math.floor(Math.random() * 5) + '.png')" class="friend__img">
+              <div class="friend__text">
+                <h3>{{ user.username }}</h3>
+                <a @click="selectUser(user)" class="user__link">{{ user.last_name }}, {{ user.first_name }}</a>
+                <p>{{ user.friends.length || '' }}</p>
+              </div>
+            </div>
+            <a @click="toggleBtns(btnName, user._id)" href="#"
+                :class="btnName === 'Un-friend' || btnName === 'Abort' ? 'btn__type1' : 'btn__type2'"
+                class="toggle__friend">{{ btnName }}
+            </a>
+          </div>
+        </transition-group>
+      </div>
     </div>
-  </div>
-</transition>
+  </transition>
 </template>
 
 <script>
@@ -26,6 +38,11 @@
 
   export default {
     name: 'Friends',
+    data() {
+      return {
+        appeared: false
+      }
+    },
     props: {
       title: {
         type: String
@@ -36,10 +53,10 @@
       friendsType: {
         type: Array
       }
-    }, 
+    },
     computed: {
       ...mapGetters([ 'loggedUser',
-                      'getUserPosts', 
+                      'getUserPosts',
                       'getFriends']),
     },
     methods: {
@@ -62,13 +79,13 @@
         this.abortFriend({'_id':this.loggedUser._id, 'friend_id': userId});
       },
       toggleBtns(btnName, user) {
-        if (btnName == 'Un-friend') {
+        if (btnName === 'Un-friend') {
           this.removeFriend(user);
-        } else if (btnName == 'Add friend') {
+        } else if (btnName === 'Add friend') {
           this.addFriend(user);
-        } else if (btnName == 'Accept') {
+        } else if (btnName === 'Accept') {
           this.accFriend(user);
-        } else if (btnName == 'Abort') {
+        } else if (btnName === 'Abort') {
           this.aboFriend(user);
         }
       },
@@ -77,9 +94,12 @@
         this.loadUserPosts(selectedUser._id);
         this.$router.push({ name: 'Timeline' });
       },
+      onAppeared() {
+        this.appeared = true;
+      }
     },
-    created() {
-      //this.fetchFriends(this.loggedUser._id);
+    mounted() {
+      this.onAppeared();
     }
   }
 </script>
@@ -112,6 +132,16 @@
   .friend__data {
     display: grid;
     justify-items: left;
+    grid-template-columns: auto auto;
+    grid-column-gap: 1em;
+  }
+  .friend__img {
+    width: 50px;
+    height: 50px;
+    border-radius: 17px;
+  }
+  .friend__text {
+    text-align: left;
   }
   .toggle__friend {
     background-color: var(--red-light);
@@ -147,5 +177,4 @@
   .btn__type2 {
     background-color: var(--green-light);
   }
-  
 </style>

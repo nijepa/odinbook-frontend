@@ -2,7 +2,7 @@
   <div class="">
     <Nav />
     <transition name="slide-fade">
-    <Posts />
+      <Posts />
     </transition>
     <Footer />
   </div>
@@ -14,27 +14,27 @@
   import Footer from '@/components/Footer.vue';
   import Posts from '@/components/Posts.vue';
 
-export default {
-  name: 'Users',
-  components: {
-    Nav, Footer, Posts
-  },
-  computed: {
-    ...mapGetters([ 'loggedUser', 'getSelectedUser']),
-  },
-  methods: {
-      ...mapActions([ 'fetchSelectedUser', 'loadUserPosts' ]),
-      noSelectedUser() {
-        if (!this.getSelectedUser._id) {
-          this.fetchSelectedUser(this.loggedUser);
-          this.loadUserPosts(this.loggedUser._id);
+  export default {
+    name: 'Users',
+    components: {
+      Nav, Footer, Posts
+    },
+    computed: {
+      ...mapGetters([ 'loggedUser', 'getSelectedUser']),
+    },
+    methods: {
+        ...mapActions([ 'fetchSelectedUser', 'loadUserPosts' ]),
+        noSelectedUser() {
+          if (!this.getSelectedUser._id) {
+            this.fetchSelectedUser(this.loggedUser);
+            this.loadUserPosts(this.loggedUser._id);
+          }
         }
-      }
-  },
-  mounted() {
-    this.noSelectedUser();
+    },
+    mounted() {
+      this.noSelectedUser();
+    }
   }
-}
 </script>
 
 <style>

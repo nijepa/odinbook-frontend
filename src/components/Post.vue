@@ -1,43 +1,40 @@
 <template>
-  <transition name="slide-fade">
-    <div v-if="!enterPost" class="">
+  <transition name="fall" >
+    <div v-if="!enterPost" class="" v-on:load="onAppeared" v-show="appeared">
       <button type="submit" class="btn-sub post-new" @click="newPost()" value="" >{{ btnName }}</button>
     </div>
-    <div v-else class="">
-      <!-- <transition name="slide-fade"> -->
-        <form @submit.prevent="addPost()" method="post" class="log">
-          <!-- <label for="email">E-Mail</label> -->
-          <input @focus="clearErrors" v-model="postInput.title" type="text" name="title" class="cool-link" placeholder="pls enter title" required>
-          <!-- <label for="password">Password</label> -->
-          <transition name="slide-fade">
-          <editor @focus="clearErrors"  v-model="postInput.text" name="text" placeholder="pls enter content"
-            api-key="2guq5wvvizaji79tec92yznr95h8nlnk69m7n7qx7k2lxdpl"
-            :init="{
-              content_css: ['https://fonts.googleapis.com/css2?family=Chewy&display=swap'],
-              font_formats:'Chewy',
-              menubar: false,
-              plugins: [
-                'advlist autolink lists link image charmap print preview anchor',
-                'searchreplace visualblocks code fullscreen',
-                'insertdatetime media table paste code help wordcount'
-              ],
-              toolbar:
-                'undo redo | formatselect | bold italic backcolor link | \
-                alignleft aligncenter alignright alignjustify | \
-                bullist numlist outdent indent | removeformat | help | fontsizeselect fontselect'
-            }"
-          />
-          </transition>
-          <!-- <textarea @focus="clearErrors" v-model="postInput.text" name="text" class="cool-link" placeholder="pls enter content" required></textarea> -->
-          <div class="post-footer">
-            <button @click="newPost()" class="btn-sub btn-cancel" value="" >Cancel</button>
-            <button type="submit" class="btn-sub btn-save" value="Log In" >Save</button>
-          </div>
-          <p class="err" v-if="getErrors.length != 0">{{ getErrors }}</p>
-        </form>
-      <!-- </transition> -->
+
+    <div v-else class="" >
+      <form @submit.prevent="addPost()" method="post" class="log" >
+        <!-- <label for="email">E-Mail</label> -->
+        <input @focus="clearErrors" v-model="postInput.title" type="text" name="title"
+                class="cool-link" placeholder="pls enter title" required>
+        <!-- <label for="password">Password</label> -->
+        <editor @focus="clearErrors"  v-model="postInput.text" name="text" placeholder="pls enter content"
+          api-key="2guq5wvvizaji79tec92yznr95h8nlnk69m7n7qx7k2lxdpl"
+          :init="{
+            menubar: false,
+            plugins: [
+              'advlist autolink lists link image charmap print preview anchor',
+              'searchreplace visualblocks code fullscreen',
+              'insertdatetime media table paste code help wordcount'
+            ],
+            toolbar:
+              'undo redo | formatselect | bold italic backcolor link | \
+              alignleft aligncenter alignright alignjustify | \
+              bullist numlist outdent indent | removeformat | help | fontsizeselect '
+          }"
+        />
+        <!-- <textarea @focus="clearErrors" v-model="postInput.text" name="text" class="cool-link" placeholder="pls enter content" required></textarea> -->
+        <div class="post-footer">
+          <button @click="newPost()" class="btn-sub btn-cancel" value="" >Cancel</button>
+          <button type="submit" class="btn-sub btn-save" value="Log In" >Save</button>
+        </div>
+        <p class="err" v-if="getErrors.length !== 0">{{ getErrors }}</p>
+      </form>
     </div>
   </transition>
+
 </template>
 
 <script>
@@ -57,7 +54,7 @@ export default {
     selectedPost: {
       type: Object
     }
-  }, 
+  },
   data() {
     return {
       enterPost: false,
@@ -67,6 +64,7 @@ export default {
         text: '',
         user: ''
       },
+      appeared: false
     }
   },
   computed: {
@@ -85,6 +83,9 @@ export default {
     },
     newPost() {
       this.enterPost = !this.enterPost
+    },
+    onAppeared() {
+      this.appeared = true;
     }
   },
   created() {
@@ -98,6 +99,9 @@ export default {
                         user: this.selectedPost.user}
       // todo
     }
+  },
+  mounted() {
+    this.onAppeared();
   }
 }
 </script>

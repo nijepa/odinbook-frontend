@@ -2,12 +2,10 @@
   <div class="hello">
     <!-- <transition name="glide-fade"> -->
     <h1 class="login__title">Register</h1>
-
-
       <form v-if="type === 'signup'" @submit.prevent="signup(signupInput)" method="post">
         <div class="form__item">
           <label for="username">User name</label>
-          <input @focus="clearErrors" v-model="signupInput.username" type="text" name="first_name" id="first_name" required>
+          <input @focus="clearErrors" v-model="signupInput.username" type="text" name="username" id="username" required>
         </div>
         <div class="form__item">
           <label for="first_name">First name</label>
@@ -57,12 +55,12 @@
       }
     },
     computed: {
-      ...mapGetters([ 'getInputType', 
-                      'loggedUser', 
+      ...mapGetters([ 'getInputType',
+                      'loggedUser',
                       'getErrors' ]),
     },
     methods: {
-      ...mapActions([ 'signup', 
+      ...mapActions([ 'signup',
                       'signType',
                       'clearErrors' ]),
       changeType(type) {
@@ -81,6 +79,6 @@
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
-<style  lang="scss">
+<style >
 
 </style>

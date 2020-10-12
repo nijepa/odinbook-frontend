@@ -25,7 +25,7 @@
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
-<style  lang="scss">
+<style >
 .login__title {
   border-left: 10px solid #2c3e50;
   border-radius: 10px;
@@ -36,8 +36,8 @@
   font-size: 4em;
   padding: 20px;
   align-self: center;
-  text-shadow: 0px 1px 3px rgba(0,0,0,0.88);
-  //grid-area: 'odin';
+  text-shadow: 0 1px 3px rgba(0,0,0,0.88);
+  /*grid-area: 'odin';*/
   margin-left: 2.1em;
 }
 /* h3 {
@@ -50,14 +50,14 @@
   display: grid;
   justify-content: center;
   align-items: center;
-  // background-color: #259de2;
-  // grid-template-columns: auto auto;
+   /*background-color: #259de2;*/
+   /*grid-template-columns: auto auto;*/
   grid-template-areas: 'login_title facebook'
                         'form odin';
   grid-gap: 20px;
   padding: 20px;
   border-radius: 20px;
-  // height: 100vh;
+   /*height: 100vh;*/
   align-content: center;
 }
 form {
@@ -134,9 +134,9 @@ button:hover {
 }
 @media (max-width: 799px) {
   .hello {
-    grid-template-areas: 'login_title' 
+    grid-template-areas: 'login_title'
                         'facebook'
-                        'form' 
+                        'form'
                         'odin';
   }
   .odin {
@@ -145,11 +145,11 @@ button:hover {
 }
 
 .flip-enter-active {
-  transition: all .8s cubic-bezier(0.55, 0.085, 0.68, 0.53); //ease-in-quad
+  transition: all .8s cubic-bezier(0.55, 0.085, 0.68, 0.53); /*//ease-in-quad*/
 }
 
 .flip-leave-active {
-  transition: all .95s cubic-bezier(0.25, 0.46, 0.45, 0.94); //ease-out-quad
+  transition: all .95s cubic-bezier(0.25, 0.46, 0.45, 0.94); /*/ease-out-quad*/
 }
 
 .flip-enter, .flip-leave-to {
@@ -165,7 +165,7 @@ button:hover {
   }
   .slide-fade-leave-active {
     transition: all .8s cubic-bezier(1.0, 0.5, 0.8, 1.0);
-  } 
+  }
   .slide-fade-enter, .slide-fade-leave-to
   /* .slide-fade-leave-active below version 2.1.8 */ {
     transform: translateX(20px);
