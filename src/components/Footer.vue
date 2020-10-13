@@ -1,9 +1,7 @@
 <template>
-
   <footer>
     <p> Nikola Pavicevic @ 2020 </p>
   </footer>
-
 </template>
 
 <script>

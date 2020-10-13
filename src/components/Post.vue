@@ -6,24 +6,23 @@
 
     <div v-else class="" >
       <form @submit.prevent="addPost()" method="post" class="log" >
-        <!-- <label for="email">E-Mail</label> -->
         <input @focus="clearErrors" v-model="postInput.title" type="text" name="title"
                 class="cool-link" placeholder="pls enter title" required>
-        <!-- <label for="password">Password</label> -->
-        <editor @focus="clearErrors"  v-model="postInput.text" name="text" placeholder="pls enter content"
-          api-key="2guq5wvvizaji79tec92yznr95h8nlnk69m7n7qx7k2lxdpl"
-          :init="{
-            menubar: false,
-            plugins: [
-              'advlist autolink lists link image charmap print preview anchor',
-              'searchreplace visualblocks code fullscreen',
-              'insertdatetime media table paste code help wordcount'
-            ],
-            toolbar:
-              'undo redo | formatselect | bold italic backcolor link | \
-              alignleft aligncenter alignright alignjustify | \
-              bullist numlist outdent indent | removeformat | help | fontsizeselect '
-          }"
+        <editor @focus="clearErrors"  v-model="postInput.text" 
+                name="text" placeholder="pls enter content"
+                :api-key="tinymceKey"
+                :init="{
+                  menubar: false,
+                  plugins: [
+                    'advlist autolink lists link image charmap print preview anchor',
+                    'searchreplace visualblocks code fullscreen',
+                    'insertdatetime media table paste code help wordcount'
+                  ],
+                  toolbar:
+                    'undo redo | formatselect | bold italic backcolor link | \
+                    alignleft aligncenter alignright alignjustify | \
+                    bullist numlist outdent indent | removeformat | help | fontsizeselect '
+                }"
         />
         <!-- <textarea @focus="clearErrors" v-model="postInput.text" name="text" class="cool-link" placeholder="pls enter content" required></textarea> -->
         <div class="post-footer">
@@ -38,85 +37,95 @@
 </template>
 
 <script>
-import { mapGetters, mapActions } from 'vuex';
-import Editor from '@tinymce/tinymce-vue'
-import router from '../router';
+  import { mapGetters, mapActions } from 'vuex';
+  import Editor from '@tinymce/tinymce-vue'
+  import router from '../router';
 
-export default {
-  name: 'Post',
-  components: {
-      Editor
-  },
-  props: {
-    btnName: {
-      type: String
+  export default {
+    name: 'Post',
+
+    components: {
+        Editor
     },
-    selectedPost: {
-      type: Object
-    }
-  },
-  data() {
-    return {
-      enterPost: false,
-      postInput: {
-        _id: '',
-        title: '',
-        text: '',
-        user: ''
+
+    props: {
+      btnName: {
+        type: String
       },
-      appeared: false
-    }
-  },
-  computed: {
-    ...mapGetters(['loggedUser', 'getErrors', 'getSelectedPost']),
-  },
-  methods: {
-    ...mapActions([ 'createPost', 'postUpdate', 'clearErrors' ]),
-    addPost() {
-      if (this.selectedPost) {
-        this.postUpdate(this.postInput);
-      } else {
-        this.postInput.user = this.loggedUser._id;
-        this.createPost(this.postInput);
+      selectedPost: {
+        type: Object
       }
-      this.newPost();
     },
-    newPost() {
-      this.enterPost = !this.enterPost
+
+    data() {
+      return {
+        tinymceKey: process.env.VUE_APP_TINYMCE_API_KEY,
+        enterPost: false,
+        postInput: {
+          _id: '',
+          title: '',
+          text: '',
+          user: ''
+        },
+        appeared: false
+      }
     },
-    onAppeared() {
-      this.appeared = true;
+
+    computed: {
+      ...mapGetters(['loggedUser', 'getErrors', 'getSelectedPost']),
+    },
+
+    methods: {
+      ...mapActions([ 'createPost', 'postUpdate', 'clearErrors' ]),
+      addPost() {
+        if (this.selectedPost) {
+          this.postUpdate(this.postInput);
+        } else {
+          this.postInput.user = this.loggedUser._id;
+          this.createPost(this.postInput);
+        }
+        this.newPost();
+      },
+      newPost() {
+        this.enterPost = !this.enterPost
+      },
+      onAppeared() {
+        this.appeared = true;
+      }
+    },
+
+    created() {
+      if (!this.loggedUser) {
+        router.push('/login')
+      }
+      if (this.selectedPost) {
+        this.postInput = {_id: this.selectedPost._id,
+                          title: this.selectedPost.title,
+                          text: this.selectedPost.text,
+                          user: this.selectedPost.user}
+        // todo
+      }
+    },
+
+    mounted() {
+      this.onAppeared();
     }
-  },
-  created() {
-    if (!this.loggedUser) {
-      router.push('/login')
-    }
-    if (this.selectedPost) {
-      this.postInput = {_id: this.selectedPost._id,
-                        title: this.selectedPost.title,
-                        text: this.selectedPost.text,
-                        user: this.selectedPost.user}
-      // todo
-    }
-  },
-  mounted() {
-    this.onAppeared();
   }
-}
 </script>
 
 <style>
   .post-footer {
     justify-self: right;
   }
+
   .post-new{
     margin-top: 5px;
-    /* background-color: var(--green-light); */
   }
+
   .btn-save {
     background-color: var(--green-light);
   }
+  
   .tox-tinymce {
     border-radius: 5px !important;
     visibility: inherit !important;

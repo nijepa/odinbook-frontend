@@ -6,7 +6,8 @@
       <div v-if="getSelectedUser._id && this.getSelectedUser._id !== this.loggedUser._id"
             class="user__profile_selected" v-on:load="onAppeared" v-show="appeared">
         <span class="info__label">Picture : </span>
-        <img :src="signupInput.picture || require('../assets/nopic' + Math.floor(Math.random() * 5) + '.png')" class="info__img">
+        <img :src="signupInput.picture || require('../assets/nopic' + Math.floor(Math.random() * 5) + '.png')" 
+              class="info__img">
         <span class="info__label">Username : </span>
         <p class="info__input">{{ signupInput.username }}</p>
         <span class="info__label">First name : </span>
@@ -24,7 +25,8 @@
       <form v-else @submit.prevent="userUpdate(signupInput)" action=""
             v-on:load="onAppeared" v-show="appeared">
         <div class="form__item">
-          <img :src="signupInput.picture || require('../assets/nopic' + Math.floor(Math.random() * 5) + '.png')" class="info__img">
+          <img :src="signupInput.picture || require('../assets/nopic' + Math.floor(Math.random() * 5) + '.png')" 
+                class="info__img">
         </div>
         <div class="form__item">
           <label for="username">User name</label>
@@ -48,7 +50,7 @@
         </div>
         <div class="form__item">
           <label for="password">Password</label>
-          <input @focus="clearErrors" v-bind="signupInput.password"
+          <input @focus="clearErrors" v-model="signupInput.password"
                   type="password" name="password" id="password">
         </div>
         <div class="form__item">
@@ -70,7 +72,9 @@
   import { mapGetters, mapActions } from 'vuex';
 
   export default {
+
     name: 'Profile',
+
     data() {
       return {
         signupInput: {
@@ -87,11 +91,13 @@
         appeared: false
       }
     },
+
     computed: {
       ...mapGetters([ 'loggedUser',
                       'getSelectedUser',
                       'getErrors' ]),
     },
+
     methods: {
       ...mapActions([ 'signup',
                       'fetchSelectedUser',
@@ -101,6 +107,7 @@
         this.appeared = true;
       }
     },
+
     created() {
       if (this.getSelectedUser._id && this.getSelectedUser._id !== this.loggedUser._id) {
         this.signupInput = this.getSelectedUser;
@@ -108,6 +115,7 @@
         this.signupInput = this.loggedUser;
       }
     },
+
     mounted() {
       this.onAppeared();
     }
@@ -117,15 +125,12 @@
 <style>
   .user__profile {
     display: grid;
-    /* gap: 2em; */
     justify-content: center;
     justify-items: left;
-    /* background-color: var(--yellow); */
-    /* padding: 2em; */
   }
+
   .user__profile_selected {
     background-color: var(--yellow);
-    /* border: 2px solid black; */
     border-radius: 20px;
     padding: 1rem;
     margin: .5rem;
@@ -137,25 +142,31 @@
     justify-items: center;
     grid-column-gap: 1em;
   }
+
   .info__input {
     font-size: 1.5em;
     justify-self: left;
   }
+
   .info__input .info__label {
     font-size: .8em;
   }
+
   .info__label {
     justify-self: right;
   }
+
   .fall-enter-active {
     transition: all 1s ease;
   }
+
   .info__img {
     justify-self: left;
     width: 50px;
     height: 50px;
     border-radius: 10px;
   }
+
   .fall-enter, .fall-leave-to {
     transform: translateY(-150px);
     opacity: 0;

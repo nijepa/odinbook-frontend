@@ -2,23 +2,17 @@
   <div class="home">
     <div v-if="isLogged" class="">
       <Nav />
-
       <Post btn-name='New Post' />
-
       <Posts />
-
     </div>
-      <!-- <img alt="Vue logo" src="../assets/logo.png"> -->
     <div v-else class="">
       <Sign msg="Log In with"/>
     </div>
-
     <Footer />
   </div>
 </template>
 
 <script>
-  // @ is an alias to /src
   import Sign from './Sign.vue'
   import Nav from '@/components/Nav.vue';
   import Footer from '@/components/Footer.vue';
@@ -28,19 +22,23 @@
 
   export default {
     name: 'Home',
+
     components: {
       Sign, Nav, Footer, Posts, Post
     },
+
     data() {
       return {
         loggedIn: false
       }
     },
+
     computed: {
       ...mapGetters([ 'loggedUser',
                       'isLogged',
                       'getErrors' ]),
     },
+
     methods: {
       ...mapActions([ 'initialState',
                       'login',
@@ -49,10 +47,11 @@
       ...mapMutations([ 'clearUserPosts',
                         'clearSelectedUser']),
     },
+    
     created() {
       this.clearUserPosts();
       this.clearSelectedUser();
-      this.initialState()
+      this.initialState();
     }
   }
 </script>

@@ -15,7 +15,8 @@
         <transition-group name="slide-fade" mode="out-in">
           <div v-for="user in friendsType" :key="user._id" class="friend">
             <div class="friend__data">
-              <img :src="user.picture || require('../assets/nopic' + Math.floor(Math.random() * 5) + '.png')" class="friend__img">
+              <img :src="user.picture || require('../assets/nopic' + Math.floor(Math.random() * 5) + '.png')" 
+                    class="friend__img">
               <div class="friend__text">
                 <h3>{{ user.username }}</h3>
                 <a @click="selectUser(user)" class="user__link">{{ user.last_name }}, {{ user.first_name }}</a>
@@ -38,11 +39,13 @@
 
   export default {
     name: 'Friends',
+
     data() {
       return {
         appeared: false
       }
     },
+
     props: {
       title: {
         type: String
@@ -54,11 +57,13 @@
         type: Array
       }
     },
+
     computed: {
       ...mapGetters([ 'loggedUser',
                       'getUserPosts',
                       'getFriends']),
     },
+
     methods: {
       ...mapActions([ 'unFriend',
                       'requestFriend',
@@ -98,6 +103,7 @@
         this.appeared = true;
       }
     },
+
     mounted() {
       this.onAppeared();
     }
@@ -107,18 +113,17 @@
 <style>
   .friends {
     display: grid;
-    /* align-content: center; */
     align-items: center;
     justify-content: center;
     padding: 1rem;
     margin: 1rem;
-    /* border: 2px solid black; */
     border-radius: 15px;
     background-color: var(--yellow);
     align-content: baseline;
     align-self: baseline;
     box-shadow: 0px 5px 4px 0px rgba(0,0,0,0.75);
   }
+
   .friend {
     display: flex;
     grid-template-columns: auto auto;
@@ -129,20 +134,24 @@
     padding: 1em;
     border-top: 1px solid black;
   }
+
   .friend__data {
     display: grid;
     justify-items: left;
     grid-template-columns: auto auto;
     grid-column-gap: 1em;
   }
+
   .friend__img {
     width: 50px;
     height: 50px;
     border-radius: 17px;
   }
+
   .friend__text {
     text-align: left;
   }
+
   .toggle__friend {
     background-color: var(--red-light);
     font-size: .8rem;
@@ -154,26 +163,32 @@
     box-shadow: 0px 4px 2px -1px rgba(0,0,0,0.75);
     transition: all .3s ease-in-out;
   }
+
   .toggle__friend:hover {
     color: black;
     background-color: whitesmoke;
     text-decoration: underline;
     transform: translate(1px);
   }
+
   .loading__img {
     width: 100px;
     height: auto;
   }
+
   .user__link {
     cursor: pointer;
   }
+
   .user__link:hover {
     color: black;
     text-decoration: underline;
   }
+
   .btn__type1 {
     background-color: var(--red-light);
   }
+  
   .btn__type2 {
     background-color: var(--green-light);
   }

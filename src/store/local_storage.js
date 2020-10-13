@@ -1,15 +1,24 @@
-/* function saveToken(token, cb) {
-	localStorage.setItem('nijepa_blog_user', JSON.stringify(token));
-
-	// user is auth ^_^
-	cb('AuthUser');
-} */
-
 function saveToken(token) {
-	localStorage.setItem('nijepa_blog_user', JSON.stringify(token));
-
-	// user is auth ^_^
-
+	localStorage.setItem('odinbook_user', JSON.stringify(token));
 }
 
-export default saveToken;
+function getToken() {
+	return JSON.parse(localStorage.getItem('odinbook_user'));
+}
+
+function removeToken() {
+	localStorage.removeItem('odinbook_user');
+}
+
+function updateToken(data) {
+	const savedCred = JSON.parse(localStorage.getItem('odinbook_user'));
+	savedCred.user = data;
+	localStorage.setItem('odinbook_user', JSON.stringify(savedCred));
+}
+
+export {
+	saveToken,
+	getToken,
+	removeToken,
+	updateToken
+}

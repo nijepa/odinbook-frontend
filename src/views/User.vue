@@ -15,14 +15,10 @@
 
   export default {
     name: 'Home',
+
     components: {
       Nav, Profile, Footer
     },
-    data() {
-      return {
-        //loggedIn: false
-      }
-    }
   }
 </script>
 
@@ -30,9 +26,11 @@
   .bounce-enter-active {
     animation: bounce-in .5s;
   }
+
   .bounce-leave-active {
     animation: bounce-in .5s reverse;
   }
+  
   @keyframes bounce-in {
     0% {
       transform: scale(0);

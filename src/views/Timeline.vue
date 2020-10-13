@@ -16,12 +16,15 @@
 
   export default {
     name: 'Users',
+
     components: {
       Nav, Footer, Posts
     },
+
     computed: {
       ...mapGetters([ 'loggedUser', 'getSelectedUser']),
     },
+
     methods: {
         ...mapActions([ 'fetchSelectedUser', 'loadUserPosts' ]),
         noSelectedUser() {
@@ -31,12 +34,9 @@
           }
         }
     },
+
     mounted() {
       this.noSelectedUser();
     }
   }
 </script>
-
-<style>
-
-</style>

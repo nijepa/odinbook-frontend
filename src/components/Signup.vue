@@ -1,6 +1,5 @@
 <template>
   <div class="hello">
-    <!-- <transition name="glide-fade"> -->
     <h1 class="login__title">Register</h1>
       <form v-if="type === 'signup'" @submit.prevent="signup(signupInput)" method="post">
         <div class="form__item">
@@ -27,9 +26,6 @@
           <button>Register</button><span>Account?<a class="register__link" @click="signType('login')" href="#">Login</a></span>
         </div>
       </form>
-    <!-- <transition name="glide-fade"> -->
-      <!-- <h1 class="odin">ODINBOOK</h1> -->
-    <!-- </transition> -->
   </div>
 </template>
 
@@ -38,9 +34,11 @@
 
   export default {
     name: 'Signup',
+
     props: {
       msg: String
     },
+
     data() {
       return {
         type: 'signup',
@@ -54,11 +52,13 @@
         user: {}
       }
     },
+
     computed: {
       ...mapGetters([ 'getInputType',
                       'loggedUser',
                       'getErrors' ]),
     },
+
     methods: {
       ...mapActions([ 'signup',
                       'signType',
@@ -69,16 +69,6 @@
       setInput() {
         this.clearErrors;
       }
-    },
-  /*   created() {
-      if(this.$route.query.type) {
-        this.type = this.$route.query.type;
-      }
-    } */
+    }
   }
 </script>
-
-<!-- Add "scoped" attribute to limit CSS to this component only -->
-<style >
-
-</style>

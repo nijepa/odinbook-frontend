@@ -1,68 +1,64 @@
 <template>
   <div class="hello">
-    <!-- <transition name="glide-fade"> -->
-      <h1  class="login__title">Login</h1>
+    <h1 class="login__title">Login</h1>
 
-    <!-- </transition> -->
-    <!-- <transition name="slide-fade"> -->
-      <!-- <button v-if="type === 'login'" class="facebook">Facebook</button> -->
-    <!-- </transition>  -->
-      <div class="cont">
-        <form v-if="type === 'login'" @submit.prevent="login(loginInput)" method="post">
-          <div class="form__item">
-            <label for="email">E-mail</label>
-            <input @focus="clearErrors" v-model="loginInput.email" 
-                    type="email" name="email" id="email" required>
-          </div>
-          <div class="form__item">
-            <label for="password">Password</label>
-            <input @focus="clearErrors" v-model="loginInput.password" 
-                    type="password" name="password" id="password" >
-          </div>
-          <div class="form__btn">
-            <button>Login</button>
-            <span>No account?
-              <a class="register__link" @click="signType('signup')" href="#">Register</a>
-            </span>
-          </div>
-          <p class="err" v-if="getErrors.length != 0">{{ getErrors }}</p>
-          <hr>
-        </form>
-        <div class="fb__info">
-          <p class="option_title">Or Log In With :</p>
-          <facebook-login class="button facebook__style"
-                          :appId=FB_ID
-                          @login="onLogin"
-                          @logout="onLogout"
-                          @get-initial-status="getUserData"
-                          @sdk-loaded="sdkLoaded">
-          </facebook-login>
-          <GoogleLogin class="google__btn" 
-                        :params="params" 
-                        :renderParams="renderParams" 
-                        :onSuccess="onSuccess" 
-                        :onFailure="onFailure">
-          </GoogleLogin>
-          <div v-if="isConnected" class="information">
-            <h1>User Info</h1>
-            <div class="well">
-              <div class="list-item">
-                <img :src="userSocial.picture" class="user__img">
-              </div>
-              <div class="list-item">
-                <i>{{ userSocial.name }}</i>
-              </div>
-              <div class="list-item">
-                <i>{{ userSocial.email }}</i>
-              </div>
+    <div class="cont">
+      <form v-if="type === 'login'" @submit.prevent="login(loginInput)" method="post">
+        <div class="form__item">
+          <label for="email">E-mail</label>
+          <input @focus="clearErrors" v-model="loginInput.email" 
+                  type="email" name="email" id="email" required>
+        </div>
+        <div class="form__item">
+          <label for="password">Password</label>
+          <input @focus="clearErrors" v-model="loginInput.password" 
+                  type="password" name="password" id="password" >
+        </div>
+        <div class="form__btn">
+          <button>Login</button>
+          <span>No account?
+            <a class="register__link" @click="signType('signup')" href="#">Register</a>
+          </span>
+        </div>
+        <p class="err" v-if="getErrors.length != 0">{{ getErrors }}</p>
+        <hr>
+      </form>
+
+      <div class="fb__info">
+        <p class="option_title">Or Log In With :</p>
+
+        <facebook-login class="button facebook__style"
+                        :appId=FB_ID
+                        @login="onLogin"
+                        @logout="onLogout"
+                        @get-initial-status="getUserData"
+                        @sdk-loaded="sdkLoaded">
+        </facebook-login>
+
+        <GoogleLogin class="google__btn" 
+                      :params="params" 
+                      :renderParams="renderParams" 
+                      :onSuccess="onSuccess" 
+                      :onFailure="onFailure">
+        </GoogleLogin>
+
+        <div v-if="isConnected" class="information">
+          <h1>User Info</h1>
+          <div class="well">
+            <div class="list-item">
+              <img :src="userSocial.picture" class="user__img">
+            </div>
+            <div class="list-item">
+              <i>{{ userSocial.name }}</i>
+            </div>
+            <div class="list-item">
+              <i>{{ userSocial.email }}</i>
             </div>
           </div>
         </div>
-      </div>
 
-    <!-- <transition name="glide-fade"> -->
-      <!-- <h1 class="odin">ODINBOOK</h1> -->
-    <!-- </transition> -->
+      </div>
+    </div>
   </div>
 </template>
 
@@ -73,9 +69,11 @@
 
   export default {
     name: 'Login',
+
     props: {
       msg: String
     },
+
     data() {
       return {
         type: 'login',
@@ -93,14 +91,12 @@
           last_name: '',
           location: '',
           gender: '',
-          about: '',
           birthday: '',
           isSocial: true
         },
         isConnected: false,
         FB: undefined,
         FB_ID: process.env.VUE_APP_FACEBOOK_ID,
-        profile: {},
         params: {
             client_id: process.env.VUE_APP_GOOGLE_ID
         },
@@ -113,15 +109,18 @@
         }
       }
     },
+
     components: {
       facebookLogin, GoogleLogin
     },
+
     computed: {
       ...mapGetters([ 'getInputType', 
                       'loggedUser', 
                       'getErrors',
                       'isLogged' ]),
     },
+
     methods: {
       ...mapActions([ 'login', 
                       'logout',
@@ -135,7 +134,7 @@
         this.clearErrors;
       },
       getUserData() {
-        this.FB.api('/me', 'GET', { fields: 'id, name, email, first_name, last_name, location, hometown, gender, about, birthday, picture' },
+        this.FB.api('/me', 'GET', { fields: 'id, name, email, first_name, last_name, location, hometown, gender, birthday, picture' },
           user => {
             this.userSocial.personalID = user.id;
             this.userSocial.email = user.email;
@@ -146,7 +145,6 @@
             this.userSocial.gender = user.gender;
             this.userSocial.location = user.location;
             this.userSocial.birthday = user.hometown;
-            this.userSocial.about = user.about;
           }
         )
       },
@@ -162,17 +160,10 @@
       },
       onLogout() {
         this.isConnected = false;
-/*         document.cookie = 'fblo_2032000590426601' + '=; Path=/; Expires=Thu, 01 Jan 1970 00:00:01 GMT;';
-        document.cookie = 'fbm_2032000590426601' + '=; Path=/; Expires=Thu, 01 Jan 1970 00:00:01 GMT;';
-        document.cookie = 'fbsr_2032000590426601' + '=; Path=/; Expires=Thu, 01 Jan 1970 00:00:01 GMT;'; */
         this.logout(this.loggedUser)
       },
       onSuccess(googleUser) {
-        //console.log(googleUser);
-
         // This only gets the user information: id, name, imageUrl and email
-        console.log(googleUser.getBasicProfile());
-        //console.log(googleUser);
         const user = googleUser.getBasicProfile();
         this.userSocial.email = user.Wt;
         this.userSocial.name = user.Ad;
@@ -183,24 +174,11 @@
       },
       onFailure() {
         console.log('o');
-        //console.log(googleUser.getBasicProfile());
       }
-  },
-/*     mounted() {
-      console.log(this.isLogged)
-      console.log(this.isConnected)
-      if (!this.isLogged && !this.isConnected) {
-        console.log('iii')
-        this.isConnected = false;
-        document.cookie = 'fblo_2032000590426601' + '=; Path=/; Expires=Thu, 01 Jan 1970 00:00:01 GMT;';
-        document.cookie = 'fbm_2032000590426601' + '=; Path=/; Expires=Thu, 01 Jan 1970 00:00:01 GMT;';
-        document.cookie = 'fbsr_2032000590426601' + '=; Path=/; Expires=Thu, 01 Jan 1970 00:00:01 GMT;';
-      }
-    } */
+    }
   }
 </script>
 
-<!-- Add "scoped" attribute to limit CSS to this component only -->
 <style lang="scss" scoped>
   .cont {
     border: 2px solid black;
@@ -210,13 +188,16 @@
     justify-items: left;
     background-color: #e2b625;
   }
+
   form {
     border: none;
     margin: 0;
   }
+
   .fb__info {
     padding: 1em;
   }
+
   .google__btn {
     padding: 0;
     font-family: 'Londrina Solid', cursive !important;
@@ -227,18 +208,22 @@
     transition: all .3s ease-in-out;
     margin: 1em;
   }
+
   .google__btn:hover {
     text-decoration: underline;
     transform: translate(1px);
   }
+
   .user__img {
     width: 50px;
     height: 50px;
   }
+
   hr {
     width: 70%;
     margin-bottom: 2px;
   }
+
   .option_title {
     justify-self: center;
     font-size: 20px;
@@ -246,10 +231,12 @@
     text-decoration: none;
     margin-top: 0;
   }
+
   .button {
     background-image: none;
     color: black !important;
   }
+  
   .button:hover {
     text-decoration: none;
     background-image: none;
