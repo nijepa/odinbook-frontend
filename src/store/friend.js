@@ -1,5 +1,5 @@
 import axios from 'axios';
-const URL = process.env.VUE_APP_BACKEND_URL_LOCAL
+const URL = process.env.VUE_APP_BACKEND_URL
 
 const  state = {
   friends: [],
