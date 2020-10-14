@@ -1,5 +1,5 @@
 import axios from 'axios';
-const URL = process.env.VUE_APP_BACKEND_URL
+const URL = process.env.VUE_APP_BACKEND_URL_LOCAL
 import apiClient from './api_client';
 import * as ls from './local_storage';
 import router from '../router';
@@ -40,13 +40,6 @@ const  mutations = {
 
   clearSelectedUser: (state) => (state.selectedUser = {}),
 
-  updatePost (state, post) {
-    state.posts = [
-      ...state.posts.map(item => 
-          item._id !== post._id ? item : {...item, ...post}
-      )
-    ] 
-  },
   updateUser (state, user) {
     state.user = user
   },

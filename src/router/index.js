@@ -29,7 +29,12 @@ Vue.use(VueRouter)
     path: '/timeline',
     name: 'Timeline',
     component: () => import('../views/Timeline.vue')
-  }
+  },
+  {
+    path: '/friends',
+    name: 'UsersFriends',
+    component: () => import('../views/UsersFriends.vue')
+  },
 ]
 
 const router = new VueRouter({

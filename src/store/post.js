@@ -1,7 +1,7 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
 import axios from 'axios';
-const URL = process.env.VUE_APP_BACKEND_URL
+const URL = process.env.VUE_APP_BACKEND_URL_LOCAL
 import apiClient from './api_client';
 import router from '../router';
 
@@ -50,12 +50,18 @@ const mutations = {
     state.posts = [text, ...state.posts]
   },
   
-  updatePost (state, post) {
+  updatePost(state, post) {
     state.posts = [
       ...state.posts.map(item => 
           item._id !== post._id ? item : {...item, ...post}
       )
     ] 
+/*     state.posts = state.posts.map(post => {
+      if (post.id === post.id) {
+        return Object.assign({}, post, data)
+      }
+      return post
+    }) */
   },
 
   deletePost (state, id) {

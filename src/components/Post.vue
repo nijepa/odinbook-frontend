@@ -72,11 +72,16 @@
     },
 
     computed: {
-      ...mapGetters(['loggedUser', 'getErrors', 'getSelectedPost']),
+      ...mapGetters([ 'loggedUser', 
+                      'getErrors', 
+                      'getSelectedPost',
+                      'allPosts' ]),
     },
 
     methods: {
-      ...mapActions([ 'createPost', 'postUpdate', 'clearErrors' ]),
+      ...mapActions([ 'createPost', 
+                      'postUpdate', 
+                      'clearErrors' ]),
       addPost() {
         if (this.selectedPost) {
           this.postUpdate(this.postInput);

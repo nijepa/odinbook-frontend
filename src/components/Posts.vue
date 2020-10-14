@@ -20,8 +20,8 @@
               v-for="post in !getSelectedUser._id ? allPosts : getUserPosts" :key="post._id" class="post">
           <div class="post-header">
             <div class="">
-              <img :src="post.user.picture || require('../assets/nopic' + Math.floor(Math.random() * 5) + '.png')" 
-                    class="user__img">
+              <a @click="selectUser(post.user)"><img :src="post.user.picture || require('../assets/nopic' + Math.floor(Math.random() * 5) + '.png')" 
+                    class="user__img"></a>
               &copy;
               <a @click="selectUser(post.user)" class="post__heading author"> {{ post.user.name }} </a>
               &#64;
@@ -44,14 +44,14 @@
           </div>
           <p v-html="post.text"></p>
           <div v-if="isLogged" class="">
-            <Post v-if="loggedUser._id === post.user._id" :selected-post='post' btn-name='Edit Post' />
+            <Post v-if="loggedUser._id === post.user._id" :selected-post="post" btn-name='Edit Post' />
           </div>
           <hr>
 
           <div class="comments">
             <h2>Comments</h2>
             <div class="">
-              <transition-group name="slide-fade">
+              <transition-group name="slide-fade" >
                 <div v-for="comment in post.comments" :key="comment._id" class="">
                   <p v-html="comment.text"></p>
                   <div class="likes">
@@ -61,7 +61,7 @@
                   </div>
 
                   <div class="post-header">
-                    <div class="">
+                    <div class="" >
                       <img :src="comment.author.picture || require('../assets/nopic' + Math.floor(Math.random() * 5) + '.png')" 
                             class="user__img">
                       &copy;
@@ -131,7 +131,7 @@
                       'getUserPosts',
                       'isLogged',
                       'loggedUser',
-                      'getSelectedUser']),
+                      'getSelectedUser' ]),
     },
 
     filters: {
@@ -245,6 +245,11 @@
     width: 40px;
     height: 40px;
     vertical-align: middle;
+  }
+
+  .user__img:hover {
+    transform: scale(1.1);
+    cursor: pointer;
   }
 
   .post {
