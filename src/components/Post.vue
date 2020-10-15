@@ -82,6 +82,7 @@
       ...mapActions([ 'createPost', 
                       'postUpdate', 
                       'clearErrors' ]),
+      
       addPost() {
         if (this.selectedPost) {
           this.postUpdate(this.postInput);
@@ -91,9 +92,11 @@
         }
         this.newPost();
       },
+
       newPost() {
         this.enterPost = !this.enterPost
       },
+      
       onAppeared() {
         this.appeared = true;
       }

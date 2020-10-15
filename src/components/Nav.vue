@@ -29,6 +29,7 @@
                       'loadingState',
                       'isLogged',
                       'allPosts']),
+      
       currentRouteName() {
         return this.$route.path;
       }

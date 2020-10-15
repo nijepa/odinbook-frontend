@@ -19,7 +19,9 @@
         <span class="info__label">About : </span>
         <p class="info__input">{{ signupInput.user_about }}</p>
         <span class="info__label">Friends : </span>
-        <p class="info__input">{{ signupInput.friends.length || '' }}</p>
+        <a @click="selectFriends(signupInput)" class="info__friends">
+          <p class="info__input">{{ signupInput.friends.length || '' }}</p>
+        </a>
       </div>
 
       <form v-else @submit.prevent="userUpdate(signupInput)" action=""
@@ -103,6 +105,12 @@
                       'fetchSelectedUser',
                       'userUpdate',
                       'clearErrors' ]),
+      
+      selectFriends(selectedUser) {
+        this.fetchSelectedUser(selectedUser);
+        this.$router.push({ name: 'UsersFriends' });
+      },
+      
       onAppeared() {
         this.appeared = true;
       }
@@ -165,6 +173,17 @@
     width: 50px;
     height: 50px;
     border-radius: 10px;
+  }
+
+  .info__friends {
+    cursor: pointer;
+    justify-self: left;
+    color: var(--blue-dark);
+  }
+
+  .info__friends:hover {
+    color: black;
+    text-decoration: underline;
   }
 
   .fall-enter, .fall-leave-to {

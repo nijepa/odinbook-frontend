@@ -20,8 +20,10 @@
               v-for="post in !getSelectedUser._id ? allPosts : getUserPosts" :key="post._id" class="post">
           <div class="post-header">
             <div class="">
-              <a @click="selectUser(post.user)"><img :src="post.user.picture || require('../assets/nopic' + Math.floor(Math.random() * 5) + '.png')" 
-                    class="user__img"></a>
+              <a @click="selectUser(post.user)">
+                <img :src="post.user.picture || require('../assets/nopic' + Math.floor(Math.random() * 5) + '.png')" 
+                      class="user__img">
+              </a>
               &copy;
               <a @click="selectUser(post.user)" class="post__heading author"> {{ post.user.name }} </a>
               &#64;
@@ -62,8 +64,10 @@
 
                   <div class="post-header">
                     <div class="" >
-                      <img :src="comment.author.picture || require('../assets/nopic' + Math.floor(Math.random() * 5) + '.png')" 
+                      <a @click="selectUser(comment.author)">
+                        <img :src="comment.author.picture || require('../assets/nopic' + Math.floor(Math.random() * 5) + '.png')" 
                             class="user__img">
+                      </a>
                       &copy;
                       <a @click="selectUser(comment.author)" class="post__heading author"> {{ comment.author.name }} </a>
                       &#64;
@@ -153,14 +157,17 @@
                       'postType',
                       'likeUpdate',
                       'likeCommentUpdate' ]),
+      
       selectUser(selectedUser) {
         this.fetchSelectedUser(selectedUser);
         this.loadUserPosts(selectedUser._id);
         this.$router.push({ name: 'Timeline' });
       },
+
       addComment() {
         this.enterComment = true;
       },
+
       newComment(data, id) {
         this.commentInput.id = id;
         this.commentInput.user = this.loggedUser._id;
@@ -171,9 +178,11 @@
           user: ''
         }
       },
+
       editPost(post) {
         this.postType(post);
       },
+
       deleteComment(comment, postId) {
         const comData = [{comment}, {postId}];
         this.commentDelete(comData);
@@ -183,15 +192,18 @@
         this.likeInput.user = this.loggedUser._id;
         this.likeUpdate(this.likeInput);
       },
+
       sendCommentLike(id, postId) {
         this.likeInput.id = id;
         this.likeInput.user = this.loggedUser._id;
         this.likeInput.postId = postId;
         this.likeCommentUpdate(this.likeInput);
       },
+
       getImgUrl(pic) {
         return require('../assets/' + pic + '.png')
       },
+      
       onAppeared() {
         this.appeared = true;
       }

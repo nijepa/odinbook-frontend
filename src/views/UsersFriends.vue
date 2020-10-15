@@ -5,8 +5,9 @@
       <div v-if="!isLoadedFriends" class="">
         <img class="loading__img" src="../assets/loading.gif" alt="">
       </div>
-      <div v-else class="friends__lists">
-        <Friends title='Friends' btnName='Un-friend' :friendsType='getFriends.user[0].friends' />
+      <div v-else class="">
+        <Friends :title="`${getSelectedUser.username} 's Friends`" btnName='' 
+                  :friendsType='getFriends.user' :isFriend='true' />
       </div>
     </transition>
     <Footer />

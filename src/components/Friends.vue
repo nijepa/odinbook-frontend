@@ -14,22 +14,18 @@
 
         <transition-group name="slide-fade" mode="out-in">
           <div v-for="user in friendsType" :key="user._id" class="friend">
-      
-              <a @click="selectUser(user)" class="friend__img">
-                <img :src="user.picture || require('../assets/nopic' + Math.floor(Math.random() * 5) + '.png')" 
-                      class="friend__img">
-              </a>
-              
-                <a @click="selectUser(user)" class="u__name">
-                  <h3 class="u__name">{{ user.username }}</h3>
-                </a>
-                <a @click="selectFriends(user)" class="u__friends">
-                  <p>Friends ({{nrOfFriends(user.friends)}})</p>
-                </a>
-                <a @click="selectUser(user)" class="user__link">{{ user.last_name }}, {{ user.first_name }}</a>
-                <!-- <p>{{ user.friends.length || '' }}</p> -->
-                
-            <a @click="toggleBtns(btnName, user._id)" href="#"
+            <a @click="selectUser(user)" class="friend__img">
+              <img :src="user.picture || require('../assets/nopic' + Math.floor(Math.random() * 5) + '.png')" 
+                    class="friend__img">
+            </a>
+            <a @click="selectUser(user)" class="u__name">
+              <h3 class="u__name">{{ user.username }}</h3>
+            </a>
+            <a @click="selectFriends(user)" class="u__friends">
+              <p>Friends ({{nrOfFriends(user.friends)}})</p>
+            </a>
+            <a @click="selectUser(user)" class="user__link">{{ user.last_name }}, {{ user.first_name }}</a>
+            <a @click="toggleBtns(btnName, user._id)" href="#" v-if="btnName"
                 :class="btnName === 'Un-friend' || btnName === 'Abort' ? 'btn__type1' : 'btn__type2'"
                 class="toggle__friend">{{ btnName }}
             </a>
@@ -83,6 +79,10 @@
       },
       friendsType: {
         type: Array
+      },
+      isFriend: {
+        type: Boolean,
+        default: false
       }
     },
 
@@ -98,19 +98,25 @@
                       'abortFriend',
                       'acceptFriend',
                       'fetchSelectedUser',
-                      'loadUserPosts' ]),
+                      'loadUserPosts',
+                      'fetchFriends' ]),
+      
       removeFriend(userId) {
         this.unFriend({'_id':this.loggedUser._id, 'friend_id': userId});
       },
+
       addFriend(userId) {
         this.requestFriend({'_id':this.loggedUser._id, 'friend_id': userId});
       },
+
       accFriend(userId) {
         this.acceptFriend({'_id':this.loggedUser._id, 'friend_id': userId});
       },
+
       aboFriend(userId) {
         this.abortFriend({'_id':this.loggedUser._id, 'friend_id': userId});
       },
+
       toggleBtns(btnName, user) {
         if (btnName === 'Un-friend') {
           this.removeFriend(user);
@@ -122,19 +128,26 @@
           this.aboFriend(user);
         }
       },
+
       selectUser(selectedUser) {
         this.fetchSelectedUser(selectedUser);
         this.loadUserPosts(selectedUser._id);
         this.$router.push({ name: 'Timeline' });
       },
+
       selectFriends(selectedUser) {
         this.fetchSelectedUser(selectedUser);
-        this.$router.push({ name: 'UsersFriends' });
+        if (this.isFriend) {
+          this.fetchFriends(selectedUser._id);
+        } else {
+          this.$router.push({ name: 'UsersFriends' });
+        }
       },
+
       nrOfFriends(friends) {
-        //let obj = friends.find(o => o.status === 1);
         return friends.filter((v) => (v.status === 1)).length;
       },
+      
       onAppeared() {
         this.appeared = true;
       }
@@ -162,21 +175,15 @@
 
   .friend {
     display: grid;
-    /*grid-template-columns: auto auto; */
-    
-
     grid-template-columns: 1fr auto 1fr 1fr;
     grid-template-rows: repeat(2, 1fr);
-    grid-column-gap: 0px;
+    grid-column-gap: 1em;
     grid-row-gap: 0px; 
-
     align-items: center;
     justify-content: space-between;
     align-content: center;
-    /* grid-gap: 2em; */
     padding: .5em;
     border-top: 1px solid black;
-    grid-column-gap: 1em;
   }
 
   .friend__data {
@@ -192,7 +199,6 @@
     height: 50px;
     border-radius: 17px;
     cursor: pointer;
-    /* justify-self: center; */
   }
 
   .friend__img:hover {
@@ -236,20 +242,18 @@
   }
 
   .u__name {
-    /* grid-area: 1 / 1 / 2 / 2; */
     grid-area: 1 / 2 / 2 / 3;
     cursor: pointer;
   }
 
   .u__friends {
-    /* grid-area: 1 / 2 / 3 / 3; */
     grid-area: 1 / 3 / 3 / 4;
     cursor: pointer;
+    justify-self: right;
   }
 
   .user__link {
     cursor: pointer;
-    /* grid-area: 2 / 1 / 3 / 2; */
     grid-area: 2 / 2 / 3 / 3;
   }
 

@@ -6,13 +6,18 @@
         <img class="loading__img" src="../assets/loading.gif" alt="">
       </div>
       <div v-else class="friends__lists">
-        <Friends title='Friends Request' btnName='Abort' :friendsType='getRequestFriend.user[0].friends' />
-        <Friends title='Friends Invitation' btnName='Accept' :friendsType='getFriendInvitation.user[0].friends' />
-        <Friends title='Friends' btnName='Un-friend' :friendsType='getFriends.user[0].friends' />
-        <Friends title='Not Friends' btnName='Add friend' :friendsType='getNotFriends.users' />
+        <Friends title='Friends Request' btnName='Abort' 
+                  :friendsType='getRequestFriend.user' />
+        <Friends title='Friends Invitation' btnName='Accept' 
+                  :friendsType='getFriendInvitation.user' />
+        <Friends title='Friends' btnName='Un-friend' 
+                  :friendsType='getFriends.user' :isFriend='false' />
+        <Friends title='Not Friends' btnName='Add friend' 
+                  :friendsType='getNotFriends.users' />
       </div>
     </transition>
     <Footer />
+    <top-button />
   </div>
 </template>
 
@@ -21,12 +26,13 @@
   import Nav from '@/components/Nav.vue';
   import Footer from '@/components/Footer.vue';
   import Friends from '@/components/Friends.vue';
+  import TopButton from '@/components/TopButton.vue';
 
   export default {
     name: 'Users',
 
     components: {
-      Nav, Friends, Footer
+      Nav, Friends, Footer, TopButton
     },
 
     data() {
@@ -40,15 +46,15 @@
                       'getFriends',
                       'getNotFriends',
                       'getFriendInvitation',
-                      'getRequestFriend']),
+                      'getRequestFriend' ]),
     },
 
     methods: {
-      ...mapActions([ 'fetchFriends', 
+      ...mapActions([ 'fetchFriends',
                       'fetchNotFriends',
                       'fetchRequestedFriends',
-                      'fetchFriendsInvitations', 
-                      'unFriend', 
+                      'fetchFriendsInvitations',
+                      'unFriend',
                       'requestFriend',
                       'abortFriend',
                       'acceptFriend',

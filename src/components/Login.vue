@@ -126,13 +126,16 @@
                       'logout',
                       'signType',
                       'clearErrors' ]),
+      
       changeType(type) {
         this.$emit('sign-type', type);
         this.type = type;
       },
+
       setInput() {
         this.clearErrors;
       },
+      
       getUserData() {
         this.FB.api('/me', 'GET', { fields: 'id, name, email, first_name, last_name, location, hometown, gender, birthday, picture' },
           user => {
@@ -148,20 +151,24 @@
           }
         )
       },
+
       sdkLoaded(payload) {
         this.isConnected = payload.isConnected
         this.FB = payload.FB
         if (this.isConnected) this.getUserData()
       },
+
       onLogin() {
         this.isConnected = true
         this.getUserData()
         this.login(this.userSocial)
       },
+
       onLogout() {
         this.isConnected = false;
         this.logout(this.loggedUser)
       },
+
       onSuccess(googleUser) {
         // This only gets the user information: id, name, imageUrl and email
         const user = googleUser.getBasicProfile();
@@ -172,6 +179,7 @@
         this.userSocial.last_name = user.fT;
         this.login(this.userSocial)
       },
+      
       onFailure() {
         console.log('o');
       }

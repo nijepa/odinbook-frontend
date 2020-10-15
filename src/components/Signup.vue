@@ -63,9 +63,11 @@
       ...mapActions([ 'signup',
                       'signType',
                       'clearErrors' ]),
+      
       changeType(type) {
         this.type = type;
       },
+      
       setInput() {
         this.clearErrors;
       }

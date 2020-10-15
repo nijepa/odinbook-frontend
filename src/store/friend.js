@@ -27,7 +27,7 @@ const  mutations = {
   setRequestedFriends: (state, requestFriend) => (state.requestFriend = requestFriend),
 
   setRequestFriend({ requestFriend }, newFriend) {
-    requestFriend.user[0].friends.push(
+    requestFriend.user.push(
       newFriend
     )
   },
@@ -39,20 +39,20 @@ const  mutations = {
   },
 
   setAcceptFriend({ friends }, newFriend) {
-    friends.user[0].friends.push(
+    friends.user.push(
       newFriend
     )
   },
 
   removeFriendsInvitations({ friendInvitation }, newFriend) {
-    friendInvitation.user[0].friends.splice(
-      friendInvitation.user[0].friends.findIndex(
+    friendInvitation.user.splice(
+      friendInvitation.user.findIndex(
         v => v._id === newFriend._id), 1);
   },
 
   setUnFriend({ friends }, newFriend) {
-    friends.user[0].friends.splice(
-      friends.user[0].friends.findIndex(
+    friends.user.splice(
+      friends.user.findIndex(
         v => v._id === newFriend._id), 1);
   },
 
@@ -63,8 +63,8 @@ const  mutations = {
   },
 
   setAbortFriend({ requestFriend }, newFriend) {
-    requestFriend.user[0].friends.splice(
-      requestFriend.user[0].friends.findIndex(
+    requestFriend.user.splice(
+      requestFriend.user.findIndex(
         v => v._id === newFriend._id), 1);
   },
 

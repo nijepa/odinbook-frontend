@@ -5,6 +5,7 @@
       <Posts />
     </transition>
     <Footer />
+    <top-button />
   </div>
 </template>
 
@@ -13,26 +14,30 @@
   import Nav from '@/components/Nav.vue';
   import Footer from '@/components/Footer.vue';
   import Posts from '@/components/Posts.vue';
+  import TopButton from '@/components/TopButton.vue';
 
   export default {
     name: 'Users',
 
     components: {
-      Nav, Footer, Posts
+      Nav, Footer, Posts, TopButton
     },
 
     computed: {
-      ...mapGetters([ 'loggedUser', 'getSelectedUser']),
+      ...mapGetters([ 'loggedUser', 
+                      'getSelectedUser']),
     },
 
     methods: {
-        ...mapActions([ 'fetchSelectedUser', 'loadUserPosts' ]),
-        noSelectedUser() {
-          if (!this.getSelectedUser._id) {
-            this.fetchSelectedUser(this.loggedUser);
-            this.loadUserPosts(this.loggedUser._id);
-          }
+      ...mapActions([ 'fetchSelectedUser', 
+                      'loadUserPosts' ]),
+      
+      noSelectedUser() {
+        if (!this.getSelectedUser._id) {
+          this.fetchSelectedUser(this.loggedUser);
+          this.loadUserPosts(this.loggedUser._id);
         }
+      },
     },
 
     mounted() {
