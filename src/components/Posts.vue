@@ -45,6 +45,7 @@
             <h1>{{ post.title }}</h1>
           </div>
           <p v-html="post.text"></p>
+          
           <div v-if="isLogged" class="">
             <Post v-if="loggedUser._id === post.user._id" :selected-post="post" btn-name='Edit Post' />
           </div>
@@ -96,7 +97,6 @@
       </transition-group>
     </div>
   </div>
-
 </template>
 
 <script>
@@ -242,6 +242,10 @@
     background-color: var(--blue);
   }
 
+  .posts:nth-child(even) { 
+    background-color: #ffc64b;
+  }
+
   .post-header {
     display: grid;
     grid-template-columns: auto auto;
@@ -272,6 +276,7 @@
     padding: 10px;
     border-radius: 20px;
     border: 1px solid grey;
+    background-image: linear-gradient(to top,var(--orange) 5%, white);
   }
 
   .post__heading {
@@ -281,6 +286,12 @@
     display: inline-grid;
     border-radius: 5px;
     font-size: 12px;
+  }
+
+  hr {
+    border: 0;
+height: 1px;
+background-image: linear-gradient(to right, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.75), rgba(0, 0, 0, 0));
   }
 
   .add__comment {

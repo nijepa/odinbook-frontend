@@ -1,8 +1,11 @@
 <template>
   <transition name="fall" >
     <div class="friends" v-on:load="onAppeared" v-show="appeared">
-      <h1>{{ title }}</h1>
-
+      <div class="">
+        <h1>{{ title }}</h1>
+        <hr>
+      </div>
+      
       <div v-if="!friendsType" class="">
         <img class="loading__img" src="../assets/loading.gif" alt="">
       </div>
@@ -183,7 +186,12 @@
     justify-content: space-between;
     align-content: center;
     padding: .5em;
-    border-top: 1px solid black;
+    /* border-top: 1px solid black; */
+  }
+
+  .friend:nth-child(even) { 
+    background-color: #ffc64b;
+    border-radius: 5px;
   }
 
   .friend__data {

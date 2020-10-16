@@ -90,6 +90,7 @@
           first_name: '',
           last_name: '',
           location: '',
+          hometown: '',
           gender: '',
           birthday: '',
           isSocial: true
@@ -147,7 +148,8 @@
             this.userSocial.last_name = user.last_name;
             this.userSocial.gender = user.gender;
             this.userSocial.location = user.location;
-            this.userSocial.birthday = user.hometown;
+            this.userSocial.hometown = user.hometown;
+            this.userSocial.birthday = user.birthday;
           }
         )
       },
