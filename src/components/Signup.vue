@@ -11,7 +11,7 @@
           <input @focus="clearErrors" v-model="signupInput.first_name" type="text" name="first_name" id="first_name" required>
         </div>
         <div class="form__item">
-          <label for="last_name">First name</label>
+          <label for="last_name">Last name</label>
           <input @focus="clearErrors" v-model="signupInput.last_name" type="text" name="last_name" id="last_name" required>
         </div>
         <div class="form__item">
@@ -23,7 +23,7 @@
           <input @focus="clearErrors" v-model="signupInput.password" type="password" name="password" id="password" required>
         </div>
         <div class="form__btn">
-          <button>Register</button><span>Account?<a class="register__link" @click="signType('login')" href="#">Login</a></span>
+          <button>Register</button><span>Account ?<a class="register__link" @click="signType('login')" href="#">Login</a></span>
         </div>
       </form>
   </div>

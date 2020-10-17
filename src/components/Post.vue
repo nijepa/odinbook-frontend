@@ -9,7 +9,7 @@
       <form @submit.prevent="addPost()" method="post" class="log" >
         <input @focus="clearErrors" v-model="postInput.title" type="text" name="title"
                 class="cool-link" placeholder="pls enter title" required>
-                <ckeditor :editor="editor" v-model="postInput.text" ></ckeditor>
+        <ckeditor :editor="editor" v-model="postInput.text" :config="{ placeholder:'pls enter content'}"></ckeditor>
 <!--         <editor @focus="clearErrors"  v-model="postInput.text" 
                 name="text" placeholder="pls enter content"
                 :api-key="tinymceKey"
@@ -62,7 +62,7 @@
 
     data() {
       return {
-        tinymceKey: process.env.VUE_APP_TINYMCE_API_KEY,
+        // tinymceKey: process.env.VUE_APP_TINYMCE_API_KEY,
         editor: ClassicEditor,
         enterPost: false,
         postInput: {
@@ -145,5 +145,30 @@
     border: 2px solid black !important;
     box-shadow: 0px 4px 2px -1px rgba(0,0,0,0.75) !important;
     transition: all .3s ease-in-out !important;
+  }
+
+  .ck.ck-editor {
+    position: relative;
+    border: 2px solid black;
+    border-radius: 5px;
+    background: var(--yellow);
+  }
+
+  .ck.ck-editor__main > .ck-editor__editable:not(.ck-focused) {
+    background: var(--yellow);
+  }
+
+  .ck.ck-editor__main > .ck-editor__editable:not(.ck-focused):hover {
+    background: white;
+  }
+
+  .ck.ck-toolbar {
+    background: var(--yellow);
+  }
+
+  @media (max-width: 760px) {
+    .ck.ck-editor {
+      max-width: 300px;
+    }
   }
 </style>

@@ -5,23 +5,41 @@
 
       <div v-if="getSelectedUser._id && this.getSelectedUser._id !== this.loggedUser._id"
             class="user__profile_selected" v-on:load="onAppeared" v-show="appeared">
-        <span class="info__label">Picture : </span>
-        <img :src="signupInput.picture || require('../assets/nopic' + Math.floor(Math.random() * 5) + '.png')" 
-              class="info__img">
-        <span class="info__label">Username : </span>
-        <p class="info__input">{{ signupInput.username }}</p>
-        <span class="info__label">First name : </span>
-        <p class="info__input">{{ signupInput.first_name }}</p>
-        <span class="info__label">Last name : </span
-        ><p class="info__input">{{ signupInput.last_name }}</p>
-        <span class="info__label">E-mail : </span>
-        <p class="info__input">{{ signupInput.email }}</p>
-        <span class="info__label">About : </span>
-        <p class="info__input">{{ signupInput.user_about }}</p>
-        <span class="info__label">Friends : </span>
-        <a @click="selectFriends(signupInput)" class="info__friends">
-          <p class="info__input">{{ signupInput.friends.length || '' }}</p>
-        </a>
+        <div class="">
+          <!-- <span class="info__label">Picture : </span> -->
+          <p>
+            <img :src="signupInput.picture || require('../assets/nopic' + Math.floor(Math.random() * 5) + '.png')" 
+                class="info__img">
+          </p>
+        </div>
+        <div class="">
+          <div class="">
+            <span class="info__label">Username : </span>
+            <p class="info__input">{{ signupInput.username }}</p>
+          </div>
+          <div class="">
+            <span class="info__label">E-mail : </span>
+            <p class="info__input">{{ signupInput.email }}</p>
+          </div>
+          <div class="">
+            <span class="info__label">First name : </span>
+            <p class="info__input">{{ signupInput.first_name }}</p>
+          </div>
+          <div class="">
+            <span class="info__label">Last name : </span
+            ><p class="info__input">{{ signupInput.last_name }}</p>
+          </div>
+        </div>
+        <div class="">
+          <span class="info__label">About : </span>
+          <p class="info__input" v-html="signupInput.user_about"></p>
+        </div>
+        <div class="">
+          <span class="info__label">Friends : </span>
+          <a @click="selectFriends(signupInput)" class="info__friends">
+            <p class="info__input"> {{nrOfFriends(signupInput.friends)}}</p>
+          </a>
+        </div>
       </div>
 
       <form v-else @submit.prevent="userUpdate(signupInput)" action=""
@@ -57,8 +75,12 @@
         </div>
         <div class="form__item">
           <label for="about">About</label>
-          <textarea @focus="clearErrors" v-model="signupInput.user_about"
-                    name="about" id="about" rows="5" cols="30"></textarea>
+          <ckeditor :editor="editor" v-model="signupInput.user_about" 
+                    :config="{ placeholder:'pls enter content'}"
+                    @focus="clearErrors" name="about" >
+          </ckeditor>
+<!--           <textarea @focus="clearErrors" v-model="signupInput.user_about"
+                    name="about" id="about" rows="5" cols="30"></textarea> -->
         </div>
         <div class="form__btn">
           <button type="submit">Save</button>
@@ -72,13 +94,20 @@
 
 <script>
   import { mapGetters, mapActions } from 'vuex';
+  import CKEditor from '@ckeditor/ckeditor5-vue';
+  import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 
   export default {
 
     name: 'Profile',
 
+    components: {
+        ckeditor:CKEditor.component
+    },
+
     data() {
       return {
+        editor: ClassicEditor,
         signupInput: {
           _id: '',
           email: '',
@@ -110,6 +139,10 @@
         this.fetchSelectedUser(selectedUser);
         this.$router.push({ name: 'UsersFriends' });
       },
+
+      nrOfFriends(friends) {
+        return friends.filter((v) => (v.status === 1)).length;
+      },
       
       onAppeared() {
         this.appeared = true;
@@ -138,7 +171,8 @@
   }
 
   .user__profile_selected {
-    background-color: var(--yellow);
+    /* background-color: var(--yellow); */
+    background-image: linear-gradient(to top,var(--orange) 5%, white);
     border-radius: 20px;
     padding: 1rem;
     margin: .5rem;
@@ -152,8 +186,10 @@
   }
 
   .info__input {
-    font-size: 1.5em;
+    font-size: 1.3em;
     justify-self: left;
+    align-self: baseline;
+    margin: .3em;
   }
 
   .info__input .info__label {
@@ -162,6 +198,8 @@
 
   .info__label {
     justify-self: right;
+    color: var(--blue-dark);
+    align-self: baseline;
   }
 
   .fall-enter-active {
@@ -178,7 +216,9 @@
   .info__friends {
     cursor: pointer;
     justify-self: left;
-    color: var(--blue-dark);
+    color: var(--blue);
+    align-self: baseline;
+    font-size: 2em;
   }
 
   .info__friends:hover {

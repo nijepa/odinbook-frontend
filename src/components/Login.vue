@@ -16,7 +16,7 @@
         </div>
         <div class="form__btn">
           <button>Login</button>
-          <span>No account?
+          <span>No account ?
             <a class="register__link" @click="signType('signup')" href="#">Register</a>
           </span>
         </div>
@@ -205,7 +205,9 @@
   }
 
   .fb__info {
-    padding: 1em;
+    // padding: 1em;
+    display: grid;
+    justify-self: center;
   }
 
   .google__btn {

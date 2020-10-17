@@ -1,5 +1,6 @@
 import axios from 'axios';
-const URL = process.env.VUE_APP_BACKEND_URL_LOCAL
+import apiClient from './api_client';
+const URL = process.env.VUE_APP_BACKEND_URL;
 
 const  state = {
   friends: [],
@@ -99,25 +100,25 @@ const actions = {
   },
 
   async requestFriend ({ commit }, userData) {
-    const response = await axios.post(URL + "users/requestfriend/" + userData._id, userData);
+    const response = await apiClient.post(URL + "users/requestfriend/" + userData._id, userData);
     commit('setRequestFriend', response.data);
     commit('removeFromNotFriends', response.data);
   },
 
   async acceptFriend ({ commit }, userData) {
-    const response = await axios.post(URL + "users/acceptfriend/" + userData._id, userData);
+    const response = await apiClient.post(URL + "users/acceptfriend/" + userData._id, userData);
     commit('setAcceptFriend', response.data);
     commit('removeFriendsInvitations', response.data);
   },
 
   async unFriend ({ commit }, userData) {
-    const response = await axios.post(URL + "users/unfriend/" + userData._id, userData);
+    const response = await apiClient.post(URL + "users/unfriend/" + userData._id, userData);
     commit('setUnFriend', response.data);
     commit('setNotFriend', response.data);
   },
 
   async abortFriend ({ commit }, userData) {
-    const response = await axios.post(URL + "users/abortfriend/" + userData._id, userData);
+    const response = await apiClient.post(URL + "users/abortfriend/" + userData._id, userData);
     commit('setAbortFriend', response.data);
     commit('setNotFriend', response.data);
   },
