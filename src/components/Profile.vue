@@ -5,41 +5,47 @@
 
       <div v-if="getSelectedUser._id && this.getSelectedUser._id !== this.loggedUser._id"
             class="user__profile_selected" v-on:load="onAppeared" v-show="appeared">
-        <div class="">
+        <div class="profile__group personal__data">
+          <div class="">
           <!-- <span class="info__label">Picture : </span> -->
           <p>
             <img :src="signupInput.picture || require('../assets/nopic' + Math.floor(Math.random() * 5) + '.png')" 
                 class="info__img">
           </p>
-        </div>
-        <div class="">
-          <div class="">
-            <span class="info__label">Username : </span>
-            <p class="info__input">{{ signupInput.username }}</p>
           </div>
           <div class="">
-            <span class="info__label">E-mail : </span>
-            <p class="info__input">{{ signupInput.email }}</p>
+            <div class="">
+              <span class="info__label">Username : </span>
+              <p class="info__input">{{ signupInput.username }}</p>
+            </div>
+            <div class="">
+              <span class="info__label">E-mail : </span>
+              <p class="info__input">{{ signupInput.email }}</p>
+            </div>
+            <div class="">
+              <span class="info__label">First name : </span>
+              <p class="info__input">{{ signupInput.first_name }}</p>
+            </div>
+            <div class="">
+              <span class="info__label">Last name : </span
+              ><p class="info__input">{{ signupInput.last_name }}</p>
+            </div>
+          </div>
+        </div>
+        
+        <div class="profile__group">
+          <div class="">
+            <span class="info__label">About : </span>
+            <p class="info__input" v-html="signupInput.user_about"></p>
           </div>
           <div class="">
-            <span class="info__label">First name : </span>
-            <p class="info__input">{{ signupInput.first_name }}</p>
-          </div>
-          <div class="">
-            <span class="info__label">Last name : </span
-            ><p class="info__input">{{ signupInput.last_name }}</p>
-          </div>
+            <span class="info__label">Friends : </span>
+            <a @click="selectFriends(signupInput)" class="info__friends">
+              <p class="info__input"> {{nrOfFriends(signupInput.friends)}}</p>
+            </a>
         </div>
-        <div class="">
-          <span class="info__label">About : </span>
-          <p class="info__input" v-html="signupInput.user_about"></p>
         </div>
-        <div class="">
-          <span class="info__label">Friends : </span>
-          <a @click="selectFriends(signupInput)" class="info__friends">
-            <p class="info__input"> {{nrOfFriends(signupInput.friends)}}</p>
-          </a>
-        </div>
+        
       </div>
 
       <form v-else @submit.prevent="userUpdate(signupInput)" action=""
@@ -178,11 +184,22 @@
     margin: .5rem;
     box-shadow: 0px 5px 4px 0px rgba(0,0,0,0.75);
     text-align: left;
-    display: grid;
+    /* display: grid; */
     grid-template-columns: auto auto;
     align-items: center;
     justify-items: center;
     grid-column-gap: 1em;
+  }
+
+  .profile__group {
+    display: grid;
+    grid-template-columns: 3fr 1fr;
+    align-items: center;
+    justify-items: center;
+  }
+
+  .personal__data {
+    grid-template-columns: 1fr 3fr;
   }
 
   .info__input {
@@ -197,9 +214,8 @@
   }
 
   .info__label {
-    justify-self: right;
     color: var(--blue-dark);
-    align-self: baseline;
+    font-style: italic;
   }
 
   .fall-enter-active {
