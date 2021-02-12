@@ -44,7 +44,15 @@
           <div class="">
             <h1>{{ post.title }}</h1>
           </div>
-          <p v-html="post.text"></p>
+
+          <div class="post__content">
+            <div class="">
+              <img :src="post.img_url ? post.img_url : 'https://images.pexels.com/photos/4646214/pexels-photo-4646214.jpeg?auto=compress&cs=tinysrgb&h=750&w=1260'"
+                  alt=""
+                  class="post__img">
+            </div>
+            <p v-html="post.text"></p>
+          </div>
           
           <div v-if="isLogged" class="">
             <Post v-if="loggedUser._id === post.user._id" :selected-post="post" btn-name='Edit Post' />
@@ -224,6 +232,27 @@
 </script>
 
 <style>
+  .post__content {
+    display: inline-block;
+  }
+
+  .post__img {
+    width: 200px;
+    border-radius: .5em;
+    float: left;
+    margin-right: 1.5em;
+    margin-bottom: 1em;
+    -webkit-box-shadow: 0px 0px 5px 0px rgba(3,30,71,1);
+    -moz-box-shadow: 0px 0px 5px 0px rgba(3,30,71,1);
+    box-shadow: 0px 0px 5px 0px rgba(3,30,71,1);
+    transition: ease-in-out .4s all;
+  }
+
+  .post__img:hover, .post__img:active {
+    transform: scale(1.1);
+    box-shadow: none;
+  }
+
   .timeline {
     background-color: var(--blue);
     padding: 2em;
@@ -290,8 +319,8 @@
 
   hr {
     border: 0;
-height: 1px;
-background-image: linear-gradient(to right, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.75), rgba(0, 0, 0, 0));
+    height: 1px;
+      background-image: linear-gradient(to right, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.75), rgba(0, 0, 0, 0));
   }
 
   .add__comment {

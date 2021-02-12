@@ -9,6 +9,8 @@
       <form @submit.prevent="addPost()" method="post" class="log" >
         <input @focus="clearErrors" v-model="postInput.title" type="text" name="title"
                 class="cool-link" placeholder="pls enter title" required>
+        <input @focus="clearErrors" v-model="postInput.img_url" type="text" name="image"
+                class="cool-link" placeholder="pls enter image url">
         <ckeditor :editor="editor" v-model="postInput.text" :config="{ placeholder:'pls enter content'}"></ckeditor>
 <!--         <editor @focus="clearErrors"  v-model="postInput.text" 
                 name="text" placeholder="pls enter content"
@@ -68,6 +70,7 @@
         postInput: {
           _id: '',
           title: '',
+          img_url: '',
           text: '',
           user: ''
         },
@@ -114,6 +117,7 @@
         this.postInput = {_id: this.selectedPost._id,
                           title: this.selectedPost.title,
                           text: this.selectedPost.text,
+                          img_url: this.selectedPost.img_url,
                           user: this.selectedPost.user}
         // todo
       }
@@ -136,15 +140,6 @@
 
   .btn-save {
     background-color: var(--green-light);
-  }
-  
-  .tox-tinymce {
-    border-radius: 5px !important;
-    visibility: inherit !important;
-    background-color: var(--yellow) !important;
-    border: 2px solid black !important;
-    box-shadow: 0px 4px 2px -1px rgba(0,0,0,0.75) !important;
-    transition: all .3s ease-in-out !important;
   }
 
   .ck.ck-editor {
@@ -169,6 +164,9 @@
   @media (max-width: 760px) {
     .ck.ck-editor {
       max-width: 300px;
+    }
+    .post__content {
+      display: grid;
     }
   }
 </style>
