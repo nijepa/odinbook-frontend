@@ -47,7 +47,7 @@
 
           <div class="post__content">
             <div class="">
-              <img :src="post.img_url ? post.img_url : 'https://images.pexels.com/photos/4646214/pexels-photo-4646214.jpeg?auto=compress&cs=tinysrgb&h=750&w=1260'"
+              <img :src="post.img_url ? post.img_url : 'https://images.pexels.com/photos/3028961/pexels-photo-3028961.jpeg?auto=compress&cs=tinysrgb&h=750&w=1260'"
                   alt=""
                   class="post__img">
             </div>
@@ -237,11 +237,10 @@
   }
 
   .post__img {
-    width: 200px;
+    width: 250px;
     border-radius: .5em;
     float: left;
-    margin-right: 1.5em;
-    margin-bottom: 1em;
+    margin: .5em 1.5em 1em .5em;
     -webkit-box-shadow: 0px 0px 5px 0px rgba(3,30,71,1);
     -moz-box-shadow: 0px 0px 5px 0px rgba(3,30,71,1);
     box-shadow: 0px 0px 5px 0px rgba(3,30,71,1);
