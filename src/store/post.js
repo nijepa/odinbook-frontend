@@ -97,8 +97,9 @@ const mutations = {
 /* -------------------------------------- ACTIONS -------------------------------------- */
 const actions = {
   
-  async loadPosts({ commit }) {
-    await axios.get(URL + 'posts').then((response) => {
+  async loadPosts({ commit }, page) {
+    console.log(page)
+    await axios.get(URL + 'posts/' + page).then((response) => {
       commit('updatePosts', response.data);
       commit('changeLoadingState', false);
     })

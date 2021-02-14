@@ -166,7 +166,7 @@
       max-width: 300px;
     }
     .post__content {
-      display: grid;
+      display: grid !important;
     }
   }
 </style>

@@ -1,5 +1,9 @@
 <template>
   <div>
+    <div v-if="loading" class="" :key="1">
+        <img class="loading__img" src="../assets/loading.gif" alt="">
+    </div>
+  <div v-else :key="2">
     <transition name="slide-fade" v-if="!allPosts">
       <div class="" v-on:load="onAppeared" v-show="appeared">
         <p>no posts</p>
@@ -17,7 +21,7 @@
 
       <transition-group v-else name="fall">
         <div v-on:load="onAppeared" v-show="appeared" 
-              v-for="post in !getSelectedUser._id ? allPosts : getUserPosts" :key="post._id" class="post">
+              v-for="post in !getSelectedUser._id ? posts : getUserPosts" :key="post._id" class="post">
           <div class="post-header">
             <div class="">
               <a @click="selectUser(post.user)">
@@ -103,7 +107,25 @@
           </div>
         </div>
       </transition-group>
+
+      <div v-show="!getSelectedUser._id && allPosts.total > posts.length" class="more" @click="loadMore()">
+        <h3>Load More...</h3>
+        <svg x="0px" y="0px"
+          width="38px" height="38px" viewBox="0 0 381.745 381.745" style="enable-background:new 0 0 381.745 381.745;"
+          xml:space="preserve">
+          <path fill="var(--orange)" d="M205.068,2.244C91.236-9.384,9.84,81.192,0.66,188.292C-3.624,239.7,12.9,289.884,51.456,324.156
+            c20.808,18.36,50.184,36.108,80.784,43.452c97.309,43.452,216.036-28.764,242.964-128.521
+            C407.028,124.645,318.288,13.872,205.068,2.244z M265.656,79.968c0.612,1.836,1.225,3.672,2.448,5.508
+            c-2.448-2.447-4.284-4.283-6.731-6.731C263.209,78.744,264.433,79.356,265.656,79.968z M186.096,312.528
+            C147.54,272.137,120,220.116,75.936,185.232c-1.224-3.061-2.448-6.732-3.06-10.404c23.256-3.061,47.124-6.12,70.38-2.448
+            c3.06,0.612,5.508-0.612,7.344-2.448c1.836-0.611,3.672-2.447,3.672-4.896c-0.612-22.645-2.448-44.676-4.284-67.32
+            c26.316-1.836,53.857-8.567,80.172-3.672c15.301,3.061-3.672,51.408-1.224,66.096c-1.224,3.061,0,7.956,4.284,9.181
+            c11.016,3.06,23.256,1.224,34.884,0.611c4.896,0,10.404,0,15.3-0.611C255.864,220.116,232.608,277.645,186.096,312.528z"/>
+        </svg>
+      </div>
+      
     </div>
+  </div>
   </div>
 </template>
 
@@ -121,6 +143,7 @@
 
     data() {
       return {
+        posts: [],
         enterComment: false,
         commentInput: {
           id: '',
@@ -133,7 +156,9 @@
           postId: ''
         },
         liked: false,
-        appeared: false
+        currentPage: 0,
+        appeared: false,
+        loading: true
       }
     },
 
@@ -211,27 +236,75 @@
       getImgUrl(pic) {
         return require('../assets/' + pic + '.png')
       },
+
+      async loadMore() {
+        this.currentPage = this.currentPage + 1;
+        await this.loadPosts(this.currentPage);
+        this.posts = [...this.posts, ...this.allPosts.posts];
+      },
       
       onAppeared() {
         this.appeared = true;
       }
     },
 
-    created() {
+    async created() {
       if (!this.getSelectedUser) {
-        this.loadUserPosts();
+        await this.loadUserPosts();
       } else {
-        this.loadPosts();
+        await this.loadPosts(0);
+        this.posts = this.allPosts.posts;
       }
+      this.loading = false;
     },
 
     mounted() {
       this.onAppeared();
+      document.addEventListener('scroll',()=>{
+        if ((window.innerHeight + window.scrollY) >= document.body.offsetHeight) {
+          //alert("you're at the bottom of the page");
+        }
+      })
     }
   }
 </script>
 
 <style>
+  .loading__img {
+    width: 100px;
+    height: auto;
+  }
+
+  .more {
+    text-transform: uppercase;
+    font-size: 2em;
+    color: var(--orange);
+    cursor: pointer;
+    justify-self: center;
+    letter-spacing: .2em;
+    margin-top: .5em;
+    transition: ease-in-out .4s all;
+  }
+
+  .more > svg > path {
+    text-shadow: 0 1px 0 rgba(255, 255, 255, 0.4);
+    transition: ease-in-out .8s all;
+  }
+
+  .more > h3 {
+    text-shadow: 0 1px 0 rgba(255, 255, 255, 0.4);
+  }
+
+  .more:active,
+  .more:hover {
+    color: var(--blue-darkest);
+  }
+
+  .more:focus > svg > path,
+  .more:hover > svg > path {
+    fill: var(--blue-darkest);
+  }
+
   .post__content {
     display: inline-block;
   }

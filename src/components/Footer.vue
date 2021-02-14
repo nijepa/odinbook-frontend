@@ -26,6 +26,7 @@
     padding: .7em;
     border-top: 2px solid black;
     box-shadow: 0 -2px 2px -1px rgba(0,0,0,0.75);
+    margin-top: .5em;
   }
   img {
     width: 20px;
