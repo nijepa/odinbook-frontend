@@ -1,114 +1,183 @@
 <template>
   <div>
-    <div v-if="loading" class="" :key="1">
-        <img class="loading__img" src="../assets/loading.gif" alt="">
+    <div v-if="loading" :key="1">
+        <img class="loading__img"  
+              src="../assets/loading.gif" alt="">
     </div>
-  <div v-else :key="2">
-    <transition name="slide-fade" v-if="!allPosts">
-      <div class="" v-on:load="onAppeared" v-show="appeared">
-        <p>no posts</p>
-      </div>
-    </transition>
-
-    <div name="fade" v-else class="posts">
-      <!-- <Post /> -->
-      <transition name="fall" v-if="!getUserPosts.length && getSelectedUser._id" mode="out-in">
-        <div class="post" v-on:load="onAppeared" v-show="appeared">
-          <p class="no__posts">no posts for</p>
-          <p class="no__posts">{{ getSelectedUser.first_name }}, {{ getSelectedUser.last_name }}</p>
+    <div v-else :key="2">
+      <transition name="slide-fade" 
+                  v-if="!allPosts">
+        <div v-on:load="onAppeared" 
+              v-show="appeared">
+          <p>no posts</p>
         </div>
       </transition>
 
-      <transition-group v-else name="fall">
-        <div v-on:load="onAppeared" v-show="appeared" 
-              v-for="post in !getSelectedUser._id ? allPosts.posts : getUserPosts" :key="post._id" class="post">
-          <div class="post-header">
-            <div class="">
-              <a @click="selectUser(post.user)">
-                <img :src="post.user.picture || require('../assets/nopic' + Math.floor(Math.random() * 5) + '.png')" 
-                      class="user__img">
-              </a>
-              &copy;
-              <a @click="selectUser(post.user)" class="post__heading author"> {{ post.user.name }} </a>
-              &#64;
-              <p class="post__heading">&copy; {{ post.createdAt | formatDate }} </p>
+      <div name="fade" v-else class="posts">
+        <!-- <Post /> -->
+        <transition name="fall" 
+                    v-if="!getUserPosts.length && getSelectedUser._id" 
+                    mode="out-in">
+          <div class="post" 
+                v-on:load="onAppeared" 
+                v-show="appeared">
+            <p class="no__posts">no posts for</p>
+            <p class="no__posts">
+              {{ getSelectedUser.first_name }}, {{ getSelectedUser.last_name }}
+            </p>
+          </div>
+        </transition>
+
+        <transition-group v-else 
+                          name="fall" 
+                          class="postc">
+          <div v-on:load="onAppeared" 
+                v-show="appeared" 
+                v-for="post in !getSelectedUser._id ? allPosts.posts : getUserPosts" 
+                :key="post._id" 
+                class="post">
+            <div class="contentp">
+            <div class="post-header">
+              <div class="">
+                <a @click="selectUser(post.user)">
+                  <img :src="post.user.picture || require('../assets/nopic' + Math.floor(Math.random() * 5) + '.png')" 
+                        class="user__img">
+                </a>
+                &copy;
+                <a @click="selectUser(post.user)" 
+                    class="post__heading author">
+                    {{ post.user.name }} 
+                </a>
+                &#64;
+                <p class="post__heading">
+                  &copy; {{ post.createdAt | formatDate }} 
+                </p>
+              </div>
+              <button v-if="loggedUser._id === post.user._id" 
+                      @click="postDelete(post)"
+                      type="submit" 
+                      class="btn-sub post-del" 
+                      title="Delete Post">
+                <img :src="getImgUrl('pngegg')" 
+                      alt="delete" 
+                      class="btn__del">
+              </button>
             </div>
-            <button v-if="loggedUser._id === post.user._id" @click="postDelete(post)"
-                    type="submit" class="btn-sub post-del" title="Delete Post">
-              <img :src="getImgUrl('pngegg')" alt="delete" class="btn__del">
-            </button>
-          </div>
 
-          <div class="likes">
-            <img @click="sendLike(post._id)" 
-                  class="like__img" :src="post.likes.length ? getImgUrl('liked') : getImgUrl('like')" alt="">
-            <p class="likes__nr">{{ post.likes.length }}</p>
-          </div>
-
-          <div class="">
-            <h1>{{ post.title }}</h1>
-          </div>
-
-          <div class="post__content">
-            <div class="">
-              <img :src="post.img_url ? post.img_url : 'https://images.pexels.com/photos/3028961/pexels-photo-3028961.jpeg?auto=compress&cs=tinysrgb&h=750&w=1260'"
-                  alt=""
-                  class="post__img">
+            <div class="likes">
+              <img @click="sendLike(post._id)" 
+                    class="like__img" 
+                    :src="post.likes.length ? getImgUrl('liked') : getImgUrl('like')" alt="">
+              <p class="likes__nr">
+                {{ post.likes.length }}
+              </p>
             </div>
-            <p v-html="post.text"></p>
-          </div>
-          
-          <div v-if="isLogged" class="">
-            <Post v-if="loggedUser._id === post.user._id" :selected-post="post" btn-name='Edit Post' />
-          </div>
-          <hr>
 
-          <div class="comments">
-            <h2>Comments</h2>
             <div class="">
-              <transition-group name="slide-fade" >
-                <div v-for="comment in post.comments" :key="comment._id" class="">
-                  <p v-html="comment.text"></p>
-                  <div class="likes">
-                    <img @click="sendCommentLike(comment._id, post._id)" class="like__img"
-                          :src="comment.likes.length ? getImgUrl('liked') : getImgUrl('like')" alt="">
-                    <p class="likes__nr">{{ comment.likes.length }}</p>
-                  </div>
+              <h1>{{ post.title }}</h1>
+            </div>
 
-                  <div class="post-header">
-                    <div class="" >
-                      <a @click="selectUser(comment.author)">
-                        <img :src="comment.author.picture || require('../assets/nopic' + Math.floor(Math.random() * 5) + '.png')" 
-                            class="user__img">
-                      </a>
-                      &copy;
-                      <a @click="selectUser(comment.author)" class="post__heading author"> {{ comment.author.name }} </a>
-                      &#64;
-                      <p class="post__heading">&copy; {{ comment.createdAt | formatDate }} </p>
+            <div class="post__content">
+              <div class="">
+                <img :src="post.img_url ? post.img_url : 'https://images.pexels.com/photos/3028961/pexels-photo-3028961.jpeg?auto=compress&cs=tinysrgb&h=750&w=1260'"
+                    alt=""
+                    class="post__img">
+              </div>
+              <p v-html="post.text"></p>
+            </div>
+            
+            <div v-if="isLogged">
+              <Post v-if="loggedUser._id === post.user._id" 
+                    :selected-post="post" 
+                    btn-name='Edit Post' />
+            </div>
+            <hr>
+
+            <div class="comments">
+              <h2>Comments</h2>
+              <div class="">
+                <transition-group name="slide-fade" >
+                  <div v-for="comment in post.comments" 
+                        :key="comment._id">
+                    <p v-html="comment.text"></p>
+                    <div class="likes">
+                      <img @click="sendCommentLike(comment._id, post._id)" 
+                            class="like__img"
+                            :src="comment.likes.length ? getImgUrl('liked') : getImgUrl('like')" alt="">
+                      <p class="likes__nr">
+                        {{ comment.likes.length }}
+                      </p>
                     </div>
-                    <button v-if="loggedUser._id === comment.author._id" @click="deleteComment(comment, post._id)"
-                            type="submit" class="btn-sub post-del" title="Delete Comment">
-                      <img :src="getImgUrl('pngegg')" alt="delete" class="btn__del">
-                    </button>
+
+                    <div class="post-header">
+                      <div class="" >
+                        <a @click="selectUser(comment.author)">
+                          <img :src="comment.author.picture || require('../assets/nopic' + Math.floor(Math.random() * 5) + '.png')" 
+                                class="user__img">
+                        </a>
+                        &copy;
+                        <a @click="selectUser(comment.author)" 
+                            class="post__heading author"> 
+                            {{ comment.author.name }} 
+                        </a>
+                        &#64;
+                        <p class="post__heading">
+                          &copy; {{ comment.createdAt | formatDate }} 
+                        </p>
+                      </div>
+                      <button v-if="loggedUser._id === comment.author._id" 
+                              @click="deleteComment(comment, post._id)"
+                              type="submit" 
+                              class="btn-sub post-del" 
+                              title="Delete Comment">
+                        <img :src="getImgUrl('pngegg')" 
+                              alt="delete" 
+                              class="btn__del">
+                      </button>
+                    </div>
                   </div>
-                </div>
-              </transition-group>
+                </transition-group>
+              </div>
+            </div>
+
+            <!-- <Comments /> -->
+            <div v-if="isLogged" 
+                  class="add__comment">
+              <button @click="newComment(commentInput, post._id)" 
+                      type="submit" 
+                      class="btn-sub">
+                      Add Comment
+              </button>
+              <textarea v-model="commentInput.text" 
+                        name="comment" 
+                        class="cool-link" 
+                        placeholder="enter comment" 
+                        rows="3" 
+                        cols="3" 
+                        required>
+              </textarea>
+            </div>
+            <div v-else 
+                  class="add__comment">
+              <p>Please 
+                <router-link class="fromLeft" 
+                              to="/login">
+                              Log In
+                </router-link> 
+                to add comments.
+              </p>
+            </div>
             </div>
           </div>
+        </transition-group>
 
-          <!-- <Comments /> -->
-          <div v-if="isLogged" class="add__comment">
-            <button @click="newComment(commentInput, post._id)" type="submit" class="btn-sub">Add Comment</button>
-            <textarea v-model="commentInput.text" name="comment" class="cool-link" 
-                      placeholder="enter comment" rows="3" cols="3" required></textarea>
-          </div>
-          <div v-else class="add__comment">
-            <p>Please <router-link class="fromLeft" to="/login">Log In</router-link> to add comments.</p>
-          </div>
-        </div>
-      </transition-group>
+        
+        
+      </div>
 
-      <div v-show="!getSelectedUser._id && allPosts.total > posts.length" class="more" @click="loadMore()">
+      <div v-show="!getSelectedUser._id && allPosts.total > posts.length" 
+            class="more" 
+            @click="loadMore()">
         <h3>Load More...</h3>
         <svg x="0px" y="0px"
           width="38px" height="38px" viewBox="0 0 381.745 381.745" style="enable-background:new 0 0 381.745 381.745;"
@@ -123,9 +192,8 @@
             c11.016,3.06,23.256,1.224,34.884,0.611c4.896,0,10.404,0,15.3-0.611C255.864,220.116,232.608,277.645,186.096,312.528z"/>
         </svg>
       </div>
-      
+
     </div>
-  </div>
   </div>
 </template>
 
@@ -221,6 +289,7 @@
         const comData = [{comment}, {postId}];
         this.commentDelete(comData);
       },
+      
       sendLike(id) {
         this.likeInput.id = id;
         this.likeInput.user = this.loggedUser._id;
@@ -243,6 +312,27 @@
         await this.loadPosts(this.currentPage);
         this.posts = [...this.posts, ...this.allPosts.posts];
         await this.syncPosts(this.posts);
+        this.$nextTick(function () {
+          // Code that will run only after the
+          // entire view has been rendered
+          this.resizeAllGridItems();
+        })
+      },
+
+      resizeGridItem(item){
+        let grid = document.getElementsByClassName("postc")[0];
+        let rowHeight = parseInt(window.getComputedStyle(grid).getPropertyValue('grid-auto-rows'))-1;
+        let rowGap = parseInt(window.getComputedStyle(grid).getPropertyValue('grid-row-gap'));
+        let rowSpan = Math.ceil((item.querySelector('.contentp').getBoundingClientRect().height + rowGap) / (rowHeight + rowGap));
+          item.style.gridRowEnd = "span " + rowSpan;
+      },
+
+      resizeAllGridItems(){
+        let allItems = document.getElementsByClassName("post");
+        console.log(this.allItems);
+        for (let x = 0; x < allItems.length; x++){
+          this.resizeGridItem(allItems[x]);
+        }
       },
       
       onAppeared() {
@@ -257,15 +347,35 @@
         await this.loadPosts(0);
         this.posts = this.allPosts.posts;
       }
+      setTimeout(function(){0; }, 3000);
       this.loading = false;
+      
     },
 
-    mounted() {
+    async mounted() {
       this.onAppeared();
-      document.addEventListener('scroll',()=>{
+/*       document.addEventListener('scroll',()=>{
         if ((window.innerHeight + window.scrollY) >= document.body.offsetHeight) {
-          //alert("you're at the bottom of the page");
+          alert("you're at the bottom of the page");
         }
+      }); */
+      //window.onload = this.resizeAllGridItems();
+      window.addEventListener("resize", this.resizeAllGridItems);
+
+      this.$nextTick(function () {
+        // Code that will run only after the
+        // entire view has been rendered
+        this.resizeAllGridItems();
+      })
+    },
+    updated() {
+    // run something after dom has changed by vue
+      this.$nextTick(function () {
+        // Code that will run only after the
+        // entire view has been rendered
+        let rrr = this.resizeAllGridItems;
+        setTimeout(function(){ rrr(); }, 500);
+        
       })
     }
   }
@@ -354,6 +464,27 @@
     grid-template-columns: auto auto;
     align-items: center;
   }
+
+.postc {
+  display: grid;
+  grid-gap: 1px;
+  grid-template-columns: repeat(auto-fill, minmax(400px,1fr));
+  grid-auto-rows: 32px;
+}
+
+
+/* 2 columns by default, hide columns 2 & 3 */
+.post:nth-child(2)  .post:nth-child(3) { display: none }
+
+/* 3 columns at medium size */
+@media ( min-width: 768px ) {
+  .post:nth-child(2) { display: block; } /* show column 2 */
+}
+
+/* 4 columns at large size */
+@media ( min-width: 1080px ) {
+  .post:nth-child(3) { display: block; } /* show column 3 */
+}
 
   .btn__del {
     width: 10px;

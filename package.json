@@ -1,6 +1,6 @@
 {
   "name": "odinbook_frontend",
-  "version": "0.3.5",
+  "version": "0.3.9",
   "author": "Nikola Pavicevic <nijepa@gmail.com>",
   "description": "Front-end for Odin-book app",
   "keywords": ["odinbook", "front-end", "vue", "facebook clone"],
