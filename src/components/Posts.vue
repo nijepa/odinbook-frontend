@@ -21,7 +21,7 @@
 
       <transition-group v-else name="fall">
         <div v-on:load="onAppeared" v-show="appeared" 
-              v-for="post in !getSelectedUser._id ? posts : getUserPosts" :key="post._id" class="post">
+              v-for="post in !getSelectedUser._id ? allPosts.posts : getUserPosts" :key="post._id" class="post">
           <div class="post-header">
             <div class="">
               <a @click="selectUser(post.user)">
@@ -181,6 +181,7 @@
 
     methods: {
       ...mapActions([ 'loadPosts',
+                      'syncPosts',
                       'choseTimeline',
                       'loadUserPosts',
                       'postDelete',
@@ -241,6 +242,7 @@
         this.currentPage = this.currentPage + 1;
         await this.loadPosts(this.currentPage);
         this.posts = [...this.posts, ...this.allPosts.posts];
+        await this.syncPosts(this.posts);
       },
       
       onAppeared() {

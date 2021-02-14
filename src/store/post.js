@@ -30,6 +30,10 @@ const mutations = {
     state.posts = posts;
   },
 
+  reupdatePosts(state, posts) {
+    state.posts.posts = posts;
+  },
+
   setisTimeline(state, isTimeline) {
     state.isTimeline = isTimeline
   },
@@ -47,12 +51,12 @@ const mutations = {
   },
 
   addPost(state, text) {
-    state.posts = [text, ...state.posts]
+    state.posts.posts = [text, ...state.posts.posts]
   },
   
   updatePost(state, post) {
-    state.posts = [
-      ...state.posts.map(item => 
+    state.posts.posts = [
+      ...state.posts.posts.map(item => 
           item._id !== post._id ? item : {...item, ...post}
       )
     ] 
@@ -65,32 +69,32 @@ const mutations = {
   },
 
   deletePost (state, id) {
-    state.posts = [
-      ...state.posts.filter((item) => item._id !== id)
+    state.posts.posts = [
+      ...state.posts.posts.filter((item) => item._id !== id)
     ];
   },
 
   addComment (state, comment) {
-    const objIndex = state.posts.map(function(x) {return x._id; }).indexOf(comment._id);
-    Object.assign(state.posts[objIndex], { comments: comment.comments });
+    const objIndex = state.posts.posts.map(function(x) {return x._id; }).indexOf(comment._id);
+    Object.assign(state.posts.posts[objIndex], { comments: comment.comments });
   },
 
   deleteComment (state, id) {
-    const objIndex = state.posts.map(function(x) {return x._id; }).indexOf(id.postId);
-    state.posts[objIndex].comments = [
-      ...state.posts[objIndex].comments.filter((item) => item._id !== id.commentId)
+    const objIndex = state.posts.posts.map(function(x) {return x._id; }).indexOf(id.postId);
+    state.posts.posts[objIndex].comments = [
+      ...state.posts.posts[objIndex].comments.filter((item) => item._id !== id.commentId)
     ];
   },
 
   updateLike (state, like) {
-    const objIndex = state.posts.map(function(x) {return x._id; }).indexOf(like._id);
-    Object.assign(state.posts[objIndex], { likes: like.likes });
+    const objIndex = state.posts.posts.map(function(x) {return x._id; }).indexOf(like._id);
+    Object.assign(state.posts.posts[objIndex], { likes: like.likes });
   },
 
   updateCommentLike (state, like) {
-    const objIndex = state.posts.map(function(x) {return x._id; }).indexOf(like.postId);
-    const comIndex = state.posts[objIndex].comments.map(function(x) {return x._id; }).indexOf(like._id);
-    Object.assign(state.posts[objIndex].comments[comIndex], { likes: like.likes });
+    const objIndex = state.posts.posts.map(function(x) {return x._id; }).indexOf(like.postId);
+    const comIndex = state.posts.posts[objIndex].comments.map(function(x) {return x._id; }).indexOf(like._id);
+    Object.assign(state.posts.posts[objIndex].comments[comIndex], { likes: like.likes });
   },
 };
 
@@ -98,11 +102,15 @@ const mutations = {
 const actions = {
   
   async loadPosts({ commit }, page) {
-    console.log(page)
     await axios.get(URL + 'posts/' + page).then((response) => {
       commit('updatePosts', response.data);
       commit('changeLoadingState', false);
     })
+  },
+
+  async syncPosts({ commit }, posts) {
+    commit('reupdatePosts', posts);
+      //commit('changeLoadingState', false);
   },
 
   async choseTimeline( { commit }, chose) {

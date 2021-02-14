@@ -1,6 +1,10 @@
 {
   "name": "odinbook_frontend",
-  "version": "0.1.0",
+  "version": "0.3.5",
+  "author": "Nikola Pavicevic <nijepa@gmail.com>",
+  "description": "Front-end for Odin-book app",
+  "keywords": ["odinbook", "front-end", "vue", "facebook clone"],
+  "repository": "github:https://github.com/nijepa/odinbook-frontend",
   "private": true,
   "scripts": {
     "serve": "vue-cli-service serve",
