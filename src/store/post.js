@@ -158,7 +158,7 @@ const actions = {
       })
   },
 
-  async commentDelete({commit}, postData) {
+  async commentDelete({ commit }, postData) {
     await apiClient.put(URL + 'posts/comment/' + postData[0].comment._id, postData)
       .then((response) => {
         commit('deleteComment', response.data, postData)
@@ -191,7 +191,7 @@ const actions = {
       })
   },
 
-  async postDelete({commit}, postData) {
+  async postDelete({ commit }, postData) {
     await apiClient.delete(URL + 'posts/' + postData._id, postData)
       .then((response) => {
         commit('deletePost', response.data._id)
@@ -205,7 +205,7 @@ const actions = {
       })
   },
 
-  async likeUpdate({commit}, likeData) {
+  async likeUpdate({ commit }, likeData) {
     await apiClient.post(URL + 'posts/like/' + likeData.id, likeData)
       .then((response) => {
         commit('updateLike', response.data);
@@ -219,7 +219,7 @@ const actions = {
       })
   },
 
-  async likeCommentUpdate({commit}, likeData) {
+  async likeCommentUpdate({ commit }, likeData) {
     await apiClient.post(URL + 'posts/comment/like/' + likeData.id, likeData)
       .then((response) => {
         response.data["postId"] = likeData.postId;

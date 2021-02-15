@@ -14,9 +14,14 @@
 
 <script>
   import { mapActions } from 'vuex';
+  import loadImage from '../mixins/loadImage';
 
   export default {
     name: 'Likes',
+
+    mixins: [
+      loadImage
+    ],
 
     props: {
       post: Object,
@@ -42,10 +47,6 @@
       ...mapActions([ 'likeUpdate',
                       'likeCommentUpdate' ]),
 
-      getImgUrl(pic) {
-        return require('../assets/' + pic + '.png')
-      },
-
       sendLike(id, postId) {
         this.likeInput.id = id;
         this.likeInput.user = this.userId;
@@ -57,7 +58,6 @@
           this.likeCommentUpdate(this.likeInput);
         }
       },
-
     }
   }
 </script>

@@ -4,8 +4,8 @@
         <img class="loading__img"  
               src="../assets/loading.gif" alt="">
     </div>
-
-    <div v-else :key="2">
+<!-- NO POSTS -->
+    <div v-else :key="2" class="posts__wrapper">
       <transition name="slide-fade" 
                   v-if="!allPosts">
         <div v-on:load="onAppeared" 
@@ -13,9 +13,9 @@
           <p>no posts</p>
         </div>
       </transition>
-
+<!-- POSTS -->
       <div name="fade" v-else class="posts">
-        <!-- <Post /> -->
+  <!-- No posts for selected user -->
         <transition name="fall" 
                     v-if="!getUserPosts.length && getSelectedUser._id" 
                     mode="out-in">
@@ -28,7 +28,7 @@
             </p>
           </div>
         </transition>
-
+  <!-- Posts -->
         <transition-group v-else 
                           name="fall" 
                           class="postc">
@@ -38,29 +38,11 @@
                 :key="post._id" 
                 class="post">
             <div class="contentp">
-
-            <PostHeader :post="post"
-                        :userId="loggedUser._id"
-                        :user="post.user" />
-<!--            <div class="post-header">
-              <div class="">
-                <a @click="selectUser(post.user)">
-                  <img :src="post.user.picture || 
-                            require('../assets/nopic' + 
-                            Math.floor(Math.random() * 5) + 
-                            '.png')" 
-                        class="user__img">
-                </a>
-                &copy;
-                <a @click="selectUser(post.user)" 
-                    class="post__heading author">
-                    {{ post.user.name }} 
-                </a>
-                &#64;
-                <p class="post__heading">
-                  &copy; {{ post.createdAt | formatDate }} 
-                </p>
-              </div>
+    <!-- Post Header -->
+            <div class="post-header">
+              <PostHeader :post="post"
+                          :userId="loggedUser._id"
+                          :user="post.user" />
               <button v-if="loggedUser._id === post.user._id" 
                       @click="postDelete(post)"
                       type="submit" 
@@ -70,25 +52,14 @@
                       alt="delete" 
                       class="btn__del">
               </button>
-            </div> -->
+            </div>
+    <!-- Post Likes -->
             <Likes :post="post" 
                     :userId="loggedUser._id" />
-<!--             <div class="likes">
-              <img @click="sendLike(post._id)" 
-                    class="like__img" 
-                    :src="post.likes.length ? 
-                          getImgUrl('liked') : 
-                          getImgUrl('like')" 
-                    alt="">
-              <p class="likes__nr">
-                {{ post.likes.length }}
-              </p>
-            </div> -->
-
             <div class="">
               <h1>{{ post.title }}</h1>
             </div>
-
+    <!-- Post Content -->
             <div class="post__content">
               <div class="">
                 <img :src="post.img_url ? 
@@ -99,46 +70,32 @@
               </div>
               <p v-html="post.text"></p>
             </div>
-            
+    <!-- New Post Form -->
             <div v-if="isLogged">
               <Post v-if="loggedUser._id === post.user._id" 
                     :selected-post="post" 
                     btn-name='Edit Post' />
             </div>
             <hr>
-
-        <!--    <div class="comments">
+    <!-- Comments -->
+            <div class="comments"> 
               <h2>Comments</h2>
               <div class="">
                 <transition-group name="slide-fade" >
                   <div v-for="comment in post.comments" 
                         :key="comment._id">
                     <p v-html="comment.text"></p>
-                    <div class="likes">
-                      <img @click="sendCommentLike(comment._id, post._id)" 
-                            class="like__img"
-                            :src="comment.likes.length ? getImgUrl('liked') : getImgUrl('like')" alt="">
-                      <p class="likes__nr">
-                        {{ comment.likes.length }}
-                      </p>
-                    </div>
-
+      <!-- Comment Likes -->
+                    <Likes :post="comment" 
+                            :userId="loggedUser._id"
+                            :postId="post._id" />
+      <!-- Comment Header -->
                     <div class="post-header">
-                      <div class="" >
-                        <a @click="selectUser(comment.author)">
-                          <img :src="comment.author.picture || require('../assets/nopic' + Math.floor(Math.random() * 5) + '.png')" 
-                                class="user__img">
-                        </a>
-                        &copy;
-                        <a @click="selectUser(comment.author)" 
-                            class="post__heading author"> 
-                            {{ comment.author.name }} 
-                        </a>
-                        &#64;
-                        <p class="post__heading">
-                          &copy; {{ comment.createdAt | formatDate }} 
-                        </p>
-                      </div>
+                      <PostHeader :post="comment"
+                                  :userId="loggedUser._id"
+                                  :user="comment.author"
+                                  :postId="post._id" />
+      <!-- Delete Comment -->
                       <button v-if="loggedUser._id === comment.author._id" 
                               @click="deleteComment(comment, post._id)"
                               type="submit" 
@@ -152,49 +109,22 @@
                   </div>
                 </transition-group>
               </div>
-            </div> -->
-
-            <Comments :comments="post.comments"
-                      :userId="loggedUser._id"
-                      :postId="post._id" />
-            <!-- <Comments /> -->
+            </div>
+      <!-- New Comment Form -->
             <CommentAdd :isLogged="isLogged" 
                         :postId="post._id"
                         @comment-added="newComment" />
-<!--             <div v-if="isLogged" 
-                  class="add__comment">
-              <button @click="newComment(commentInput, post._id)" 
-                      type="submit" 
-                      class="btn-sub">
-                      Add Comment
-              </button>
-              <textarea v-model="commentInput.text" 
-                        name="comment" 
-                        class="cool-link" 
-                        placeholder="enter comment" 
-                        rows="3" 
-                        cols="3" 
-                        required>
-              </textarea>
-            </div>
-            <div v-else 
-                  class="add__comment">
-              <p>Please 
-                <router-link class="fromLeft" 
-                              to="/login">
-                              Log In
-                </router-link> 
-                to add comments.
-              </p>
-            </div> -->
             </div>
           </div>
         </transition-group>
-
-        
-        
       </div>
 
+      <Friends title='Friends' 
+                btnName='Un-friend' 
+                :friendsType='getFriends.user' 
+                :isFriend='false'
+                class="home__friends" />
+  <!-- Load More Button -->
       <div v-show="!getSelectedUser._id && allPosts.total > posts.length" 
             class="more" 
             @click="loadMore()">
@@ -212,7 +142,6 @@
             c11.016,3.06,23.256,1.224,34.884,0.611c4.896,0,10.404,0,15.3-0.611C255.864,220.116,232.608,277.645,186.096,312.528z"/>
         </svg>
       </div>
-
     </div>
   </div>
 </template>
@@ -222,9 +151,10 @@
   import { mapGetters, mapActions } from 'vuex';
   import Post from '@/components/Post.vue';
   import PostHeader from '@/components/PostHeader.vue';
-  import Comments from '@/components/Comments.vue';
   import CommentAdd from '@/components/CommentAdd.vue';
   import Likes from '@/components/Likes.vue';
+  import Friends from '@/components/Friends.vue';
+  import loadImage from '../mixins/loadImage';
 
   export default {
     name: 'Posts',
@@ -232,10 +162,14 @@
     components: {
       Post,
       PostHeader,
-      Comments,
       CommentAdd,
-      Likes
+      Likes,
+      Friends
     },
+
+    mixins: [
+      loadImage
+    ],
 
     data() {
       return {
@@ -263,6 +197,7 @@
       ...mapGetters([ 'allPosts',
                       'getIsTimeline',
                       'getUserPosts',
+                      'getFriends',
                       'isLogged',
                       'loggedUser',
                       'getSelectedUser' ]),
@@ -281,11 +216,12 @@
                       'syncPosts',
                       'choseTimeline',
                       'loadUserPosts',
-                      'postDelete',
-                      'commentDelete',
                       'fetchSelectedUser',
                       'createComment',
-                      'postType' ]),
+                      'commentDelete',
+                      'postDelete',
+                      'postType',
+                      'fetchFriends' ]),
       
       selectUser(selectedUser) {
         this.fetchSelectedUser(selectedUser);
@@ -298,7 +234,6 @@
       },
 
       async newComment(data, id) {
-        console.log(id)
         this.commentInput.text = data;
         this.commentInput.id = id;
         this.commentInput.user = this.loggedUser._id;
@@ -314,42 +249,19 @@
         this.postType(post);
       },
 
-/*       deleteComment(comment, postId) {
+      deleteComment(comment, postId) {
         const comData = [{comment}, {postId}];
         this.commentDelete(comData);
-      }, */
-      
-/*       sendLike(id) {
-        this.likeInput.id = id;
-        this.likeInput.user = this.loggedUser._id;
-        this.likeUpdate(this.likeInput);
-      }, */
-
-/*       sendCommentLike(id, postId) {
-        this.likeInput.id = id;
-        this.likeInput.user = this.loggedUser._id;
-        this.likeInput.postId = postId;
-        this.likeCommentUpdate(this.likeInput);
-      }, */
-
-      getImgUrl(pic) {
-        return require('../assets/' + pic + '.png')
-      },
+      }, 
 
       async loadMore() {
         this.currentPage = this.currentPage + 1;
         await this.loadPosts(this.currentPage);
         this.posts = [...this.posts, ...this.allPosts.posts];
         await this.syncPosts(this.posts);
-        // this.$nextTick(function () {
-        //   // Code that will run only after the
-        //   // entire view has been rendered
-        //   //this.resizeAllGridItems();
-        //   setTimeout(() => { this.resizeAllGridItems(); }, 500);
-        // })
       },
 
-      resizeGridItem(item){
+/*       resizeGridItem(item){
         let grid = document.getElementsByClassName("postc")[0];
         let rowHeight = parseInt(window.getComputedStyle(grid).getPropertyValue('grid-auto-rows'))-1;
         let rowGap = parseInt(window.getComputedStyle(grid).getPropertyValue('grid-row-gap'));
@@ -358,14 +270,11 @@
       },
 
       resizeAllGridItems(){
-        //this.loading =true
         let allItems = document.getElementsByClassName("post");
-        console.log(this.allItems);
         for (let x = 0; x < allItems.length; x++){
           this.resizeGridItem(allItems[x]);
         }
-        //this.loading = false
-      },
+      }, */
       
       onAppeared() {
         this.appeared = true;
@@ -379,30 +288,22 @@
         await this.loadPosts(0);
         this.posts = this.allPosts.posts;
       }
+      await this.fetchFriends(this.loggedUser._id);
       this.loading = false;
     },
 
     async mounted() {
       this.onAppeared();
-      // window.addEventListener("resize", this.resizeAllGridItems);
-      // this.$nextTick(function () {
-      //   //this.resizeAllGridItems();
-      //   //setTimeout(() => { this.resizeAllGridItems(); }, 700);
-      // })
     },
-
-    // updated() {
-    //   //this.loading = true
-    //   this.$nextTick(function () {
-    //     setTimeout(() => { this.resizeAllGridItems(); }, 500);
-    //     //setTimeout(() => {  }, 700);
-    //   })
-      
-    // }
   }
 </script>
 
 <style>
+  .posts__wrapper {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    align-items: baseline;
+  }
   .loading__img {
     width: 100px;
     height: auto;
@@ -487,7 +388,7 @@
   }
 
 .postc {
-  width: 70%;
+  /*width: 70%;*/
   justify-self: center;
   /* display: grid;
   grid-gap: 1px;
@@ -626,5 +527,14 @@
 
   .fade-enter, .fade-leave-to {
     opacity: 0;
+  }
+
+  @media ( max-width: 768px ) {
+    .posts__wrapper {
+      grid-template-columns: 1fr;
+    }
+    .home__friends {
+      display: none;
+    }
   }
 </style>
