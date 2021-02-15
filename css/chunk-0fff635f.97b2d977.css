@@ -1,0 +1,1 @@
+.friends__lists{display:grid;grid-template-columns:auto auto;background-color:var(--blue)}@media (max-width:810px){.friends__lists{grid-template-columns:auto}}
