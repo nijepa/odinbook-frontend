@@ -93,7 +93,7 @@
             </div>
             <hr>
 
-            <div class="comments">
+         <!--    <div class="comments">
               <h2>Comments</h2>
               <div class="">
                 <transition-group name="slide-fade" >
@@ -138,10 +138,19 @@
                   </div>
                 </transition-group>
               </div>
-            </div>
+            </div> -->
 
+            <Comments :comments="post.comments"
+                      :userId="loggedUser._id"
+                      :postId="post._id"
+                      @comment-liked="sendCommentLike"
+                      @comment-deleted="deleteComment"
+                      @user-selected="selectUser" />
             <!-- <Comments /> -->
-            <div v-if="isLogged" 
+            <CommentAdd :isLogged="isLogged" 
+                        :postId="post._id"
+                        @comment-added="newComment" />
+<!--             <div v-if="isLogged" 
                   class="add__comment">
               <button @click="newComment(commentInput, post._id)" 
                       type="submit" 
@@ -166,7 +175,7 @@
                 </router-link> 
                 to add comments.
               </p>
-            </div>
+            </div> -->
             </div>
           </div>
         </transition-group>
@@ -201,12 +210,16 @@
   import moment from 'moment';
   import { mapGetters, mapActions } from 'vuex';
   import Post from '@/components/Post.vue';
+  import Comments from '@/components/Comments.vue';
+  import CommentAdd from '@/components/CommentAdd.vue';
 
   export default {
     name: 'Posts',
 
     components: {
-      Post
+      Post,
+      Comments,
+      CommentAdd
     },
 
     data() {
@@ -270,10 +283,12 @@
         this.enterComment = true;
       },
 
-      newComment(data, id) {
+      async newComment(data, id) {
+        console.log(id)
+        this.commentInput.text = data;
         this.commentInput.id = id;
         this.commentInput.user = this.loggedUser._id;
-        this.createComment(this.commentInput);
+        await this.createComment(this.commentInput);
         this.commentInput = {
           id: '',
           text: '',
@@ -312,11 +327,12 @@
         await this.loadPosts(this.currentPage);
         this.posts = [...this.posts, ...this.allPosts.posts];
         await this.syncPosts(this.posts);
-        this.$nextTick(function () {
-          // Code that will run only after the
-          // entire view has been rendered
-          this.resizeAllGridItems();
-        })
+        // this.$nextTick(function () {
+        //   // Code that will run only after the
+        //   // entire view has been rendered
+        //   //this.resizeAllGridItems();
+        //   setTimeout(() => { this.resizeAllGridItems(); }, 500);
+        // })
       },
 
       resizeGridItem(item){
@@ -328,11 +344,13 @@
       },
 
       resizeAllGridItems(){
+        //this.loading =true
         let allItems = document.getElementsByClassName("post");
         console.log(this.allItems);
         for (let x = 0; x < allItems.length; x++){
           this.resizeGridItem(allItems[x]);
         }
+        //this.loading = false
       },
       
       onAppeared() {
@@ -347,37 +365,26 @@
         await this.loadPosts(0);
         this.posts = this.allPosts.posts;
       }
-      setTimeout(function(){0; }, 3000);
       this.loading = false;
-      
     },
 
     async mounted() {
       this.onAppeared();
-/*       document.addEventListener('scroll',()=>{
-        if ((window.innerHeight + window.scrollY) >= document.body.offsetHeight) {
-          alert("you're at the bottom of the page");
-        }
-      }); */
-      //window.onload = this.resizeAllGridItems();
-      window.addEventListener("resize", this.resizeAllGridItems);
-
-      this.$nextTick(function () {
-        // Code that will run only after the
-        // entire view has been rendered
-        this.resizeAllGridItems();
-      })
+      // window.addEventListener("resize", this.resizeAllGridItems);
+      // this.$nextTick(function () {
+      //   //this.resizeAllGridItems();
+      //   //setTimeout(() => { this.resizeAllGridItems(); }, 700);
+      // })
     },
-    updated() {
-    // run something after dom has changed by vue
-      this.$nextTick(function () {
-        // Code that will run only after the
-        // entire view has been rendered
-        let rrr = this.resizeAllGridItems;
-        setTimeout(function(){ rrr(); }, 500);
-        
-      })
-    }
+
+    // updated() {
+    //   //this.loading = true
+    //   this.$nextTick(function () {
+    //     setTimeout(() => { this.resizeAllGridItems(); }, 500);
+    //     //setTimeout(() => {  }, 700);
+    //   })
+      
+    // }
   }
 </script>
 
@@ -466,25 +473,27 @@
   }
 
 .postc {
-  display: grid;
+  width: 70%;
+  justify-self: center;
+  /* display: grid;
   grid-gap: 1px;
-  grid-template-columns: repeat(auto-fill, minmax(400px,1fr));
-  grid-auto-rows: 32px;
+  grid-template-columns: repeat(auto-fill, minmax(350px,1fr));
+  grid-auto-rows: 32px; */
 }
 
 
 /* 2 columns by default, hide columns 2 & 3 */
-.post:nth-child(2)  .post:nth-child(3) { display: none }
+/* .post:nth-child(2)  .post:nth-child(3) { display: none } */
 
 /* 3 columns at medium size */
-@media ( min-width: 768px ) {
+/* @media ( min-width: 768px ) {
   .post:nth-child(2) { display: block; } /* show column 2 */
-}
+/*} */
 
 /* 4 columns at large size */
-@media ( min-width: 1080px ) {
+/* @media ( min-width: 1080px ) {
   .post:nth-child(3) { display: block; } /* show column 3 */
-}
+/*} */
 
   .btn__del {
     width: 10px;
