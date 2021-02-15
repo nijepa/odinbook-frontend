@@ -4,22 +4,39 @@
       <h2>Comments</h2>
       <div class="">
         <transition-group name="slide-fade" >
+
           <div v-for="comment in comments" 
                 :key="comment._id">
+
             <p v-html="comment.text"></p>
-            <div class="likes">
+
+            <Likes :post="comment" 
+                    :userId="userId"
+                    :postId="postId" />
+<!--             <div class="likes">
               <img @click="commentLike(comment._id, postId)" 
                     class="like__img"
-                    :src="comment.likes.length ? getImgUrl('liked') : getImgUrl('like')" alt="">
+                    :src="comment.likes.length ?
+                          getImgUrl('liked') : 
+                          getImgUrl('like')" 
+                    alt="">
               <p class="likes__nr">
                 {{ comment.likes.length }}
               </p>
-            </div>
+            </div> -->
 
-            <div class="post-header">
+            <PostHeader :post="comment"
+                        :userId="userId"
+                        :user="comment.author"
+                        :postId="postId" />
+<!--            <div class="post-header">
+
               <div class="" >
                 <a @click="userSelect(comment.author)">
-                  <img :src="comment.author.picture || require('../assets/nopic' + Math.floor(Math.random() * 5) + '.png')" 
+                  <img :src="comment.author.picture || 
+                            require('../assets/nopic' + 
+                            Math.floor(Math.random() * 5) + 
+                            '.png')" 
                         class="user__img">
                 </a>
                 &copy;
@@ -32,6 +49,7 @@
                   &copy; {{ comment.createdAt | formatDate }} 
                 </p>
               </div>
+
               <button v-if="userId === comment.author._id" 
                       @click="commentDelete(comment, postId)"
                       type="submit" 
@@ -41,7 +59,7 @@
                       alt="delete" 
                       class="btn__del">
               </button>
-            </div>
+            </div> -->
           </div>
         </transition-group>
       </div>
@@ -51,14 +69,23 @@
 
 <script>
   import moment from 'moment';
+  import Likes from '@/components/Likes.vue';
+  import PostHeader from '@/components/PostHeader.vue';
 
   export default {
+    name: 'Comments',
+
     filters: {
       formatDate: function(value) {
         if (value) {
           return moment(String(value)).format('LLLL')
         }
       }
+    },
+
+    components: {
+      Likes,
+      PostHeader
     },
 
     props: {
@@ -86,7 +113,3 @@
     }
   }
 </script>
-
-<style>
-
-</style>

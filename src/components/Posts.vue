@@ -4,6 +4,7 @@
         <img class="loading__img"  
               src="../assets/loading.gif" alt="">
     </div>
+
     <div v-else :key="2">
       <transition name="slide-fade" 
                   v-if="!allPosts">
@@ -37,10 +38,17 @@
                 :key="post._id" 
                 class="post">
             <div class="contentp">
-            <div class="post-header">
+
+            <PostHeader :post="post"
+                        :userId="loggedUser._id"
+                        :user="post.user" />
+<!--            <div class="post-header">
               <div class="">
                 <a @click="selectUser(post.user)">
-                  <img :src="post.user.picture || require('../assets/nopic' + Math.floor(Math.random() * 5) + '.png')" 
+                  <img :src="post.user.picture || 
+                            require('../assets/nopic' + 
+                            Math.floor(Math.random() * 5) + 
+                            '.png')" 
                         class="user__img">
                 </a>
                 &copy;
@@ -62,16 +70,20 @@
                       alt="delete" 
                       class="btn__del">
               </button>
-            </div>
-
-            <div class="likes">
+            </div> -->
+            <Likes :post="post" 
+                    :userId="loggedUser._id" />
+<!--             <div class="likes">
               <img @click="sendLike(post._id)" 
                     class="like__img" 
-                    :src="post.likes.length ? getImgUrl('liked') : getImgUrl('like')" alt="">
+                    :src="post.likes.length ? 
+                          getImgUrl('liked') : 
+                          getImgUrl('like')" 
+                    alt="">
               <p class="likes__nr">
                 {{ post.likes.length }}
               </p>
-            </div>
+            </div> -->
 
             <div class="">
               <h1>{{ post.title }}</h1>
@@ -79,7 +91,9 @@
 
             <div class="post__content">
               <div class="">
-                <img :src="post.img_url ? post.img_url : 'https://images.pexels.com/photos/3028961/pexels-photo-3028961.jpeg?auto=compress&cs=tinysrgb&h=750&w=1260'"
+                <img :src="post.img_url ? 
+                          post.img_url : 
+                          defaultPic"
                     alt=""
                     class="post__img">
               </div>
@@ -93,7 +107,7 @@
             </div>
             <hr>
 
-         <!--    <div class="comments">
+        <!--    <div class="comments">
               <h2>Comments</h2>
               <div class="">
                 <transition-group name="slide-fade" >
@@ -142,10 +156,7 @@
 
             <Comments :comments="post.comments"
                       :userId="loggedUser._id"
-                      :postId="post._id"
-                      @comment-liked="sendCommentLike"
-                      @comment-deleted="deleteComment"
-                      @user-selected="selectUser" />
+                      :postId="post._id" />
             <!-- <Comments /> -->
             <CommentAdd :isLogged="isLogged" 
                         :postId="post._id"
@@ -210,21 +221,26 @@
   import moment from 'moment';
   import { mapGetters, mapActions } from 'vuex';
   import Post from '@/components/Post.vue';
+  import PostHeader from '@/components/PostHeader.vue';
   import Comments from '@/components/Comments.vue';
   import CommentAdd from '@/components/CommentAdd.vue';
+  import Likes from '@/components/Likes.vue';
 
   export default {
     name: 'Posts',
 
     components: {
       Post,
+      PostHeader,
       Comments,
-      CommentAdd
+      CommentAdd,
+      Likes
     },
 
     data() {
       return {
         posts: [],
+        defaultPic: 'https://images.pexels.com/photos/3028961/pexels-photo-3028961.jpeg?auto=compress&cs=tinysrgb&h=750&w=1260',
         enterComment: false,
         commentInput: {
           id: '',
@@ -269,9 +285,7 @@
                       'commentDelete',
                       'fetchSelectedUser',
                       'createComment',
-                      'postType',
-                      'likeUpdate',
-                      'likeCommentUpdate' ]),
+                      'postType' ]),
       
       selectUser(selectedUser) {
         this.fetchSelectedUser(selectedUser);
@@ -300,23 +314,23 @@
         this.postType(post);
       },
 
-      deleteComment(comment, postId) {
+/*       deleteComment(comment, postId) {
         const comData = [{comment}, {postId}];
         this.commentDelete(comData);
-      },
+      }, */
       
-      sendLike(id) {
+/*       sendLike(id) {
         this.likeInput.id = id;
         this.likeInput.user = this.loggedUser._id;
         this.likeUpdate(this.likeInput);
-      },
+      }, */
 
-      sendCommentLike(id, postId) {
+/*       sendCommentLike(id, postId) {
         this.likeInput.id = id;
         this.likeInput.user = this.loggedUser._id;
         this.likeInput.postId = postId;
         this.likeCommentUpdate(this.likeInput);
-      },
+      }, */
 
       getImgUrl(pic) {
         return require('../assets/' + pic + '.png')

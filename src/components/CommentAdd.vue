@@ -1,5 +1,6 @@
 <template>
   <div class="">
+
     <div v-if="isLogged" 
           class="add__comment">
       <button @click="commentCreated(commentText, postId)" 
@@ -16,6 +17,7 @@
                 required>
       </textarea>
     </div>
+
     <div v-else 
           class="add__comment">
       <p>Please 
@@ -51,7 +53,3 @@
 
   }
 </script>
-
-<style>
-
-</style>
