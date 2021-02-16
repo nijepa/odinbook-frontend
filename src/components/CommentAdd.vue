@@ -33,6 +33,8 @@
 
 <script>
   export default {
+    name: 'CommentAdd',
+    
     props: {
       isLogged: Boolean,
       postId: String
@@ -50,6 +52,5 @@
         this.commentText = '';
       }
     }
-
   }
 </script>

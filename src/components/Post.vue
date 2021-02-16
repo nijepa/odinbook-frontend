@@ -1,39 +1,55 @@
 <template>
   <div class="">
-    <transition name="slide-fade" v-if="!enterPost" mode="out-in">
+    <transition name="slide-fade" 
+                v-if="!enterPost" 
+                mode="out-in">
       <div class="" >
-        <button type="submit" class="btn-sub post-new" @click="newPost()" value="" >{{ btnName }}</button>
+        <button type="submit" 
+                class="btn-sub post-new" 
+                @click="newPost()" 
+                value="" >
+                {{ btnName }}
+        </button>
       </div>
     </transition>
-    <transition name="slide-fade" v-else mode="out-in">
-      <form @submit.prevent="addPost()" method="post" class="log" >
-        <input @focus="clearErrors" v-model="postInput.title" type="text" name="title"
-                class="cool-link" placeholder="pls enter title" required>
-        <input @focus="clearErrors" v-model="postInput.img_url" type="text" name="image"
-                class="cool-link" placeholder="pls enter image url">
-        <ckeditor :editor="editor" v-model="postInput.text" :config="{ placeholder:'pls enter content'}"></ckeditor>
-<!--         <editor @focus="clearErrors"  v-model="postInput.text" 
-                name="text" placeholder="pls enter content"
-                :api-key="tinymceKey"
-                :init="{
-                  menubar: false,
-                  plugins: [
-                    'advlist autolink lists link image charmap print preview anchor',
-                    'searchreplace visualblocks code fullscreen',
-                    'insertdatetime media table paste code help wordcount'
-                  ],
-                  toolbar:
-                    'undo redo | formatselect | bold italic backcolor link | \
-                    alignleft aligncenter alignright alignjustify | \
-                    bullist numlist outdent indent | removeformat | help | fontsizeselect '
-                }"
-        /> -->
-        <!-- <textarea @focus="clearErrors" v-model="postInput.text" name="text" class="cool-link" placeholder="pls enter content" required></textarea> -->
+    <transition name="slide-fade" 
+                v-else mode="out-in">
+      <form @submit.prevent="addPost()" 
+            method="post" 
+            class="log" >
+        <input @focus="clearErrors" 
+                v-model="postInput.title" 
+                type="text" 
+                name="title"
+                class="cool-link" 
+                placeholder="pls enter title" 
+                required>
+        <input @focus="clearErrors" 
+                v-model="postInput.img_url" 
+                type="text" 
+                name="image"
+                class="cool-link" 
+                placeholder="pls enter image url">
+        <ckeditor :editor="editor" 
+                  v-model="postInput.text" 
+                  :config="{ placeholder:'pls enter content'}">
+        </ckeditor>
         <div class="post-footer">
-          <button @click.prevent="newPost()" class="btn-sub btn-cancel" value="" >Cancel</button>
-          <button type="submit" class="btn-sub btn-save" value="Log In" >Save</button>
+          <button @click.prevent="newPost()" 
+                  class="btn-sub btn-cancel" 
+                  value="" >
+                  Cancel
+          </button>
+          <button type="submit" 
+                  class="btn-sub btn-save" 
+                  value="Log In" >
+                  Save
+          </button>
         </div>
-        <p class="err" v-if="getErrors.length !== 0">{{ getErrors }}</p>
+        <p class="err" 
+            v-if="getErrors.length !== 0">
+            {{ getErrors }}
+        </p>
       </form>
     </transition>
   </div>
@@ -41,7 +57,6 @@
 
 <script>
   import { mapGetters, mapActions } from 'vuex';
-  //import Editor from '@tinymce/tinymce-vue'
   import router from '../router';
   import CKEditor from '@ckeditor/ckeditor5-vue';
   import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
@@ -64,7 +79,6 @@
 
     data() {
       return {
-        // tinymceKey: process.env.VUE_APP_TINYMCE_API_KEY,
         editor: ClassicEditor,
         enterPost: false,
         postInput: {

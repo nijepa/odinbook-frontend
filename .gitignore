@@ -2,7 +2,7 @@
 node_modules
 
 src/old
-
+/pics
 /dist
 # local env files
 .env.local

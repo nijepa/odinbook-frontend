@@ -1,9 +1,14 @@
 {
   "name": "odinbook_frontend",
-  "version": "0.3.9",
+  "version": "0.4.5",
   "author": "Nikola Pavicevic <nijepa@gmail.com>",
   "description": "Front-end for Odin-book app",
-  "keywords": ["odinbook", "front-end", "vue", "facebook clone"],
+  "keywords": [
+    "odinbook",
+    "front-end",
+    "vue",
+    "facebook clone"
+  ],
   "repository": "github:https://github.com/nijepa/odinbook-frontend",
   "private": true,
   "scripts": {
@@ -14,17 +19,16 @@
     "servebuild": "vue-cli-service serve -s dist."
   },
   "dependencies": {
-    "@ckeditor/ckeditor5-build-classic": "^23.0.0",
+    "@ckeditor/ckeditor5-build-classic": "^25.0.0",
     "@ckeditor/ckeditor5-vue": "^1.0.3",
-    "axios": "^0.20.0",
-    "connect-history-api-fallback": "^1.6.0",
-    "core-js": "^3.6.5",
+    "axios": "^0.21.1",
+    "core-js": "^3.8.3",
     "facebook-login-vuejs": "^2.1.3",
     "moment": "^2.29.1",
     "vue": "^2.6.12",
     "vue-google-login": "^2.0.5",
-    "vue-router": "^3.4.7",
-    "vuex": "^3.5.1"
+    "vue-router": "^3.5.1",
+    "vuex": "^3.6.2"
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "~4.5.7",

@@ -2,18 +2,34 @@
   <nav>
     <a class="odin">ODINBOOK</a>
     <div class="links">
-      <router-link to="/" class="nav__link" 
-                    :class="currentRouteName === '/' ? 'nav__link_active' : ''">Home</router-link>
-      <router-link to="/users" class="nav__link" 
-                    :class="currentRouteName === '/users' ? 'nav__link_active' : ''">Friends</router-link>
-      <router-link to="/timeline" class="nav__link" 
-                    :class="currentRouteName === '/timeline' ? 'nav__link_active' : ''">Timeline</router-link>
-      <router-link to="/profile" class="nav__link profile" 
-                    :class="currentRouteName === '/profile' ? 'nav__link_active' : ''">Profile</router-link>
+      <router-link to="/" 
+                    class="nav__link" 
+                    :class="currentRouteName === '/' ? 'nav__link_active' : ''">
+        Home
+      </router-link>
+      <router-link to="/users" 
+                    class="nav__link" 
+                    :class="currentRouteName === '/users' ? 'nav__link_active' : ''">
+        Friends
+      </router-link>
+      <router-link to="/timeline" 
+                    class="nav__link" 
+                    :class="currentRouteName === '/timeline' ? 'nav__link_active' : ''">
+        Timeline
+      </router-link>
+      <router-link to="/profile" 
+                    class="nav__link profile" 
+                    :class="currentRouteName === '/profile' ? 'nav__link_active' : ''">
+        Profile
+      </router-link>
     </div>
     <div class="user__logout">
       &#10022; {{loggedUser.name}} &#10022;
-      <a @click="logout(loggedUser)" href="#" class="logout">Log Out</a>
+      <a @click="logout(loggedUser)" 
+          href="#" 
+          class="logout">
+        Log Out
+      </a>
     </div>
   </nav>
 </template>

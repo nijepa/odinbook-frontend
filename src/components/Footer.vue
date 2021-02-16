@@ -4,10 +4,15 @@
       <a href="mailto:nijepa@hotmail.com"> Nikola Pavicevic </a> @ 2020
     </p>
     <p>Final project assignment for 
-      <a href="https://www.theodinproject.com/courses/nodejs" target="blank">
-        <img :src="require('../assets/odin-logo.svg')" alt=""> The Odin Project
+      <a href="https://www.theodinproject.com/courses/nodejs" 
+          target="blank">
+        <img :src="require('../assets/images/odin-logo.svg')" alt=""> 
+        The Odin Project
       </a> , NodeJS path. The source code can be viewed on 
-      <a href="https://github.com/nijepa/odinbook-frontend" target="blank">GitHub</a> .
+      <a href="https://github.com/nijepa/odinbook-frontend" 
+          target="blank">
+        GitHub
+      </a> .
     </p>
   </footer>
 </template>

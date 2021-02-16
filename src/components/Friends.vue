@@ -1,13 +1,17 @@
 <template>
   <transition name="fall" >
-    <div class="friends" v-on:load="onAppeared" v-show="appeared">
+    <div class="friends" 
+          v-on:load="onAppeared" 
+          v-show="appeared">
       <div class="">
         <h1>{{ title }}</h1>
         <hr>
       </div>
       
       <div v-if="!friendsType" class="">
-        <img class="loading__img" src="../assets/loading.gif" alt="">
+        <img class="loading__img" 
+              src="../assets/images/loading.gif" 
+              alt="">
       </div>
 
       <div v-else class="">
@@ -15,45 +19,37 @@
           <h3>No friends</h3>
         </div>
 
-        <transition-group name="slide-fade" mode="out-in">
-          <div v-for="user in friendsType" :key="user._id" class="friend">
-            <a @click="selectUser(user)" class="friend__img">
-              <img :src="user.picture || require('../assets/nopic' + Math.floor(Math.random() * 5) + '.png')" 
+        <transition-group name="slide-fade" 
+                          mode="out-in">
+          <div v-for="user in friendsType" 
+                :key="user._id" 
+                class="friend">
+            <a @click="selectUser(user)" 
+                class="friend__img">
+              <img :src="user.picture || require('../assets/images/nopic' + Math.floor(Math.random() * 5) + '.png')" 
                     class="friend__img">
             </a>
-            <a @click="selectUser(user)" class="u__name">
-              <h3 class="u__name">{{ user.username }}</h3>
+            <a @click="selectUser(user)" 
+                class="u__name">
+              <h3 class="u__name">
+                {{ user.username }}
+              </h3>
             </a>
-            <a @click="selectFriends(user)" class="u__friends">
+            <a @click="selectFriends(user)" 
+                class="u__friends">
               <p>Friends ({{nrOfFriends(user.friends)}})</p>
             </a>
-            <a @click="selectUser(user)" class="user__link">{{ user.last_name }}, {{ user.first_name }}</a>
-            <a @click="toggleBtns(btnName, user._id)" href="#" v-if="btnName"
+            <a @click="selectUser(user)" 
+                class="user__link">
+              {{ user.last_name }}, {{ user.first_name }}
+            </a>
+            <a @click="toggleBtns(btnName, user._id)" 
+                href="#" v-if="btnName"
                 :class="btnName === 'Un-friend' || btnName === 'Abort' ? 'btn__type1' : 'btn__type2'"
-                class="toggle__friend">{{ btnName }}
+                class="toggle__friend">
+              {{ btnName }}
             </a>
           </div>
-<!--           <div v-for="user in friendsType" :key="user._id" class="friend">
-            <div class="friend__data">
-              <a @click="selectUser(user)">
-                <img :src="user.picture || require('../assets/nopic' + Math.floor(Math.random() * 5) + '.png')" 
-                      class="friend__img">
-              </a>
-              <div class="friend__text">
-                <a @click="selectUser(user)" class="u__name">
-                  <h3 class="u__name">{{ user.username }}</h3>
-                </a>
-                <a @click="selectFriends(user)" class="u__friends">
-                  <p>Friends ({{nrOfFriends(user.friends)}})</p>
-                </a>
-                <a @click="selectUser(user)" class="user__link">{{ user.last_name }}, {{ user.first_name }}</a>
-              </div>
-            </div>
-            <a @click="toggleBtns(btnName, user._id)" href="#"
-                :class="btnName === 'Un-friend' || btnName === 'Abort' ? 'btn__type1' : 'btn__type2'"
-                class="toggle__friend">{{ btnName }}
-            </a>
-          </div> -->
         </transition-group>
       </div>
     </div>
@@ -186,7 +182,6 @@
     justify-content: space-between;
     align-content: center;
     padding: .5em;
-    /* border-top: 1px solid black; */
   }
 
   .friend:nth-child(even) { 

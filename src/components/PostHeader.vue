@@ -2,7 +2,7 @@
   <div class="">
     <a @click="selectUser(user)">
       <img :src="user.picture || 
-                require('../assets/nopic' + 
+                require('../assets/images/nopic' + 
                 Math.floor(Math.random() * 5) + 
                 '.png')" 
             class="user__img">

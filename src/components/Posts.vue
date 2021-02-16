@@ -2,7 +2,7 @@
   <div>
     <div v-if="loading" :key="1">
         <img class="loading__img"  
-              src="../assets/loading.gif" alt="">
+              src="../assets/images/loading.gif" alt="">
     </div>
 <!-- NO POSTS -->
     <div v-else :key="2" class="posts__wrapper">
@@ -304,6 +304,7 @@
     grid-template-columns: 1fr auto;
     align-items: baseline;
   }
+  
   .loading__img {
     width: 100px;
     height: auto;
@@ -318,25 +319,6 @@
     letter-spacing: .2em;
     margin-top: .5em;
     transition: ease-in-out .4s all;
-  }
-
-  .more > svg > path {
-    text-shadow: 0 1px 0 rgba(255, 255, 255, 0.4);
-    transition: ease-in-out .8s all;
-  }
-
-  .more > h3 {
-    text-shadow: 0 1px 0 rgba(255, 255, 255, 0.4);
-  }
-
-  .more:active,
-  .more:hover {
-    color: var(--blue-darkest);
-  }
-
-  .more:focus > svg > path,
-  .more:hover > svg > path {
-    fill: var(--blue-darkest);
   }
 
   .post__content {
@@ -387,28 +369,10 @@
     align-items: center;
   }
 
-.postc {
-  /*width: 70%;*/
-  justify-self: center;
-  /* display: grid;
-  grid-gap: 1px;
-  grid-template-columns: repeat(auto-fill, minmax(350px,1fr));
-  grid-auto-rows: 32px; */
-}
-
-
-/* 2 columns by default, hide columns 2 & 3 */
-/* .post:nth-child(2)  .post:nth-child(3) { display: none } */
-
-/* 3 columns at medium size */
-/* @media ( min-width: 768px ) {
-  .post:nth-child(2) { display: block; } /* show column 2 */
-/*} */
-
-/* 4 columns at large size */
-/* @media ( min-width: 1080px ) {
-  .post:nth-child(3) { display: block; } /* show column 3 */
-/*} */
+/*   .postc {
+    width: 70%;
+    justify-self: center;
+  } */
 
   .btn__del {
     width: 10px;
@@ -519,6 +483,25 @@
 
   .no__posts {
     text-align: center;
+  }
+
+  .more > svg > path {
+    text-shadow: 0 1px 0 rgba(255, 255, 255, 0.4);
+    transition: ease-in-out .8s all;
+  }
+
+  .more > h3 {
+    text-shadow: 0 1px 0 rgba(255, 255, 255, 0.4);
+  }
+
+  .more:active,
+  .more:hover {
+    color: var(--blue-darkest);
+  }
+
+  .more:focus > svg > path,
+  .more:hover > svg > path {
+    fill: var(--blue-darkest);
   }
 
   .fade-enter-active, .fade-leave-active {

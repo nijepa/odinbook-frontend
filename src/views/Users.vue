@@ -3,7 +3,7 @@
     <Nav />
     <transition name="slide-fade" mode="out-in">
       <div v-if="!isLoadedFriends" class="">
-        <img class="loading__img" src="../assets/loading.gif" alt="">
+        <img class="loading__img" src="../assets/images/loading.gif" alt="">
       </div>
       <div v-else class="friends__lists">
         <Friends title='Friends Request' btnName='Abort' 

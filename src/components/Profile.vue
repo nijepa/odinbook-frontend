@@ -1,15 +1,16 @@
 <template>
-
   <div class="user__profile">
     <transition name="fall">
 
       <div v-if="getSelectedUser._id && this.getSelectedUser._id !== this.loggedUser._id"
-            class="user__profile_selected" v-on:load="onAppeared" v-show="appeared">
+            class="user__profile_selected" 
+            v-on:load="onAppeared" 
+            v-show="appeared">
         <div class="profile__group personal__data">
           <div class="">
           <!-- <span class="info__label">Picture : </span> -->
           <p>
-            <img :src="signupInput.picture || require('../assets/nopic' + Math.floor(Math.random() * 5) + '.png')" 
+            <img :src="signupInput.picture || require('../assets/images/nopic' + Math.floor(Math.random() * 5) + '.png')" 
                 class="info__img">
           </p>
           </div>
@@ -36,11 +37,14 @@
         <div class="profile__group">
           <div class="">
             <span class="info__label">About : </span>
-            <p class="info__input" v-html="signupInput.user_about"></p>
+            <p class="info__input" 
+                v-html="signupInput.user_about">
+            </p>
           </div>
           <div class="">
             <span class="info__label">Friends : </span>
-            <a @click="selectFriends(signupInput)" class="info__friends">
+            <a @click="selectFriends(signupInput)" 
+                class="info__friends">
               <p class="info__input"> {{nrOfFriends(signupInput.friends)}}</p>
             </a>
         </div>
@@ -48,42 +52,62 @@
         
       </div>
 
-      <form v-else @submit.prevent="userUpdate(signupInput)" action=""
-            v-on:load="onAppeared" v-show="appeared">
+      <form v-else 
+            @submit.prevent="userUpdate(signupInput)" action=""
+            v-on:load="onAppeared" 
+            v-show="appeared">
         <div class="form__item">
-          <img :src="signupInput.picture || require('../assets/nopic' + Math.floor(Math.random() * 5) + '.png')" 
+          <img :src="signupInput.picture || require('../assets/images/nopic' + Math.floor(Math.random() * 5) + '.png')" 
                 class="info__img">
         </div>
         <div class="form__item">
           <label for="username">User name</label>
-          <input @focus="clearErrors" v-model="signupInput.username"
-                  type="text" name="username" id="username" required>
+          <input @focus="clearErrors" 
+                  v-model="signupInput.username"
+                  type="text" 
+                  name="username" 
+                  id="username" 
+                  required>
         </div>
         <div class="form__item">
           <label for="first_name">First name</label>
-          <input @focus="clearErrors" v-model="signupInput.first_name"
-                  type="text" name="first_name" id="first_name">
+          <input @focus="clearErrors" 
+                  v-model="signupInput.first_name"
+                  type="text" 
+                  name="first_name" 
+                  id="first_name">
         </div>
         <div class="form__item">
           <label for="last_name">First name</label>
-          <input @focus="clearErrors" v-model="signupInput.last_name"
-                  type="text" name="last_name" id="last_name">
+          <input @focus="clearErrors" 
+                  v-model="signupInput.last_name"
+                  type="text" 
+                  name="last_name" 
+                  id="last_name">
         </div>
         <div class="form__item">
           <label for="email">E-mail</label>
-          <input @focus="clearErrors" v-model="signupInput.email"
-                  type="email" name="email" id="email">
+          <input @focus="clearErrors" 
+                  v-model="signupInput.email"
+                  type="email" 
+                  name="email" 
+                  id="email">
         </div>
         <div class="form__item">
           <label for="password">Password</label>
-          <input @focus="clearErrors" v-model="signupInput.password"
-                  type="password" name="password" id="password">
+          <input @focus="clearErrors" 
+                  v-model="signupInput.password"
+                  type="password" 
+                  name="password" 
+                  id="password">
         </div>
         <div class="form__item">
           <label for="about">About</label>
-          <ckeditor :editor="editor" v-model="signupInput.user_about" 
+          <ckeditor :editor="editor" 
+                    v-model="signupInput.user_about" 
                     :config="{ placeholder:'pls enter content'}"
-                    @focus="clearErrors" name="about" >
+                    @focus="clearErrors" 
+                    name="about" >
           </ckeditor>
 <!--           <textarea @focus="clearErrors" v-model="signupInput.user_about"
                     name="about" id="about" rows="5" cols="30"></textarea> -->
@@ -177,7 +201,6 @@
   }
 
   .user__profile_selected {
-    /* background-color: var(--yellow); */
     background-image: linear-gradient(to top,var(--orange) 5%, white);
     border-radius: 20px;
     padding: 1rem;

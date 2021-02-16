@@ -41,13 +41,6 @@ html {
 }
 
 body {
-  /* background-image: url("../images/ContourLine.svg"),
-                    linear-gradient(210deg, var(--orange), #1247f7);
-  background-size: 340px, auto;
-  /* min-height: calc(100vh - 100px); */
-  /*margin: 50px;
-  background-attachment: fixed;
-  letter-spacing: -1px; */
   margin: 0;
 }
 

@@ -3,29 +3,47 @@
     <h1 class="login__title">Login</h1>
 
     <div class="cont">
-      <form v-if="type === 'login'" @submit.prevent="login(loginInput)" method="post">
+      <form v-if="type === 'login'" 
+            @submit.prevent="login(loginInput)" 
+            method="post">
         <div class="form__item">
           <label for="email">E-mail</label>
-          <input @focus="clearErrors" v-model="loginInput.email" 
-                  type="email" name="email" id="email" required>
+          <input @focus="clearErrors" 
+                  v-model="loginInput.email" 
+                  type="email" 
+                  name="email" 
+                  id="email" 
+                  required>
         </div>
         <div class="form__item">
           <label for="password">Password</label>
-          <input @focus="clearErrors" v-model="loginInput.password" 
-                  type="password" name="password" id="password" >
+          <input @focus="clearErrors" 
+                  v-model="loginInput.password" 
+                  type="password" 
+                  name="password" 
+                  id="password" >
         </div>
         <div class="form__btn">
           <button>Login</button>
           <span>No account ?
-            <a class="register__link" @click="signType('signup')" href="#">Register</a>
+            <a class="register__link" 
+                @click="signType('signup')" 
+                href="#">
+              Register
+            </a>
           </span>
         </div>
-        <p class="err" v-if="getErrors.length != 0">{{ getErrors }}</p>
+        <p class="err" 
+            v-if="getErrors.length != 0">
+          {{ getErrors }}
+        </p>
         <hr>
       </form>
 
       <div class="fb__info">
-        <p class="option_title">Or Log In With :</p>
+        <p class="option_title">
+          Or Log In With :
+        </p>
 
         <facebook-login class="button facebook__style"
                         :appId=FB_ID
@@ -42,11 +60,13 @@
                       :onFailure="onFailure">
         </GoogleLogin>
 
-        <div v-if="isConnected" class="information">
+        <div v-if="isConnected" 
+              class="information">
           <h1>User Info</h1>
           <div class="well">
             <div class="list-item">
-              <img :src="userSocial.picture" class="user__img">
+              <img :src="userSocial.picture" 
+                    class="user__img">
             </div>
             <div class="list-item">
               <i>{{ userSocial.name }}</i>
@@ -56,7 +76,6 @@
             </div>
           </div>
         </div>
-
       </div>
     </div>
   </div>
@@ -138,7 +157,8 @@
       },
       
       getUserData() {
-        this.FB.api('/me', 'GET', { fields: 'id, name, email, first_name, last_name, location, hometown, gender, birthday, picture' },
+        this.FB.api('/me', 'GET', { fields: 
+          'id, name, email, first_name, last_name, location, hometown, gender, birthday, picture' },
           user => {
             this.userSocial.personalID = user.id;
             this.userSocial.email = user.email;
