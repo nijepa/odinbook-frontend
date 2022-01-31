@@ -6,6 +6,15 @@
     </div>
 <!-- NO POSTS -->
     <div v-else :key="2" class="posts__wrapper">
+      <div class="posts-fav">
+        <div v-on:load="onAppeared" 
+            v-show="appeared" 
+            v-for="fav in getFavPosts" 
+            :key="fav._id" 
+            class="post">
+          <p>{{ fav.title }}</p>
+        </div>
+      </div>
       <transition name="slide-fade" 
                   v-if="!allPosts">
         <div v-on:load="onAppeared" 
@@ -200,7 +209,8 @@
                       'getFriends',
                       'isLogged',
                       'loggedUser',
-                      'getSelectedUser' ]),
+                      'getSelectedUser',
+                      'getFavPosts' ]),
     },
 
     filters: {
@@ -221,7 +231,8 @@
                       'commentDelete',
                       'postDelete',
                       'postType',
-                      'fetchFriends' ]),
+                      'fetchFriends',
+                      'loadAllPosts' ]),
       
       selectUser(selectedUser) {
         this.fetchSelectedUser(selectedUser);
@@ -282,6 +293,7 @@
     },
 
     async created() {
+      this.loadAllPosts()
       if (!this.getSelectedUser) {
         await this.loadUserPosts();
       } else {
@@ -301,7 +313,7 @@
 <style>
   .posts__wrapper {
     display: grid;
-    grid-template-columns: 1fr auto;
+    grid-template-columns: 1fr auto 1fr;
     align-items: baseline;
   }
   
@@ -319,6 +331,7 @@
     letter-spacing: .2em;
     margin-top: .5em;
     transition: ease-in-out .4s all;
+    grid-column: 1/4;
   }
 
   .post__content {
@@ -355,12 +368,22 @@
 
   .posts {
     display: grid;
-    min-width: 373px;
+    /* min-width: 373px; */
     background-color: var(--blue);
+    width: 1024px;
+    margin: 1em 0;
   }
 
   .posts:nth-child(even) { 
-    background-color: #ffc64b;
+    /* background-color: #ffc64b; */
+  }
+
+  .posts-fav {
+    justify-self: end;
+    display: grid;
+    padding: 1em;
+    margin: 1em;
+    border: 1px solid peru;
   }
 
   .post-header {

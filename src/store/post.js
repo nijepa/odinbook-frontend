@@ -1,13 +1,14 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
 import axios from 'axios';
-const URL = process.env.VUE_APP_BACKEND_URL;
+const URL = process.env.VUE_APP_BACKEND_URL_LOCAL;
 import apiClient from './api_client';
 import router from '../router';
 
 Vue.use(Vuex)
 
 const state = {
+  allPosts: [],
   posts: [],
   isTimeline: false,
   userPosts: [],
@@ -21,11 +22,17 @@ const getters = {
   getIsTimeline: state => state.isTimeline,
   getUserPosts: state => state.userPosts,
   allComments: state => state.comments,
-  getSelectedPost: state => state.selectedPost
+  getSelectedPost: state => state.selectedPost,
+  getFavPosts: state => state.allPosts
 };
 
 /* -------------------------------------- MUTATIONS -------------------------------------- */
 const mutations = {
+
+  setAllPosts(state, posts) {
+    state.allPosts = posts;
+  },
+
   updatePosts(state, posts) {
     state.posts = posts;
   },
@@ -100,6 +107,13 @@ const mutations = {
 
 /* -------------------------------------- ACTIONS -------------------------------------- */
 const actions = {
+
+  async loadAllPosts({ commit }) {
+    await axios.get(URL + 'posts').then((response) => {
+      commit('setAllPosts', response.data);
+      commit('changeLoadingState', false);
+    })
+  },
   
   async loadPosts({ commit }, page) {
     await axios.get(URL + 'posts/' + page).then((response) => {
