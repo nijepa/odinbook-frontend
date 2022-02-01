@@ -10,6 +10,7 @@ Vue.use(Vuex)
 const state = {
   allPosts: [],
   posts: [],
+  post: {},
   isTimeline: false,
   userPosts: [],
   comments: [],
@@ -21,6 +22,7 @@ const getters = {
   allPosts: state => state.posts,
   getIsTimeline: state => state.isTimeline,
   getUserPosts: state => state.userPosts,
+  getPost: state => state.post,
   allComments: state => state.comments,
   getSelectedPost: state => state.selectedPost,
   getFavPosts: state => state.allPosts
@@ -39,6 +41,10 @@ const mutations = {
 
   reupdatePosts(state, posts) {
     state.posts.posts = posts;
+  },
+
+  setPost(state, post) {
+    state.post = post;
   },
 
   setisTimeline(state, isTimeline) {
@@ -118,6 +124,13 @@ const actions = {
   async loadPosts({ commit }, page) {
     await axios.get(URL + 'posts/' + page).then((response) => {
       commit('updatePosts', response.data);
+      commit('changeLoadingState', false);
+    })
+  },
+
+  async loadPost({ commit }, id) {
+    await axios.get(URL + 'posts/' + id).then((response) => {
+      commit('setPost', response.data);
       commit('changeLoadingState', false);
     })
   },

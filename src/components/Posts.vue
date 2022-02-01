@@ -6,7 +6,7 @@
     </div>
 <!-- NO POSTS -->
     <div v-else :key="2" class="posts__wrapper">
-      <favorites />
+      <favorites @post-clicked="handlePost" />
       <transition name="slide-fade" 
                   v-if="!allPosts">
         <div v-on:load="onAppeared" 
@@ -204,7 +204,8 @@
                       'isLogged',
                       'loggedUser',
                       'getSelectedUser',
-                      'getFavPosts' ]),
+                      'getFavPosts',
+                      'getPost' ]),
     },
 
     filters: {
@@ -226,12 +227,17 @@
                       'postDelete',
                       'postType',
                       'fetchFriends',
-                      'loadAllPosts' ]),
+                      'loadAllPosts',
+                      'loadPost' ]),
       
       selectUser(selectedUser) {
         this.fetchSelectedUser(selectedUser);
         this.loadUserPosts(selectedUser._id);
         this.$router.push({ name: 'Timeline' });
+      },
+
+      handlePost(id) {
+        this.loadPost(id)
       },
 
       addComment() {

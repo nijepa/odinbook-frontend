@@ -1,7 +1,11 @@
 <template>
-  <div class="posts-fav ">
+  <div class="posts-fav">
+    <div class="">
+      <h1>Most Liked</h1>
+      <hr>
+    </div>
     <div v-for="fav in getFavPosts" :key="fav._id" class="fav">
-      <div class="fav__wrapper">
+      <div class="fav__wrapper" @click="handleClick(fav._id)">
         <p>{{ fav.title }}</p>
         <img
           :src="fav.img_url ? fav.img_url : defaultPic"
@@ -16,7 +20,6 @@
         <p>{{ fav.user.first_name }}</p>
         <p>{{ fav.createdAt | shortDate }}</p>
       </div>
-      
     </div>
   </div>
 </template>
@@ -27,12 +30,6 @@ import { mapGetters, mapActions } from "vuex";
 import loadImage from '../mixins/loadImage';
 export default {
   name: "Favorites",
-  // props: {
-  //   favorites: {
-  //     type: Array,
-  //     required: true
-  //   },
-  // },
   mixins: [
     loadImage
   ],
@@ -56,6 +53,9 @@ export default {
     onAppeared() {
       this.appeared = true;
     },
+    handleClick(id) {
+      this.$emit('postClicked', id)
+    }
   },
   async mounted() {
     await this.loadAllPosts();
@@ -74,6 +74,7 @@ export default {
   background-color: var(--yellow);
   box-shadow: 0px 5px 4px 0px rgba(0,0,0,0.75);
   align-content: start;
+  align-self: baseline;
 }
 .fav__wrapper {
   display: grid;
@@ -99,8 +100,9 @@ export default {
 }
 .fav:hover {
   background-color: var(--blue);
-  transform: scale(1.1);
+  transform: scale(1.05);
   transition: all .4s ease-in-out;
   color: #1f1700;
+  box-shadow: 0px 5px 4px 0px rgba(0,0,0,0.75);
 }
 </style>
