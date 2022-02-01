@@ -6,6 +6,7 @@
     </div>
 <!-- NO POSTS -->
     <div v-else :key="2" class="posts__wrapper">
+      <favorites @post-clicked="handlePost" />
       <transition name="slide-fade" 
                   v-if="!allPosts">
         <div v-on:load="onAppeared" 
@@ -154,6 +155,7 @@
   import CommentAdd from '@/components/CommentAdd.vue';
   import Likes from '@/components/Likes.vue';
   import Friends from '@/components/Friends.vue';
+  import Favorites from '@/components/Favorites.vue';
   import loadImage from '../mixins/loadImage';
 
   export default {
@@ -164,7 +166,8 @@
       PostHeader,
       CommentAdd,
       Likes,
-      Friends
+      Friends,
+      Favorites
     },
 
     mixins: [
@@ -200,7 +203,9 @@
                       'getFriends',
                       'isLogged',
                       'loggedUser',
-                      'getSelectedUser' ]),
+                      'getSelectedUser',
+                      'getFavPosts',
+                      'getPost' ]),
     },
 
     filters: {
@@ -221,12 +226,18 @@
                       'commentDelete',
                       'postDelete',
                       'postType',
-                      'fetchFriends' ]),
+                      'fetchFriends',
+                      'loadAllPosts',
+                      'loadPost' ]),
       
       selectUser(selectedUser) {
         this.fetchSelectedUser(selectedUser);
         this.loadUserPosts(selectedUser._id);
         this.$router.push({ name: 'Timeline' });
+      },
+
+      handlePost(id) {
+        this.loadPost(id)
       },
 
       addComment() {
@@ -282,6 +293,7 @@
     },
 
     async created() {
+      //this.loadAllPosts()
       if (!this.getSelectedUser) {
         await this.loadUserPosts();
       } else {
@@ -301,8 +313,8 @@
 <style>
   .posts__wrapper {
     display: grid;
-    grid-template-columns: 1fr auto;
-    align-items: baseline;
+    grid-template-columns: 1fr auto 1fr;
+    /* align-items: baseline; */
   }
   
   .loading__img {
@@ -319,6 +331,7 @@
     letter-spacing: .2em;
     margin-top: .5em;
     transition: ease-in-out .4s all;
+    grid-column: 1/4;
   }
 
   .post__content {
@@ -355,12 +368,14 @@
 
   .posts {
     display: grid;
-    min-width: 373px;
+    /* min-width: 373px; */
     background-color: var(--blue);
+    width: 1024px;
+    margin: 1em 0;
   }
 
   .posts:nth-child(even) { 
-    background-color: #ffc64b;
+    /* background-color: #ffc64b; */
   }
 
   .post-header {

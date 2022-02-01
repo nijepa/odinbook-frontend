@@ -170,11 +170,12 @@
     align-content: baseline;
     align-self: baseline;
     box-shadow: 0px 5px 4px 0px rgba(0,0,0,0.75);
+    justify-self: start;
   }
 
   .friend {
     display: grid;
-    grid-template-columns: 1fr auto 1fr 1fr;
+    grid-template-columns: auto 1fr auto auto;
     grid-template-rows: repeat(2, 1fr);
     grid-column-gap: 1em;
     grid-row-gap: 0px; 
