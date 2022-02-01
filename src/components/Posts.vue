@@ -6,15 +6,7 @@
     </div>
 <!-- NO POSTS -->
     <div v-else :key="2" class="posts__wrapper">
-      <div class="posts-fav">
-        <div v-on:load="onAppeared" 
-            v-show="appeared" 
-            v-for="fav in getFavPosts" 
-            :key="fav._id" 
-            class="post">
-          <p>{{ fav.title }}</p>
-        </div>
-      </div>
+      <favorites />
       <transition name="slide-fade" 
                   v-if="!allPosts">
         <div v-on:load="onAppeared" 
@@ -163,6 +155,7 @@
   import CommentAdd from '@/components/CommentAdd.vue';
   import Likes from '@/components/Likes.vue';
   import Friends from '@/components/Friends.vue';
+  import Favorites from '@/components/Favorites.vue';
   import loadImage from '../mixins/loadImage';
 
   export default {
@@ -173,7 +166,8 @@
       PostHeader,
       CommentAdd,
       Likes,
-      Friends
+      Friends,
+      Favorites
     },
 
     mixins: [
@@ -293,7 +287,7 @@
     },
 
     async created() {
-      this.loadAllPosts()
+      //this.loadAllPosts()
       if (!this.getSelectedUser) {
         await this.loadUserPosts();
       } else {
@@ -314,7 +308,7 @@
   .posts__wrapper {
     display: grid;
     grid-template-columns: 1fr auto 1fr;
-    align-items: baseline;
+    /* align-items: baseline; */
   }
   
   .loading__img {
@@ -376,14 +370,6 @@
 
   .posts:nth-child(even) { 
     /* background-color: #ffc64b; */
-  }
-
-  .posts-fav {
-    justify-self: end;
-    display: grid;
-    padding: 1em;
-    margin: 1em;
-    border: 1px solid peru;
   }
 
   .post-header {
