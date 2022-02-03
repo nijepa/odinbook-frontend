@@ -121,7 +121,7 @@
     justify-self: flex-end;
   }
 
-  @media (max-width: 760px) {
+  @media (max-width: 890px) {
     nav {
       grid-template-columns: auto;
     }

@@ -129,8 +129,11 @@ const actions = {
   },
 
   async loadPost({ commit }, id) {
-    await axios.get(URL + 'posts/' + id).then((response) => {
+    await axios.get(URL + 'posts/post/' + id).then((response) => {
       commit('setPost', response.data);
+      const arr = {posts: []}
+      arr.posts.push(response.data)
+      commit('updatePosts', arr);
       commit('changeLoadingState', false);
     })
   },

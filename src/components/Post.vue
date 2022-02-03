@@ -149,7 +149,9 @@
   }
 
   .post-new{
-    margin-top: 5px;
+    margin-top: 1em;
+    padding: 1em !important;
+    font-size: 1.2em !important;
   }
 
   .btn-save {

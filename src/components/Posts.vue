@@ -6,7 +6,9 @@
     </div>
 <!-- NO POSTS -->
     <div v-else :key="2" class="posts__wrapper">
+<!-- FAVORITES -->
       <favorites @post-clicked="handlePost" />
+
       <transition name="slide-fade" 
                   v-if="!allPosts">
         <div v-on:load="onAppeared" 
@@ -119,7 +121,7 @@
           </div>
         </transition-group>
       </div>
-
+<!-- Friends -->
       <Friends title='Friends' 
                 btnName='Un-friend' 
                 :friendsType='getFriends.user' 
@@ -236,8 +238,9 @@
         this.$router.push({ name: 'Timeline' });
       },
 
-      handlePost(id) {
-        this.loadPost(id)
+      async handlePost(id) {
+        await this.loadPost(id)
+        console.log(this.getPost)
       },
 
       addComment() {
@@ -313,7 +316,7 @@
 <style>
   .posts__wrapper {
     display: grid;
-    grid-template-columns: 1fr auto 1fr;
+    grid-template-columns: 1fr 2fr 1fr;
     /* align-items: baseline; */
   }
   
@@ -370,7 +373,7 @@
     display: grid;
     /* min-width: 373px; */
     background-color: var(--blue);
-    width: 1024px;
+    /* width: 1024px; */
     margin: 1em 0;
   }
 
@@ -525,6 +528,17 @@
 
   .fade-enter, .fade-leave-to {
     opacity: 0;
+  }
+
+  .home__friends {
+    border-radius: 0; 
+    background-color: transparent; 
+    justify-self: start;
+  }
+  .home__friends .friend:nth-child(even) { 
+    /* background-color: #ffc64b; */
+    background-color: #56aee0;
+    border-radius: 5px;
   }
 
   @media ( max-width: 768px ) {

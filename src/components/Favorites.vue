@@ -54,7 +54,8 @@ export default {
       this.appeared = true;
     },
     handleClick(id) {
-      this.$emit('postClicked', id)
+      console.log('uuuuuuuuuuuu')
+      this.$emit('post-clicked', id)
     }
   },
   async mounted() {
@@ -68,11 +69,11 @@ export default {
 .posts-fav {
   justify-self: end;
   display: grid;
-  padding: 1rem;
-  margin: 1rem;
-  border-radius: 15px;
-  background-color: var(--yellow);
-  box-shadow: 0px 5px 4px 0px rgba(0,0,0,0.75);
+  padding: .5rem;
+  margin: .5rem;
+  /* border-radius: 15px; */
+  /* background-color: var(--yellow); */
+  box-shadow: 7px 0px 6px -7px rgba(0,0,0,0.75);
   align-content: start;
   align-self: baseline;
 }
@@ -84,7 +85,7 @@ export default {
   justify-items: center;
 }
 .fav {
-  padding: 1em;
+  padding: .5em;
   cursor: pointer;
   border-radius: 5px;
 }
@@ -96,10 +97,11 @@ export default {
   height: 25px;
 }
 .fav:nth-child(even) { 
-  background-color: #ffc64b;
+  /* background-color: #ffc64b; */
+  background-color: #56aee0;
 }
 .fav:hover {
-  background-color: var(--blue);
+  background-color: var(--orange);
   transform: scale(1.05);
   transition: all .4s ease-in-out;
   color: #1f1700;
