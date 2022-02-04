@@ -274,4 +274,12 @@
   .btn__type2 {
     background-color: var(--green-light);
   }
+  @media (max-width: 1024px) {
+    .u__friends {
+      display: none;
+    }
+    .btn__type1 {
+      display: none;
+    }
+  }
 </style>

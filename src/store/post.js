@@ -55,6 +55,10 @@ const mutations = {
     state.userPosts = userPosts;
   },
 
+  updateUserLikes(state, userPosts) {
+    state.userPosts = userPosts;
+  },
+
   clearUserPosts(state) {
     state.userPosts = [];
   },
@@ -150,6 +154,12 @@ const actions = {
   async loadUserPosts({ commit }, id) {
     await axios.get(URL + 'posts/user/' + id).then((response) => {
       commit('updateUserPosts', response.data);
+    })
+  },
+
+  async loadUserLikes({ commit }, id) {
+    await axios.get(URL + 'posts/posts/' + id).then((response) => {
+      commit('updateUserLikes', response.data);
     })
   },
 

@@ -17,6 +17,11 @@
                     :class="currentRouteName === '/timeline' ? 'nav__link_active' : ''">
         Timeline
       </router-link>
+      <a @click="selectUserLikes"
+                    class="nav__link" 
+                    :class="currentRouteName === '/liked' ? 'nav__link_active' : ''">
+        Liked
+      </a>
       <router-link to="/profile" 
                     class="nav__link profile" 
                     :class="currentRouteName === '/profile' ? 'nav__link_active' : ''">
@@ -55,7 +60,12 @@
       ...mapActions([ 'fetchUser',
                       'loadPosts',
                       'initialState',
-                      'logout' ]),
+                      'logout',
+                      'loadUserLikes' ]),
+      async selectUserLikes() {
+        await this.loadUserLikes(this.loggedUser._id)
+        this.$router.push('/liked')
+      }
     },
 
     created() {
@@ -85,7 +95,9 @@
     border-radius: 15px;
     padding: 10px;
   }
-
+  a {
+    cursor: pointer;
+  }
   .nav__link:hover {
     background-color: var(--blue-darkest);
   }
@@ -121,13 +133,13 @@
     justify-self: flex-end;
   }
 
-  @media (max-width: 890px) {
+  @media (max-width: 990px) {
     nav {
       grid-template-columns: auto;
     }
   }
 
-  @media (max-width: 490px) {
+  @media (max-width: 575px) {
     .links {
       display: grid;
       grid-template-columns: auto;

@@ -223,6 +223,7 @@
                       'syncPosts',
                       'choseTimeline',
                       'loadUserPosts',
+                      'loadUserLikes',
                       'fetchSelectedUser',
                       'createComment',
                       'commentDelete',
@@ -374,7 +375,7 @@
     /* min-width: 373px; */
     background-color: var(--blue);
     /* width: 1024px; */
-    margin: 1em 0;
+    margin: .2em 0;
   }
 
   .posts:nth-child(even) { 
@@ -387,10 +388,11 @@
     align-items: center;
   }
 
-/*   .postc {
-    width: 70%;
-    justify-self: center;
-  } */
+  .postc {
+    margin: 0%;
+    /* width: 70%;
+    justify-self: center; */
+  } 
 
   .btn__del {
     width: 10px;
@@ -409,13 +411,14 @@
   }
 
   .post {
-    background-color: var(--yellow);
+    /* background-color: var(--yellow); */
     text-align: left;
-    box-shadow: 0px 5px 4px 0px rgba(0,0,0,0.75);
+    box-shadow: 0px 2px 4px 0px rgba(0,0,0,0.75);
     margin: 5px ;
+    margin-bottom: 10px;
     padding: 10px;
     border-radius: 20px;
-    border: 1px solid grey;
+    /* border: 1px solid grey; */
     background-image: linear-gradient(to top,var(--orange) 5%, white);
   }
 
@@ -531,7 +534,7 @@
   }
 
   .home__friends {
-    border-radius: 0; 
+    border-radius: 20px; 
     background-color: transparent; 
     justify-self: start;
   }
@@ -546,6 +549,9 @@
       grid-template-columns: 1fr;
     }
     .home__friends {
+      display: none;
+    }
+    .posts-fav {
       display: none;
     }
   }

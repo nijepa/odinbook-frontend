@@ -71,7 +71,7 @@ export default {
   display: grid;
   padding: .5rem;
   margin: .5rem;
-  /* border-radius: 15px; */
+  border-radius: 20px;
   /* background-color: var(--yellow); */
   box-shadow: 7px 0px 6px -7px rgba(0,0,0,0.75);
   align-content: start;
