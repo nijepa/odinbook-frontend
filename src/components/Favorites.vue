@@ -1,24 +1,27 @@
 <template>
-  <div class="posts-fav">
-    <div class="">
-      <h1>Most Liked</h1>
-      <hr />
-    </div>
-    <div v-for="fav in getFavPosts" :key="fav._id" class="fav">
-      <div class="fav__wrapper" @click="handleClick(fav._id)">
-        <p>{{ fav.title }}</p>
-        <img
-          :src="fav.img_url ? fav.img_url : defaultPic"
-          alt=""
-          class="fav__img"
-        />
-        <h3>{{ fav.likes.length }}</h3>
-        <img class="fav__like" :src="getImgUrl('liked')" alt="" />
-        <p>{{ fav.user.first_name }}</p>
-        <p>{{ fav.createdAt | shortDate }}</p>
+  <transition name="fall" >
+    <div class="posts-fav" v-on:load="onAppeared" 
+          v-show="appeared">
+      <div class="">
+        <h1>Most Liked</h1>
+        <hr />
+      </div>
+      <div v-for="fav in getFavPosts" :key="fav._id" class="fav">
+        <div class="fav__wrapper" @click="handleClick(fav._id)">
+          <p>{{ fav.title }}</p>
+          <img
+            :src="fav.img_url ? fav.img_url : defaultPic"
+            alt=""
+            class="fav__img"
+          />
+          <h3>{{ fav.likes.length }}</h3>
+          <img class="fav__like" :src="getImgUrl('liked')" alt="" />
+          <p>{{ fav.user.first_name }}</p>
+          <p>{{ fav.createdAt | shortDate }}</p>
+        </div>
       </div>
     </div>
-  </div>
+  </transition>
 </template>
 
 <script>
@@ -42,6 +45,7 @@ export default {
     return {
       defaultPic:
         "https://images.pexels.com/photos/3028961/pexels-photo-3028961.jpeg?auto=compress&cs=tinysrgb&h=750&w=1260",
+      appeared: false
     };
   },
 
@@ -61,7 +65,9 @@ export default {
   },
 
   async mounted() {
+    this.onAppeared();
     await this.loadAllPosts();
+    
   },
 };
 </script>

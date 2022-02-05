@@ -164,6 +164,10 @@
     margin-bottom: -10px;
     font-size: 1.2em;
   }
+
+  .cool-link {
+    width: 100%;
+  }
   
   .post-footer {
     justify-self: right;

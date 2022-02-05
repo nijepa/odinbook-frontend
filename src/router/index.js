@@ -36,6 +36,11 @@ Vue.use(VueRouter)
     component: () => import('../views/Liked.vue')
   },
   {
+    path: '/favorite',
+    name: 'Favorite',
+    component: () => import('../views/Favorite.vue')
+  },
+  {
     path: '/friends',
     name: 'UsersFriends',
     component: () => import('../views/UsersFriends.vue')

@@ -276,10 +276,10 @@
   }
   @media (max-width: 1024px) {
     .u__friends {
-      display: none;
+      /* display: none; */
     }
     .btn__type1 {
-      display: none;
+      /* display: none; */
     }
   }
 </style>
