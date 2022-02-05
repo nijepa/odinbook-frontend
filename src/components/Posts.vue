@@ -172,6 +172,8 @@
       Favorites
     },
 
+    props: [ 'single' ],
+
     mixins: [
       loadImage
     ],
@@ -241,7 +243,7 @@
 
       async handlePost(id) {
         await this.loadPost(id)
-        console.log(this.getPost)
+        if (this.$route.name !== 'Favorite') this.$router.push('/favorite')
       },
 
       addComment() {
@@ -298,13 +300,17 @@
 
     async created() {
       //this.loadAllPosts()
-      if (!this.getSelectedUser) {
-        await this.loadUserPosts();
-      } else {
-        await this.loadPosts(0);
-        this.posts = this.allPosts.posts;
+      console.log('1111',this.allPosts.posts )
+      console.log('222', this.getUserPosts)
+      if (!this.single) {
+        if (!this.getSelectedUser) {
+          await this.loadUserPosts();
+        } else {
+          await this.loadPosts(0);
+          this.posts = this.allPosts.posts;
+        }
+        await this.fetchFriends(this.loggedUser._id);
       }
-      await this.fetchFriends(this.loggedUser._id);
       this.loading = false;
     },
 
@@ -376,6 +382,7 @@
     background-color: var(--blue);
     /* width: 1024px; */
     margin: .2em 0;
+    align-self: baseline;
   }
 
   .posts:nth-child(even) { 
@@ -542,6 +549,15 @@
     /* background-color: #ffc64b; */
     background-color: #56aee0;
     border-radius: 15px;
+  }
+
+  @media (max-width: 1024px) {
+    .home__friends .btn__type1 {
+      display: none;
+    }
+    .home__friends .u__friends {
+      display: none;
+    }
   }
 
   @media ( max-width: 768px ) {

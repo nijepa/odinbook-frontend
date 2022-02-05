@@ -118,14 +118,14 @@
         FB: undefined,
         FB_ID: process.env.VUE_APP_FACEBOOK_ID,
         params: {
-            client_id: process.env.VUE_APP_GOOGLE_ID
+          client_id: process.env.VUE_APP_GOOGLE_ID
         },
         // only needed if you want to render the button with the google ui
         renderParams: {
-            width: 230,
-            height: 35,
-            longtitle: true,
-            //theme: 'dark'
+           width: 230,
+          height: 35,
+          longtitle: true,
+          //theme: 'dark'
         }
       }
     },
@@ -162,7 +162,7 @@
           user => {
             this.userSocial.personalID = user.id;
             this.userSocial.email = user.email;
-            this.userSocial.name = user.name;
+            this.userSocial.username = user.name;
             this.userSocial.picture = user.picture.data.url;
             this.userSocial.first_name = user.first_name;
             this.userSocial.last_name = user.last_name;
@@ -210,15 +210,9 @@
           if (a.split(" ").length > 1) {
             this.userSocial.first_name = a.split(" ")[0]
             this.userSocial.last_name = a.split(" ")[1]
-            this.userSocial.name = a
+            this.userSocial.username = a
           }
         })
-
-        // this.userSocial.email = user.Wt;
-        // this.userSocial.name = user.Ad;
-        // this.userSocial.picture = user.JJ;
-        // this.userSocial.first_name = user.dV;
-        // this.userSocial.last_name = user.fT;
         this.login(this.userSocial)
       },
       
