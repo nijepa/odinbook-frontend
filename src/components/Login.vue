@@ -195,15 +195,29 @@
         this.logout(this.loggedUser)
       },
 
-      onSuccess(googleUser) {
+      async onSuccess(googleUser) {
         // This only gets the user information: id, name, imageUrl and email
-        const user = googleUser.getBasicProfile();
+        const user = await googleUser.getBasicProfile();
         console.log(user)
-        this.userSocial.email = user.Wt;
-        this.userSocial.name = user.Ad;
-        this.userSocial.picture = user.JJ;
-        this.userSocial.first_name = user.dV;
-        this.userSocial.last_name = user.fT;
+        const arr = Object.values(user)
+        arr.forEach(a => {
+          if (a.startsWith('http', 0)) {
+            this.userSocial.picture = a
+          }
+          if (a.includes('@')) {
+            this.userSocial.email = a
+          }
+          if (a.split(" ").length > 1) {
+            this.userSocial.first_name = a.split(" ")[0]
+            this.userSocial.last_name = a.split(" ")[1]
+          }
+        })
+
+        // this.userSocial.email = user.Wt;
+        // this.userSocial.name = user.Ad;
+        // this.userSocial.picture = user.JJ;
+        // this.userSocial.first_name = user.dV;
+        // this.userSocial.last_name = user.fT;
         this.login(this.userSocial)
       },
       
