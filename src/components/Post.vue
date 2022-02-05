@@ -17,22 +17,28 @@
       <form @submit.prevent="addPost()" 
             method="post" 
             class="log" >
+        <label class="post__label" for="title" :style="{'visibility': showLabel}">Title</label>
         <input @focus="clearErrors" 
                 v-model="postInput.title" 
                 type="text" 
                 name="title"
+                id="title"
                 class="cool-link" 
                 placeholder="pls enter title" 
                 required>
+        <label class="post__label" for="image" :style="{'visibility': showLabelImage}">Image</label>
         <input @focus="clearErrors" 
                 v-model="postInput.img_url" 
                 type="text" 
                 name="image"
+                id="image"
                 class="cool-link" 
                 placeholder="pls enter image url">
+        <label class="post__label" for="desc" :style="{'visibility': showLabelDesc}">Content</label>
         <ckeditor :editor="editor" 
                   v-model="postInput.text" 
-                  :config="{ placeholder:'pls enter content'}">
+                  :config="{ placeholder:'pls enter content'}"
+                  id="desc">
         </ckeditor>
         <div class="post-footer">
           <button @click.prevent="newPost()" 
@@ -97,6 +103,15 @@
                       'getErrors', 
                       'getSelectedPost',
                       'allPosts' ]),
+      showLabel() {
+        return this.postInput.title.length ?  'visible' : 'hidden'
+      },
+      showLabelImage() {
+        return this.postInput.img_url.length ?  'visible' : 'hidden'
+      },
+      showLabelDesc() {
+        return this.postInput.text.length ?  'visible' : 'hidden'
+      }
     },
 
     methods: {
@@ -144,6 +159,12 @@
 </script>
 
 <style>
+  .post__label {
+    transition: all 1s ease;
+    margin-bottom: -10px;
+    font-size: 1.2em;
+  }
+  
   .post-footer {
     justify-self: right;
   }

@@ -2,7 +2,7 @@
   <div class="posts-fav">
     <div class="">
       <h1>Most Liked</h1>
-      <hr>
+      <hr />
     </div>
     <div v-for="fav in getFavPosts" :key="fav._id" class="fav">
       <div class="fav__wrapper" @click="handleClick(fav._id)">
@@ -13,10 +13,7 @@
           class="fav__img"
         />
         <h3>{{ fav.likes.length }}</h3>
-        <img  
-          class="fav__like" 
-          :src="getImgUrl('liked')" 
-          alt="">
+        <img class="fav__like" :src="getImgUrl('liked')" alt="" />
         <p>{{ fav.user.first_name }}</p>
         <p>{{ fav.createdAt | shortDate }}</p>
       </div>
@@ -25,42 +22,46 @@
 </template>
 
 <script>
-import moment from 'moment';
+import moment from "moment";
 import { mapGetters, mapActions } from "vuex";
-import loadImage from '../mixins/loadImage';
+import loadImage from "../mixins/loadImage";
 export default {
   name: "Favorites",
-  mixins: [
-    loadImage
-  ],
+
+  mixins: [loadImage],
+
   filters: {
-    shortDate: function(value) {
+    shortDate: function (value) {
       if (value) {
-        return moment(String(value)).format("MMM Do YY")
+        return moment(String(value)).format("MMM Do YY");
       }
-    }
+    },
   },
+
   data() {
     return {
-      defaultPic: 'https://images.pexels.com/photos/3028961/pexels-photo-3028961.jpeg?auto=compress&cs=tinysrgb&h=750&w=1260',
+      defaultPic:
+        "https://images.pexels.com/photos/3028961/pexels-photo-3028961.jpeg?auto=compress&cs=tinysrgb&h=750&w=1260",
     };
   },
+
   computed: {
     ...mapGetters(["getFavPosts"]),
   },
+
   methods: {
     ...mapActions(["loadAllPosts"]),
     onAppeared() {
       this.appeared = true;
     },
+
     handleClick(id) {
-      console.log('uuuuuuuuuuuu')
-      this.$emit('post-clicked', id)
-    }
+      this.$emit("post-clicked", id);
+    },
   },
+
   async mounted() {
     await this.loadAllPosts();
-    console.log(this.getFavPosts)
   },
 };
 </script>
@@ -69,11 +70,11 @@ export default {
 .posts-fav {
   justify-self: end;
   display: grid;
-  padding: .5rem;
-  margin: .5rem;
+  padding: 0.5rem;
+  margin: 0.5rem;
   border-radius: 20px;
   /* background-color: var(--yellow); */
-  box-shadow: 7px 0px 6px -7px rgba(0,0,0,0.75);
+  box-shadow: 7px 0px 6px -7px rgba(0, 0, 0, 0.75);
   align-content: start;
   align-self: baseline;
 }
@@ -85,9 +86,9 @@ export default {
   justify-items: center;
 }
 .fav {
-  padding: .5em;
+  padding: 0.5em;
   cursor: pointer;
-  border-radius: 5px;
+  border-radius: 15px;
 }
 .fav__img {
   width: 70px;
@@ -96,15 +97,15 @@ export default {
 .fav__like {
   height: 25px;
 }
-.fav:nth-child(even) { 
+.fav:nth-child(even) {
   /* background-color: #ffc64b; */
   background-color: #56aee0;
 }
 .fav:hover {
   background-color: var(--orange);
   transform: scale(1.05);
-  transition: all .4s ease-in-out;
+  transition: all 0.4s ease-in-out;
   color: #1f1700;
-  box-shadow: 0px 5px 4px 0px rgba(0,0,0,0.75);
+  box-shadow: 0px 5px 4px 0px rgba(0, 0, 0, 0.75);
 }
 </style>

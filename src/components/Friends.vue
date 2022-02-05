@@ -188,7 +188,7 @@
   .friend:nth-child(even) { 
     background-color: #ffc64b; 
     /* background-color: #56aee0; */
-    border-radius: 5px;
+    border-radius: 15px;
   }
 
   .friend__data {

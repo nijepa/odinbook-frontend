@@ -156,8 +156,8 @@
         this.clearErrors;
       },
       
-      getUserData() {
-        this.FB.api('/me', 'GET', { fields: 
+      async getUserData() {
+        await this.FB?.api('/me', 'GET', { fields: 
           'id, name, email, first_name, last_name, location, hometown, gender, birthday, picture' },
           user => {
             this.userSocial.personalID = user.id;
@@ -183,7 +183,11 @@
       onLogin() {
         this.isConnected = true
         this.getUserData()
-        this.login(this.userSocial)
+        if (this.userSocial.email.length) {
+          this.login(this.userSocial)
+        } else {
+          console.log('erroooooor', this.userSocial)
+        }
       },
 
       onLogout() {
@@ -194,6 +198,7 @@
       onSuccess(googleUser) {
         // This only gets the user information: id, name, imageUrl and email
         const user = googleUser.getBasicProfile();
+        console.log(user)
         this.userSocial.email = user.Wt;
         this.userSocial.name = user.Ad;
         this.userSocial.picture = user.JJ;
