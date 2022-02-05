@@ -210,6 +210,7 @@
           if (a.split(" ").length > 1) {
             this.userSocial.first_name = a.split(" ")[0]
             this.userSocial.last_name = a.split(" ")[1]
+            this.userSocial.name = a
           }
         })
 
