@@ -20,7 +20,7 @@ const state = {
 
 /* -------------------------------------- GETTERS -------------------------------------- */
 const getters = {
-  allPosts: state => state.posts,
+  getAllPosts: state => state.posts,
   getIsTimeline: state => state.isTimeline,
   getUserPosts: state => state.userPosts,
   getPost: state => state.post,

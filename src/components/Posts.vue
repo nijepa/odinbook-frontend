@@ -10,7 +10,7 @@
       <favorites @post-clicked="handlePost" />
 
       <transition name="slide-fade" 
-                  v-if="!allPosts">
+                  v-if="!getAllPosts">
         <div v-on:load="onAppeared" 
               v-show="appeared">
           <p>no posts</p>
@@ -37,7 +37,7 @@
                           class="postc">
           <div v-on:load="onAppeared" 
                 v-show="appeared" 
-                v-for="post in !getSelectedUser._id ? allPosts.posts : getUserPosts" 
+                v-for="post in !getSelectedUser._id ? getAllPosts.posts : getUserPosts" 
                 :key="post._id" 
                 class="post">
             <div class="contentp">
@@ -109,6 +109,7 @@
                               class="btn__del">
                       </button>
                     </div>
+                    <hr />
                   </div>
                 </transition-group>
               </div>
@@ -128,7 +129,7 @@
                 :isFriend='false'
                 class="home__friends" />
   <!-- Load More Button -->
-      <div v-show="!getSelectedUser._id && allPosts.total > posts.length" 
+      <div v-show="!getSelectedUser._id && getAllPosts.total > posts.length" 
             class="more" 
             @click="loadMore()">
         <h3>Load More...</h3>
@@ -201,7 +202,7 @@
     },
 
     computed: {
-      ...mapGetters([ 'allPosts',
+      ...mapGetters([ 'getAllPosts',
                       'getIsTimeline',
                       'getUserPosts',
                       'getFriends',
@@ -274,7 +275,7 @@
       async loadMore() {
         this.currentPage = this.currentPage + 1;
         await this.loadPosts(this.currentPage);
-        this.posts = [...this.posts, ...this.allPosts.posts];
+        this.posts = [...this.posts, ...this.getAllPosts.posts];
         await this.syncPosts(this.posts);
       },
 
@@ -300,18 +301,19 @@
 
     async created() {
       //this.loadAllPosts()
-      console.log('1111',this.allPosts.posts )
-      console.log('222', this.getUserPosts)
+      
       if (!this.single) {
         if (!this.getSelectedUser) {
           await this.loadUserPosts();
         } else {
           await this.loadPosts(0);
-          this.posts = this.allPosts.posts;
+          this.posts = this.getAllPosts.posts;
         }
         await this.fetchFriends(this.loggedUser._id);
       }
       this.loading = false;
+      console.log('ALL POSTS', this.getAllPosts.posts )
+      console.log('222', this.getUserPosts)
     },
 
     async mounted() {

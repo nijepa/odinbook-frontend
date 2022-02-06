@@ -54,13 +54,17 @@ export default {
   },
 
   methods: {
-    ...mapActions(["loadAllPosts"]),
+    ...mapActions(['loadAllPosts',"loadPost", 'choseTimeline']),
     onAppeared() {
       this.appeared = true;
     },
 
-    handleClick(id) {
-      this.$emit("post-clicked", id);
+    async handleClick(id) {
+        await this.loadPost(id)
+        //if (this.$route.name !== 'Favorite') 
+   this.$router.push('/favorite')
+      //this.choseTimeline(false)
+      //this.$emit("post-clicked", id);
     },
   },
 
