@@ -58,7 +58,7 @@ export default {
   name: "Nav",
 
   computed: {
-    ...mapGetters(["loggedUser", "loadingState", "isLogged", "allPosts"]),
+    ...mapGetters(["loggedUser", "loadingState", "isLogged", "getAllPosts"]),
 
     currentRouteName() {
       return this.$route.path;

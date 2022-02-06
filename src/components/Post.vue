@@ -102,7 +102,7 @@
       ...mapGetters([ 'loggedUser', 
                       'getErrors', 
                       'getSelectedPost',
-                      'allPosts' ]),
+                      'getAllPosts' ]),
       showLabel() {
         return this.postInput.title.length ?  'visible' : 'hidden'
       },
