@@ -3,7 +3,13 @@
     <Nav />
     <transition name="slide-fade" mode="out-in" appear>
       <div class="">
-        <h1>This is an about page</h1>
+        <h1>Odinbook</h1>
+        <h3>This app is my solution to final assignment from The Odin Project.</h3>
+        <p>Lerning path - Full Stack JavaScript:</p>
+        <li>NodeJS (Express)</li>
+        <li>VueJS</li>
+        <li>mongoDB</li>
+        <p>Please look around.</p>
         <svg xmlns="http://www.w3.org/2000/svg" width="67" height="89" viewBox="0 0 67 89">
           <defs>
             <linearGradient id="a" x1="43.923%" x2="78.855%" y1="59.791%" y2="62.034%">
