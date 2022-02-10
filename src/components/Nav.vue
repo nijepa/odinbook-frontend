@@ -116,7 +116,7 @@ a {
 }
 .nav__link:hover {
   background-color: var(--blue-darkest);
-  transition: all .5s ease;
+  transition: all 0.5s ease;
 }
 
 .nav__link_active {
@@ -129,9 +129,9 @@ a {
   background: var(--yellow);
 }
 .about__span {
-  padding: .2em;
+  padding: 0.2em;
   border-radius: 15px;
-  transition: all .5s ease;
+  transition: all 0.5s ease;
 }
 .profile {
   background-color: var(--blue-dark);
