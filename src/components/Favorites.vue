@@ -1,7 +1,6 @@
 <template>
-  <transition name="fall" >
-    <div class="posts-fav" v-on:load="onAppeared" 
-          v-show="appeared">
+  <transition name="fall">
+    <div class="posts-fav" v-on:load="onAppeared" v-show="appeared">
       <div class="">
         <h1>Most Liked</h1>
         <hr />
@@ -45,7 +44,7 @@ export default {
     return {
       defaultPic:
         "https://images.pexels.com/photos/3028961/pexels-photo-3028961.jpeg?auto=compress&cs=tinysrgb&h=750&w=1260",
-      appeared: false
+      appeared: false,
     };
   },
 
@@ -54,15 +53,15 @@ export default {
   },
 
   methods: {
-    ...mapActions(['loadAllPosts',"loadPost", 'choseTimeline']),
+    ...mapActions(["loadAllPosts", "loadPost", "choseTimeline"]),
     onAppeared() {
       this.appeared = true;
     },
 
     async handleClick(id) {
-        await this.loadPost(id)
-        //if (this.$route.name !== 'Favorite') 
-   this.$router.push('/favorite')
+      await this.loadPost(id);
+      //if (this.$route.name !== 'Favorite')
+      this.$router.push("/favorite");
       //this.choseTimeline(false)
       //this.$emit("post-clicked", id);
     },
@@ -71,7 +70,6 @@ export default {
   async mounted() {
     this.onAppeared();
     await this.loadAllPosts();
-    
   },
 };
 </script>
