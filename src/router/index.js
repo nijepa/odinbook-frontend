@@ -1,56 +1,56 @@
-import Vue from 'vue'
-import VueRouter from 'vue-router'
-import Home from '../views/Home.vue'
+import Vue from "vue";
+import VueRouter from "vue-router";
+import Home from "../views/Home.vue";
 
-Vue.use(VueRouter)
+Vue.use(VueRouter);
 
-  const routes = [
+const routes = [
   {
-    path: '/',
-    name: 'Home',
-    component: Home
+    path: "/",
+    name: "Home",
+    component: Home,
   },
   {
-    path: '/about',
-    name: 'About',
-    component: () => import('../views/About.vue')
+    path: "/about",
+    name: "About",
+    component: () => import("../views/About.vue"),
   },
   {
-    path: '/profile',
-    name: 'User',
-    component: () => import('../views/User.vue')
+    path: "/profile",
+    name: "User",
+    component: () => import("../views/User.vue"),
   },
   {
-    path: '/users',
-    name: 'Users',
-    component: () => import('../views/Users.vue')
+    path: "/users",
+    name: "Users",
+    component: () => import("../views/Users.vue"),
   },
   {
-    path: '/timeline',
-    name: 'Timeline',
-    component: () => import('../views/Timeline.vue')
+    path: "/timeline",
+    name: "Timeline",
+    component: () => import("../views/Timeline.vue"),
   },
   {
-    path: '/liked',
-    name: 'Liked',
-    component: () => import('../views/Liked.vue')
+    path: "/liked",
+    name: "Liked",
+    component: () => import("../views/Liked.vue"),
   },
   {
-    path: '/favorite',
-    name: 'Favorite',
-    component: () => import('../views/Favorite.vue')
+    path: "/favorite",
+    name: "Favorite",
+    component: () => import("../views/Favorite.vue"),
   },
   {
-    path: '/friends',
-    name: 'UsersFriends',
-    component: () => import('../views/UsersFriends.vue')
+    path: "/friends",
+    name: "UsersFriends",
+    component: () => import("../views/UsersFriends.vue"),
   },
-]
+];
 
 const router = new VueRouter({
-  mode: 'history',
+  mode: "history",
   base: process.env.BASE_URL,
-  routes
-})
+  routes,
+});
 
-export default router
+export default router;

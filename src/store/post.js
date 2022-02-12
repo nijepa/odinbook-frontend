@@ -1,8 +1,8 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
 import axios from 'axios';
-const URL = process.env.VUE_APP_BACKEND_URL_LOCAL;
-//const URL = process.env.VUE_APP_BACKEND_URL;
+//const URL = process.env.VUE_APP_BACKEND_URL_LOCAL;
+const URL = process.env.VUE_APP_BACKEND_URL;
 import apiClient from './api_client';
 import router from '../router';
 
