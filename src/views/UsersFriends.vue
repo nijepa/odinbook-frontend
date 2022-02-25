@@ -8,6 +8,7 @@
       <div v-else class="">
         <Friends
           :title="`${getSelectedUser.username} 's Friends`"
+          :count="getFriends.user.length"
           btnName=""
           :friendsType="getFriends.user"
           :isFriend="true"

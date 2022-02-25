@@ -1,6 +1,7 @@
 <template>
   <div class="users">
     <Nav />
+    <!-- <h3>{{ friendsCount }}</h3> -->
     <transition name="slide-fade" mode="out-in">
       <div v-if="!isLoadedFriends" class="">
         <img class="loading__img" src="../assets/images/loading.gif" alt="" />
@@ -8,22 +9,26 @@
       <div v-else class="friends__lists">
         <Friends
           title="Friends Request"
+          :count="getRequestFriend.user.length"
           btnName="Abort"
           :friendsType="getRequestFriend.user"
         />
         <Friends
           title="Friends Invitation"
+          :count="getFriendInvitation.user.length"
           btnName="Accept"
           :friendsType="getFriendInvitation.user"
         />
         <Friends
           title="Friends"
+          :count="getFriends.user.length"
           btnName="Un-friend"
           :friendsType="getFriends.user"
           :isFriend="false"
         />
         <Friends
           title="Not Friends"
+          :count="getNotFriends.users.length"
           btnName="Add friend"
           :friendsType="getNotFriends.users"
         />
@@ -65,6 +70,9 @@ export default {
       "getFriendInvitation",
       "getRequestFriend",
     ]),
+    friendsCount() {
+      return this.getNotFriends?.users?.length + this.getFriendInvitation?.user?.length + this.getFriends?.user?.length + this.getRequestFriend?.user?.length
+    }
   },
 
   methods: {

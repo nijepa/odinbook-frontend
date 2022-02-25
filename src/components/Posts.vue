@@ -140,6 +140,7 @@
       <!-- Friends -->
       <Friends
         title="Friends"
+        :count="getFriends.user.length"
         btnName="Un-friend"
         :friendsType="getFriends.user"
         :isFriend="false"
