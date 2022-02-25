@@ -121,6 +121,8 @@
       </div>
     </transition>
     <Footer />
+
+
   </div>
 </template>
 <script>

@@ -2,7 +2,7 @@
   <transition name="fall">
     <div class="friends" v-on:load="onAppeared" v-show="appeared">
       <div class="">
-        <h1>{{ title }}</h1>
+        <h1>{{ title }} <span class="friends_count">({{ count }})</span></h1>
         <hr />
       </div>
 
@@ -74,6 +74,9 @@ export default {
 
   props: {
     title: {
+      type: String,
+    },
+    count: {
       type: String,
     },
     btnName: {
@@ -247,6 +250,10 @@ export default {
 .loading__img {
   width: 100px;
   height: auto;
+}
+
+.friends_count {
+  font-size: .8em;
 }
 
 .u__name {
