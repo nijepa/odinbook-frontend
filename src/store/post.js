@@ -16,6 +16,7 @@ const state = {
   userPosts: [],
   comments: [],
   selectedPost: {},
+  totalPosts: 0
 };
 
 /* -------------------------------------- GETTERS -------------------------------------- */
@@ -27,12 +28,17 @@ const getters = {
   allComments: (state) => state.comments,
   getSelectedPost: (state) => state.selectedPost,
   getFavPosts: (state) => state.allPosts,
+  getTotalPosts: (state) => state.totalPosts
 };
 
 /* -------------------------------------- MUTATIONS -------------------------------------- */
 const mutations = {
   setAllPosts(state, posts) {
     state.allPosts = posts;
+  },
+
+  setTotalPosts(state, posts) {
+    state.totalPosts = posts.total;
   },
 
   updatePosts(state, posts) {
@@ -151,6 +157,7 @@ const actions = {
   async loadPosts({ commit }, page) {
     await axios.get(URL + "posts/" + page).then((response) => {
       commit("updatePosts", response.data);
+      commit('setTotalPosts', response.data);
       commit("changeLoadingState", false);
     });
   },
