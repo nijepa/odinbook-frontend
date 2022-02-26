@@ -344,8 +344,8 @@ export default {
       await this.fetchFriends(this.loggedUser._id);
     }
     this.loading = false;
-    console.log("ALL POSTS", this.getAllPosts.posts);
-    console.log("222", this.getUserPosts);
+    //console.log("ALL POSTS", this.getAllPosts.posts);
+    //console.log("222", this.getUserPosts);
   },
 
   async mounted() {

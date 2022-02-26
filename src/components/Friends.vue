@@ -77,7 +77,7 @@ export default {
       type: String,
     },
     count: {
-      type: String,
+      type: Number,
     },
     btnName: {
       type: String,

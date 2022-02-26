@@ -202,7 +202,7 @@ export default {
     async onSuccess(googleUser) {
       // This only gets the user information: id, name, imageUrl and email
       const user = await googleUser.getBasicProfile();
-      console.log(user);
+     // console.log(user);
       const arr = Object.values(user);
       arr.forEach((a) => {
         if (a.startsWith("http", 0)) {

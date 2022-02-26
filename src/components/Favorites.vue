@@ -2,7 +2,7 @@
   <transition name="fall">
     <div class="posts-fav" v-on:load="onAppeared" v-show="appeared">
       <div class="">
-        <h1>Most Liked</h1>
+        <h1>Most Liked <span class="posts_count">({{ getTotalPosts }})</span></h1>
         <hr />
       </div>
       <div v-for="fav in getFavPosts" :key="fav._id" class="fav">
@@ -49,7 +49,7 @@ export default {
   },
 
   computed: {
-    ...mapGetters(["getFavPosts"]),
+    ...mapGetters(["getFavPosts", 'getTotalPosts']),
   },
 
   methods: {
@@ -115,5 +115,8 @@ export default {
   transition: all 0.4s ease-in-out;
   color: #1f1700;
   box-shadow: 0px 5px 4px 0px rgba(0, 0, 0, 0.75);
+}
+.posts_count {
+  font-size: .8em;
 }
 </style>
