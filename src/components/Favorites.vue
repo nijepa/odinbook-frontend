@@ -2,7 +2,7 @@
   <transition name="fall">
     <div class="posts-fav" v-on:load="onAppeared" v-show="appeared">
       <div class="">
-        <h1>Most Liked <span class="posts_count">({{ getTotalPosts }})</span></h1>
+        <h1>Most Liked <span class="posts_count">{{ getTotalPosts }}</span></h1>
         <hr />
       </div>
       <div v-for="fav in getFavPosts" :key="fav._id" class="fav">
@@ -118,5 +118,9 @@ export default {
 }
 .posts_count {
   font-size: .8em;
+  border-radius: .5em;
+  margin-left: .5em;
+  padding: 0 .2em;
+  background-color: var(--orange);
 }
 </style>
