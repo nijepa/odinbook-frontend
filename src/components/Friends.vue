@@ -2,7 +2,7 @@
   <transition name="fall">
     <div class="friends" v-on:load="onAppeared" v-show="appeared">
       <div class="">
-        <h1>{{ title }} <span class="friends_count">({{ count }})</span></h1>
+        <h1>{{ title }} <span class="friends_count">{{ count }}</span></h1>
         <hr />
       </div>
 
@@ -253,6 +253,10 @@ export default {
 }
 
 .friends_count {
+  border-radius: .5em;
+  margin-left: .5em;
+  padding: 0 .2em;
+  background-color: #ffc64b;
   font-size: .8em;
 }
 
