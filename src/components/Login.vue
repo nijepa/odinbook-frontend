@@ -29,8 +29,11 @@
             id="password"
           />
         </div>
+        <div v-if="loading" class="">
+          <img class="loading__img" src="../assets/images/loading.gif" alt="" />
+        </div>
         <div class="form__btn">
-          <button>Login</button>
+          <button v-if="!loading">Login</button>
           <span
             >No account ?
             <a class="register__link" @click="signType('signup')" href="#">
@@ -54,6 +57,7 @@
           @logout="onLogout"
           @get-initial-status="getUserData"
           @sdk-loaded="sdkLoaded"
+          v-if="!loading"
         >
         </facebook-login>
 
@@ -63,6 +67,7 @@
           :renderParams="renderParams"
           :onSuccess="onSuccess"
           :onFailure="onFailure"
+          v-if="!loading"
         >
         </GoogleLogin>
 
@@ -131,6 +136,7 @@ export default {
         longtitle: true,
         //theme: 'dark'
       },
+      loading: false
     };
   },
 
@@ -185,6 +191,7 @@ export default {
     },
 
     onLogin() {
+      this.loading = true
       this.isConnected = true;
       this.getUserData();
       if (this.userSocial.email.length) {
@@ -192,6 +199,7 @@ export default {
       } else {
         console.log("erroooooor", this.userSocial);
       }
+      this.loading = false
     },
 
     onLogout() {
@@ -200,6 +208,7 @@ export default {
     },
 
     async onSuccess(googleUser) {
+      this.loading = true
       // This only gets the user information: id, name, imageUrl and email
       const user = await googleUser.getBasicProfile();
      // console.log(user);
@@ -218,6 +227,7 @@ export default {
         }
       });
       this.login(this.userSocial);
+      this.loading = false
     },
 
     onFailure() {
