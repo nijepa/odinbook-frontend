@@ -41,7 +41,7 @@
             </a>
           </span>
         </div>
-        <p class="err" v-if="getErrors.length != 0">
+        <p class="err" v-if="getErrors && getErrors.length != 0">
           {{ getErrors }}
         </p>
         <hr />
@@ -190,10 +190,10 @@ export default {
       if (this.isConnected) this.getUserData();
     },
 
-    onLogin() {
+    async onLogin() {
       this.loading = true
       this.isConnected = true;
-      this.getUserData();
+      await this.getUserData();
       if (this.userSocial.email.length) {
         this.login(this.userSocial);
       } else {
